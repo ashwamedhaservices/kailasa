@@ -3,7 +3,11 @@ module Kailasa
     class << self
       SECRET = Rails.application.credentials.secret_key_base
       ALGORITHM = 'HS256'.freeze
+      # RSA_PRIVATE_KEY = Rails.application.credentials.private_key
+      # ALGORITHM = 'RS256'.freeze
 
+      # Will use private key to sign(KMS)
+      # use public key to verify signature
       def encode(payload)
         JWT.encode payload, SECRET, ALGORITHM
       end

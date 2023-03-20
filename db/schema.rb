@@ -10,41 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_11_160247) do
-  create_table "referrals", charset: "utf8mb3", force: :cascade do |t|
-    t.integer "referrer_id"
-    t.integer "referee_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "transactions", charset: "utf8mb3", force: :cascade do |t|
-    t.float "amount"
-    t.float "balance"
-    t.string "ref_no"
-    t.datetime "date"
-    t.string "type"
-    t.bigint "wallets_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["wallets_id"], name: "index_transactions_on_wallets_id"
-  end
-
+ActiveRecord::Schema[7.0].define(version: 2023_03_11_152916) do
   create_table "users", charset: "utf8mb3", force: :cascade do |t|
-    t.integer "phone", null: false
-    t.string "name"
-    t.string "code"
+    t.string "fname"
+    t.string "mname"
+    t.string "lname"
+    t.string "password"
+    t.string "email"
+    t.string "mobile_number", null: false
+    t.string "type"
+    t.string "referral_code"
+    t.integer "referred_by"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["phone"], name: "index_users_on_phone"
-  end
-
-  create_table "wallets", charset: "utf8mb3", force: :cascade do |t|
-    t.integer "status"
-    t.bigint "users_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["users_id"], name: "index_wallets_on_users_id"
+    t.index ["mobile_number"], name: "index_users_on_mobile_number"
   end
 
 end
