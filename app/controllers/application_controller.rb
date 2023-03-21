@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::API
   include ExceptionHandler
-  include AuthenticatesWithJwt
+  include AuthorizationHandler
   include ActionController::MimeResponds
+  include RenderResponse
 end
