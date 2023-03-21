@@ -27,3 +27,6 @@
 /config/master.key
 
 /config/credentials/development.key
+
+# Ignore Editor data
+.vscode

@@ -1,7 +1,15 @@
-require "test_helper"
+# frozen_string_literal: true
 
-class Admin::Api::V1::ReferralsControllerTest < ActionDispatch::IntegrationTest
-  # test "the truth" do
-  #   assert true
-  # end
+require 'test_helper'
+
+module Admin
+  module Api
+    module V1
+      class ReferralsControllerTest < ActionDispatch::IntegrationTest
+        # test "the truth" do
+        #   assert true
+        # end
+      end
+    end
+  end
 end

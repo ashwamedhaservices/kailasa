@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Authenticate
   class Users
     attr_reader :request
@@ -21,6 +23,7 @@ module Authenticate
         # Kailasa::Logger.error('No Service Authorization header present in the request')
         return ServiceResponse.error(message: 'Authentication failed', http_status: 401)
       end
+
       ServiceResponse.success(payload: payload)
     end
 

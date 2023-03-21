@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 module Kailasa
   class Jwt
     class << self
       SECRET = Rails.application.credentials.secret_key_base
-      ALGORITHM = 'HS256'.freeze
+      ALGORITHM = 'HS256'
       # RSA_PRIVATE_KEY = Rails.application.credentials.private_key
       # ALGORITHM = 'RS256'.freeze
 
