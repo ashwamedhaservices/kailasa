@@ -15,15 +15,19 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_11_152916) do
     t.string "fname"
     t.string "mname"
     t.string "lname"
-    t.string "password"
+    t.string "password_digest"
     t.string "email"
     t.string "mobile_number", null: false
+    t.string "state"
     t.string "type"
     t.string "referral_code"
-    t.integer "referred_by"
+    t.bigint "referrer_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["mobile_number"], name: "index_users_on_mobile_number"
+    t.index ["mobile_number"], name: "index_users_on_mobile_number", unique: true
+    t.index ["referrer_id"], name: "index_users_on_referrer_id"
+    t.index ["state"], name: "index_users_on_state"
   end
 
+  add_foreign_key "users", "users", column: "referrer_id"
 end

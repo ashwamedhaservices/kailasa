@@ -5,7 +5,9 @@ module Users
       delegate :params, to: :context
       
       def call
-        context.fail!(error: "Invalid mobile number, please enter a valid number.") unless valid_mobile?
+        if params[:mobile_number]
+          context.fail!(error: "Invalid mobile number, please enter a valid number.") unless valid_mobile?
+        end
       end
 
       private

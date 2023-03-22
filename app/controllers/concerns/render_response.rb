@@ -1,7 +1,7 @@
 module RenderResponse
   extend ActiveSupport::Concern
 
-  def render_success(msg, data)
+  def render_success(msg, data = [])
     {
       success: true,
       message: msg,

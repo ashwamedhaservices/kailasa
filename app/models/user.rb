@@ -1,5 +1,8 @@
 class User < ApplicationRecord
-  validates :mobile_number, 
-            :presence => {:message => "Mobile can't be blank." },
-            :uniqueness => {:message => "User already registered with this mobile number."}
+  has_secure_password
+
+
+  include Users::StateMachine
+  include Users::Associatable
+  include Users::Validatable
 end
