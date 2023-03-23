@@ -1,9 +1,10 @@
 module Authenticate
   class Users
-    attr_reader :request
+    attr_reader :request, :token
 
-    def initialize(request)
+    def initialize(request, token)
       @request = request
+      @token = token
     end
 
     def self.call(*args)
@@ -17,24 +18,14 @@ module Authenticate
     private
 
     def authenticate
-      if auth_token.nil?
-        # Kailasa::Logger.error('No Service Authorization header present in the request')
-        return ServiceResponse.error(message: 'Authentication failed', http_status: 401)
-      end
+      # custom checks to go here
+      return ::ServiceResponse.success(data: payload) if payload
 
-      ServiceResponse.success(payload: payload)
-    end
-
-    def auth_token
-      @http_token ||= auth_header.split.last if auth_header
-    end
-
-    def auth_header
-      @auth_header ||= request.headers['Authorization']
+      ::ServiceResponse.error(msg: "Authorization failed")
     end
 
     def payload
-      @payload ||= Kailasa::Jwt.decode(http_token)
+      @payload ||= Kailasa::Jwt.decode(token)
     end
   end
 end

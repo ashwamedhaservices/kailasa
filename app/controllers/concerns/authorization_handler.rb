@@ -4,27 +4,24 @@ module AuthorizationHandler
 
   attr_accessor :result, :current_user
 
-  delegate :payload, :success?, to: :result
+  # delegate :payload, :success?, to: :result
+  delegate :data, to: :result
 
   def authorize_user!
-    # return render json: { status: 'failure', error: 'Authentication failed' }, status: :unauthorized unless jwt_token
-    return render json: render_failure('Authentication failed', 401), status: :unauthorized unless jwt_token
+    return render json: failure('Authentication failed', 401), status: :unauthorized unless jwt_token
 
-    @result = Authenticate::Users.call(jwt_token)
-    return render json: { status: 'failure', error: payload }, status: http_status unless success?
+    @result = Authenticate::Users.call(request,jwt_token)
+    return render json: { status: 'failure', error: payload }, status: :unauthorized unless result.success
 
-    @current_user = user
-
-    # TODO: use failure
+    @current_user = User.find(data["id"])
   end
 
   def authorize_admin!
     authorize_user!
-    @current_user = result.payload
     return if current_user.admin?
 
     # TODO: use failure
-    render json: render_failure('Unautherized access!', 401), status: :unauthorized
+    render json: failure('Unautherized access!', 401), status: :unauthorized
   end
 
   def authorize_service!
@@ -38,9 +35,5 @@ module AuthorizationHandler
 
   def jwt_token
     (request.headers['Authorization'] || '').split.last
-  end
-
-  def user
-    User.find(payload[:user_id])
   end
 end

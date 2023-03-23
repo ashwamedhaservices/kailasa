@@ -6,7 +6,7 @@ module ExceptionHandler
     rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
     rescue_from JWT::ExpiredSignature, with: :forbidden
     rescue_from JWT::DecodeError, with: :forbidden
-    rescue_from ActionController::ParameterMissing, with: :parameter_missing
+    # rescue_from ActionController::ParameterMissing, with: :parameter_missing
     # ActionController::ParameterMissing
     # rescue_from CanCan::AccessDenied, with: :unauthorized_request
   end
@@ -14,6 +14,7 @@ module ExceptionHandler
   private
 
   def parameter_missing
+    byebug
     render json: failure(msg: 'Required parameter missing', error_code: error_code('required_params_missing')), status: :forbidden
   end
 

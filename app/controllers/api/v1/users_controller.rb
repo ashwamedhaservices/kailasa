@@ -1,6 +1,10 @@
 class Api::V1::UsersController < ApplicationController
-  before_action :authorize_user!, only: %i[:index]
-  # skip_before_action :authorize_user!, only: %i[create verify]
+  before_action :authorize_user!, only: :index
+
+  def index
+    render json: { hi: 'hello' }, status: :ok
+  end
+
   # POST accounts/api/v1/users
   def create
     @interactor = ::Users::Create::Processor.call(params: create_params)
@@ -54,10 +58,6 @@ class Api::V1::UsersController < ApplicationController
     else
       render json: failure(msg: 'Incorrect OTP', error_code: error_code('wrong_otp')), status: :unauthorized
     end
-  end
-
-  def index
-    render json: { hi: 'hello' }, status: :ok
   end
 
   private
