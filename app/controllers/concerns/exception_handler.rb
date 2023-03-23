@@ -12,7 +12,7 @@ module ExceptionHandler
   private
 
   def record_not_found
-    render json: { status: 'failure', data: 'invalid record' }, status: :not_found
+    render json: failure(msg: 'Record does not exists', error_code: ::Errors::Handler.code('record_not_found')), status: :not_found
   end
 
   def standard_error(_exception)

@@ -26,21 +26,24 @@ class Otp
   end
 
   def self.verify!(otp_value, options)
-    otp = self.where(
-      user_id: options[:user_id],
-      receiver: options[:receiver],
-      otp_type: options[:otp_type],
-      verified: false
-    ).limit(1).last
-    if otp_value.to_s == otp.value
-      otp.update(verified: true)
+    otp = otp(options)
+    value = Rails.env.production? ? otp.value : '111111'
+    if otp_value.to_s == value
+      return otp.update(verified: true)
     else
       otp.update(retry_count: otp.retry_count + 1)
     end
+    false # can do better here
   end
 
   private
-    def otp_generate
-      self.value = SecureRandom.random_number(900000)
+
+    def otp(options)
+      @otp ||= self.where(
+        user_id: options[:user_id],
+        receiver: options[:receiver],
+        otp_type: options[:otp_type],
+        verified: false
+      ).limit(1).last
     end
 end

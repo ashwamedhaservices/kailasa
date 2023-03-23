@@ -21,4 +21,8 @@ module RenderResponse
       data: data
     }
   end
+
+  def error_code(error)
+    ::Errors::Handler.code(error)
+  end
 end
