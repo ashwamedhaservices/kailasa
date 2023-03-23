@@ -27,6 +27,7 @@ module Authenticate
         # Kailasa::Logger.error('Service token is not whitelisted')
         return ServiceResponse.error(message: 'Authentication failed', http_status: 401)
       end
+
       ServiceResponse.success(payload: { 'auth': true })
     end
 

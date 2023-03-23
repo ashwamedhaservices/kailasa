@@ -1,8 +1,7 @@
 class ::Notifcation::Email
+  def trigger; end
 
-  def trigger
-  end
   private
-    def options
-    end
+
+  def options; end
 end

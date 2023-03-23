@@ -5,7 +5,7 @@ module Sms
       attr_reader :options, :resp
 
       # options structure
-      #{
+      # {
       #   mobile: sms_params[:sender],
       #   message: sms_params[:message],
       #   template_id: sms_params[:template_id]
@@ -17,17 +17,17 @@ module Sms
       rescue StandardError => e
         # logger
         # sentry
-      end      
+      end
 
       def payload
         {
-          "mobiles"   => options[:mobile],
-          "authkey"   => credentials[:key],
-          "DLT_TE_ID" => options[:template_id],
-          "route"     => credentials[:code],
-          "sender"    => credentials[:sender],
-          "message"   => options[:message],
-          "country"   => "91"
+          'mobiles' => options[:mobile],
+          'authkey' => credentials[:key],
+          'DLT_TE_ID' => options[:template_id],
+          'route' => credentials[:code],
+          'sender' => credentials[:sender],
+          'message' => options[:message],
+          'country' => '91'
         }
       end
 

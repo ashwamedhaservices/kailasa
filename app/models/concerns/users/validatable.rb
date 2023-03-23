@@ -18,16 +18,15 @@ module Users
       # associations
 
       # delegations
-      
+
       # validations
-      validates :mobile_number, 
-                :presence => true,
-                :uniqueness => { message: "has already been registered, please login."}
-      validates :password, 
+      validates :mobile_number,
                 presence: true,
-                format: { with: PASSWORD_FORMAT, message: "is not longer or missing numbers or characters" }, 
-                on: :create 
-      
+                uniqueness: { message: 'has already been registered, please login.' }
+      validates :password,
+                presence: true,
+                format: { with: PASSWORD_FORMAT, message: 'is not longer or missing numbers or characters' },
+                on: :create
     end
 
     def testing

@@ -1,6 +1,5 @@
 module Utils
   class Validator
-
     # may be use some gem or move all regexes to a file and load it
     INDIAN_MOBILE_REGEX = /\A[4-9]{1}[0-9]{9}\z/
 

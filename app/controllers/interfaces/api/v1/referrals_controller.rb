@@ -1,7 +1,7 @@
 class Interfaces::Api::V1::ReferralsController < ApplicationController
   # def create
   #   ::Referrals::Process.call(referrall_params)
-  # end  
+  # end
 
   # private
   # def referrall_params

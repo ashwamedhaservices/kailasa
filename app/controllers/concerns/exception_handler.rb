@@ -15,7 +15,7 @@ module ExceptionHandler
     render json: { status: 'failure', data: 'invalid record' }, status: :not_found
   end
 
-  def standard_error(exception)
+  def standard_error(_exception)
     # Kailasa::Logger.error(exception.message, sentry: true)
     render json: { status: 'failure', data: 'something went wrong' }, status: :internal_server_error
   end

@@ -9,9 +9,6 @@ module Users
 
     private
 
-      def test
-      end
-    
-
+    def test; end
   end
 end
