@@ -5,8 +5,10 @@ module Errors
     end
 
     CODES = {
-      'mobile_number_taken' => 'RE0001',
-      'mobile_number_blank' => 'RE0001'
+      'required_params_missing' => 'IR0001', # invalid request
+      'mobile_number_taken' => 'RE0001', # Register Error
+      'mobile_number_blank' => 'RE0001', # Register Error
+      'wrong_otp' => 'WD0001'# Wrong Data
     }
 
     # TODO

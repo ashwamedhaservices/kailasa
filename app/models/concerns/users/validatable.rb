@@ -28,9 +28,5 @@ module Users
                 format: { with: PASSWORD_FORMAT, message: 'is not longer or missing numbers or characters' },
                 on: :create
     end
-
-    def testing
-      byebug
-    end
   end
 end

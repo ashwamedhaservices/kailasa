@@ -1,15 +1,19 @@
 module RenderResponse
   extend ActiveSupport::Concern
-
-  def render_success(msg, data = [])
-    {
-      success: true,
-      message: msg,
-      data: data
-    }
+  included do
+    alias_method :success, :render_success
+    alias_method :failure, :render_failure
   end
 
-  def render_failure(msg, error_code, data = [])
+  def render_success(msg: '', data: {})
+    {}.tap do |resp|
+      resp[:success] = true
+      resp[:message] = msg
+      resp[:data] = data[:data] || data
+    end
+  end
+
+  def render_failure(msg: '', error_code: '', data: {})
     {
       success: false,
       message: msg,

@@ -3,15 +3,17 @@ module Users
     class CreateUser
       include Interactor
       delegate :params, to: :context
-      
+
       def call
         user = ::User.new(create_attributes)
         if user.save
           context.user = user
         else
           # TODO ERROR CODES
-          # user.errors.first.attribute.to_s + "_" + user.errors.first.type.to_s
-          context.fail!(error: user.errors.full_messages.to_sentence, code: )
+          error = user.errors.first
+          error_name = error.attribute.to_s + "_" + error.type.to_s
+          code = ::Errors::Handler.code(error_name)
+          context.fail!(error: user.errors.full_messages.to_sentence, code: code)
         end
       end
 
