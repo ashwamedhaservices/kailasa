@@ -48,9 +48,9 @@ class Api::V1::UsersController < ApplicationController
 
   # POST accounts/api/v1/users/otp_verification
   def otp_verification
-    if Otp.verify!(login_params[:otp], verify_options)
-      resp = Api::V1::UserSerializer.new(user, params: {issue_token: true}).serializable_hash
-      render json: success(msg: i8n_msg, data: resp), status: :ok
+    if Otp.verify!(login_params["otp"], verify_options)
+      i8n_msg =  'Otp verified successfully'
+      render json: success(msg: i8n_msg, data: user_login_resp), status: :ok
     else
       render json: failure(msg: 'Incorrect OTP', error_code: error_code('wrong_otp')), status: :unauthorized
     end
@@ -71,8 +71,7 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def login_params
-    # params.require(:users).permit(:mobile_number, :otp, :id, :password)
-    params.require(:users).permit(:password, :mobile_number)
+    params.require(:users).permit(:password, :mobile_number, :otp, :id)
   end
 
   def user

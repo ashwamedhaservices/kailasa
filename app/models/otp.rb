@@ -26,7 +26,7 @@ class Otp
   end
 
   def self.verify!(otp_value, options)
-    otp = otp(options)
+    otp = self.otp(options)
     value = Rails.env.production? ? otp.value : '111111'
     if otp_value.to_s == value
       return otp.update(verified: true)
@@ -36,14 +36,12 @@ class Otp
     false # can do better here
   end
 
-  private
-
-    def otp(options)
-      @otp ||= self.where(
-        user_id: options[:user_id],
-        receiver: options[:receiver],
-        otp_type: options[:otp_type],
-        verified: false
-      ).limit(1).last
-    end
+  def self.otp(options)
+    @otp ||= self.where(
+      user_id: options[:user_id],
+      receiver: options[:receiver],
+      otp_type: options[:otp_type],
+      verified: false
+    ).limit(1).last
+  end
 end
