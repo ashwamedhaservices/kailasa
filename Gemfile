@@ -19,7 +19,7 @@ gem 'puma', '~> 3.11'
 # gem 'redis', '~> 4.0'
 
 # Use ActiveModel has_secure_password
-gem 'bcrypt', '~> 3.1.7'
+# gem 'bcrypt', '~> 3.1.7'
 
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
@@ -50,7 +50,7 @@ gem 'friendly_id', '~> 5.4.0'
 
 # Payment gateways -> supports PAYU and HDFC PAYPAL-> INDIA
 # https://github.com/activemerchant/active_merchant
-gem 'activemerchant'
+# gem 'activemerchant'
 
 
 group :development, :test do
@@ -60,7 +60,10 @@ group :development, :test do
   gem 'brakeman'
   gem 'bundler-audit'
   gem 'safe_query', '~> 0.1.0'
-  gem 'bullet'
+  # gem 'bullet'
+  gem 'rack-mini-profiler', '~> 3.0'
+  gem 'meta_request'
+  gem 'scout_apm'
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
 end
 

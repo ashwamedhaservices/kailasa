@@ -23,7 +23,11 @@ module Users
       validates :mobile_number,
                 presence: true,
                 uniqueness: { message: 'has already been registered, please login.' }
-      validates :password,
+      # validates :password,
+      #           presence: true,
+      #           format: { with: PASSWORD_FORMAT, message: 'is not longer or missing numbers or characters' },
+      #           on: :create
+      validates :passwd,
                 presence: true,
                 format: { with: PASSWORD_FORMAT, message: 'is not longer or missing numbers or characters' },
                 on: :create
