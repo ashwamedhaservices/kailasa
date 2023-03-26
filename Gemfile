@@ -48,12 +48,20 @@ gem 'jsonapi-serializer'
 # generates friendly id
 gem 'friendly_id', '~> 5.4.0'
 
+# Payment gateways -> supports PAYU and HDFC PAYPAL-> INDIA
+# https://github.com/activemerchant/active_merchant
+gem 'activemerchant'
+
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'safe_query', '~> 0.1.0'
-  gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'rubocop'
+  gem 'rubocop-rails', require: false
+  gem 'brakeman'
+  gem 'bundler-audit'
+  gem 'safe_query', '~> 0.1.0'
+  gem 'bullet'
+  gem 'byebug', platforms: %i[mri mingw x64_mingw]
 end
 
 group :development do
