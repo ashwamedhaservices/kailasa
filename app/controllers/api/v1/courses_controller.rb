@@ -14,7 +14,7 @@ module Api
       end
 
       def create
-        @course = Course.new(params.require(:course).permit(:name, :description, :image, :price))
+        @course = Course.new(params.require(:course).permit(:name, :description, :image_url, :price))
         if @course.save
           render json: { status: 'success', data: @course }, status: :ok
         else

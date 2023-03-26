@@ -1,12 +1,11 @@
 # frozen_string_literal: true
 
-class CreateCourses < ActiveRecord::Migration[7.0]
+class CreateSubjects < ActiveRecord::Migration[7.0]
   def change
-    create_table :courses do |t|
+    create_table :subjects do |t|
       t.string :name
       t.string :description
       t.string :image_url
-      t.decimal :price
 
       t.timestamps
     end

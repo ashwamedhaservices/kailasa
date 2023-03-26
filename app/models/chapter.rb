@@ -2,20 +2,16 @@
 
 # == Schema Information
 #
-# Table name: courses
+# Table name: chapters
 #
 #  id          :bigint           not null, primary key
 #  name        :string(255)
 #  description :string(255)
 #  image_url   :string(255)
-#  price       :decimal(10, )
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #
-require 'test_helper'
-
-class CourseTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+class Chapter < ApplicationRecord
+  has_many :subject_chapters, dependent: :destroy
+  has_many :subjects, through: :subject_chapters
 end

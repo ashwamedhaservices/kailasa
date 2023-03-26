@@ -16,6 +16,10 @@ scope :accounts do
 end
 namespace :api do
   namespace :v1 do
-    resources :courses
+    resources :courses do
+      resources :subjects, shallow: true do
+        resources :chapters, shallow: true
+      end
+    end
   end
 end
