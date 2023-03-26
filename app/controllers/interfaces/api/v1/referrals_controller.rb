@@ -1,4 +1,7 @@
-# frozen_string_literal: true
+class Interfaces::Api::V1::ReferralsController < ApplicationController
+  # def create
+  #   ::Referrals::Process.call(referrall_params)
+  # end
 
 module Interfaces
   module Api

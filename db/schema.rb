@@ -12,28 +12,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 20_230_321_164_413) do
-  create_table 'courses', charset: 'utf8mb4', collation: 'utf8mb4_0900_ai_ci', force: :cascade do |t|
-    t.string 'name'
-    t.string 'description'
-    t.string 'image'
-    t.decimal 'price', precision: 10
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-  end
-
-  create_table 'users', charset: 'utf8mb4', collation: 'utf8mb4_0900_ai_ci', force: :cascade do |t|
+ActiveRecord::Schema[7.0].define(version: 20_230_311_152_916) do
+  create_table 'users', charset: 'utf8mb3', force: :cascade do |t|
     t.string 'fname'
     t.string 'mname'
     t.string 'lname'
-    t.string 'password'
+    t.string 'password_digest'
     t.string 'email'
     t.string 'mobile_number', null: false
+    t.string 'state'
     t.string 'type'
     t.string 'referral_code'
-    t.integer 'referred_by'
+    t.bigint 'referrer_id'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
-    t.index ['mobile_number'], name: 'index_users_on_mobile_number'
+    t.index ['mobile_number'], name: 'index_users_on_mobile_number', unique: true
+    t.index ['referrer_id'], name: 'index_users_on_referrer_id'
+    t.index ['state'], name: 'index_users_on_state'
   end
+
+  add_foreign_key 'users', 'users', column: 'referrer_id'
 end

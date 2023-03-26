@@ -9,7 +9,7 @@ Rails.application.configure do
   config.cache_classes = false
 
   # Do not eager load code on boot.
-  config.eager_load = false
+  config.eager_load = true
 
   # Show full error reports.
   config.consider_all_requests_local = true
@@ -37,15 +37,21 @@ Rails.application.configure do
 
   config.action_mailer.perform_caching = false
 
-  # Print deprecation notices to the Rails logger.
-  config.active_support.deprecation = :log
+  config.logger = Logger.new Rails.root.join("log/#{Rails.env}.log")
+  config.logger = ActiveSupport::Logger.new(STDOUT)
+  config.logger.formatter = Logger::Formatter.new
+  config.logger = ActiveSupport::TaggedLogging.new(config.logger)
+  config.log_tags = [:request_id]
+
+  # Raise an error on page load if there are pending migrations.
+  config.active_record.migration_error = :page_load
 
   # Raise an error on page load if there are pending migrations.
   config.active_record.migration_error = :page_load
 
   # Highlight code that triggered database queries in logs.
   config.active_record.verbose_query_logs = true
-
+  config.active_record.warn_on_records_fetched_greater_than = 100
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 
