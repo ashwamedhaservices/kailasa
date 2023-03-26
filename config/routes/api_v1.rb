@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 scope :accounts do
   namespace :api do
     namespace :v1 do

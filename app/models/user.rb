@@ -4,18 +4,20 @@
 #
 # Table name: users
 #
-#  id            :bigint           not null, primary key
-#  fname         :string(255)
-#  mname         :string(255)
-#  lname         :string(255)
-#  password      :string(255)
-#  email         :string(255)
-#  mobile_number :string(255)      not null
-#  type          :string(255)
-#  referral_code :string(255)
-#  referred_by   :integer
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
+#  id              :bigint           not null, primary key
+#  title           :string(255)
+#  fname           :string(255)
+#  mname           :string(255)
+#  lname           :string(255)
+#  password_digest :string(255)
+#  email           :string(255)
+#  mobile_number   :string(255)      not null
+#  state           :string(255)
+#  type            :string(255)
+#  referral_code   :string(255)
+#  referrer_id     :bigint
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
 #
 class User < ApplicationRecord
   has_secure_password
@@ -31,6 +33,6 @@ class User < ApplicationRecord
 
   # TODO: temp action
   def token
-    ::Kailasa::Jwt.encode({id: id, exp: 1.day.from_now.to_i})
+    ::Kailasa::Jwt.encode({ id: id, exp: 1.day.from_now.to_i })
   end
 end

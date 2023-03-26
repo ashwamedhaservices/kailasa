@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Users
   module Create
     class CreateUser
@@ -9,9 +11,9 @@ module Users
         if user.save
           context.user = user
         else
-          # TODO ERROR CODES
+          # TODO: ERROR CODES
           error = user.errors.first
-          error_name = error.attribute.to_s + "_" + error.type.to_s
+          error_name = "#{error.attribute}_#{error.type}"
           code = ::Errors::Handler.code(error_name)
           context.fail!(error: user.errors.full_messages.to_sentence, code: code)
         end
@@ -30,7 +32,6 @@ module Users
         user_id = params[:referral_code].downcase.to_i(36)
         ::User.exists?(user_id) ? user_id : nil
       end
-
     end
   end
 end

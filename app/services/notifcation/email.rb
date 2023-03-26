@@ -1,7 +1,11 @@
-class ::Notifcation::Email
-  def trigger; end
+# frozen_string_literal: true
 
-  private
+module ::Notifcation
+  class Email
+    def trigger; end
 
-  def options; end
+    private
+
+    def options; end
+  end
 end

@@ -54,16 +54,13 @@ gem 'friendly_id', '~> 5.4.0'
 # https://github.com/activemerchant/active_merchant
 gem 'activemerchant'
 
-
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'rubocop'
-  gem 'rubocop-rails', require: false
   gem 'brakeman'
+  # gem 'bullet'
   gem 'bundler-audit'
-  gem 'safe_query', '~> 0.1.0'
-  gem 'bullet'
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
+  gem 'safe_query', '~> 0.1.0'
 end
 
 group :development do
@@ -71,6 +68,7 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'annotate'
   gem 'rubocop-rails', require: false
+  gem 'rubocop'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
 end

@@ -8,5 +8,4 @@ class ApplicationController < ActionController::API
   # TODO: might backfire.. To think about it
   delegate :success?, :error, :code, to: :interactor
   attr_accessor :interactor, :current_user
-
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Sms
   class Base
     attr_reader :client

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module RenderResponse
   extend ActiveSupport::Concern
   included do

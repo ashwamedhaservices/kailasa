@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Otp
   include ::Mongoid::Document
   include ::Mongoid::Timestamps
@@ -16,28 +18,27 @@ class Otp
 
   # TODO: move this to concern
   def self.generate!(user, type)
-    self.create({
-      user_id: user.id,
-      receiver: user.mobile_number,
-      receiver_type: 'mobile_number',
-      value: SecureRandom.random_number(900000),
-      otp_type: type,
-    }).value
+    create({
+             user_id: user.id,
+             receiver: user.mobile_number,
+             receiver_type: 'mobile_number',
+             value: SecureRandom.random_number(900_000),
+             otp_type: type
+           }).value
   end
 
   def self.verify!(otp_value, options)
     otp = self.otp(options)
     value = Rails.env.production? ? otp.value : '111111'
-    if otp_value.to_s == value
-      return otp.update(verified: true)
-    else
-      otp.update(retry_count: otp.retry_count + 1)
-    end
+    return otp.update(verified: true) if otp_value.to_s == value
+
+    otp.update(retry_count: otp.retry_count + 1)
+
     false # can do better here
   end
 
   def self.otp(options)
-    @otp ||= self.where(
+    @otp ||= where(
       user_id: options[:user_id],
       receiver: options[:receiver],
       otp_type: options[:otp_type],
