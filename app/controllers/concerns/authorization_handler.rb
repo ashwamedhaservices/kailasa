@@ -4,7 +4,7 @@ module AuthorizationHandler
   extend ActiveSupport::Concern
   include RenderResponse
 
-  attr_accessor :result, :current_user
+  attr_accessor :result, :current_user, :current_profile
 
   # delegate :payload, :success?, to: :result
   delegate :data, to: :result
@@ -16,6 +16,7 @@ module AuthorizationHandler
     return render json: { status: 'failure', error: payload }, status: :unauthorized unless result.success
 
     @current_user = User.find(data['id'])
+    @current_profile = Profile.find(data['profile_id'])
   end
 
   def authorize_admin!

@@ -7,5 +7,5 @@ class ApplicationController < ActionController::API
   include RenderResponse
   # TODO: might backfire.. To think about it
   delegate :success?, :error, :code, to: :interactor
-  attr_accessor :interactor, :current_user
+  attr_accessor :interactor, :current_user, :current_profile
 end
