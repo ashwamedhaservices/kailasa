@@ -21,7 +21,7 @@ gem 'puma', '~> 3.11'
 # gem 'redis', '~> 4.0'
 
 # Use ActiveModel has_secure_password
-gem 'bcrypt', '~> 3.1.7'
+# gem 'bcrypt', '~> 3.1.7'
 
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
@@ -52,15 +52,22 @@ gem 'friendly_id', '~> 5.4.0'
 
 # Payment gateways -> supports PAYU and HDFC PAYPAL-> INDIA
 # https://github.com/activemerchant/active_merchant
-gem 'activemerchant'
+# gem 'activemerchant'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'brakeman'
   # gem 'bullet'
   gem 'bundler-audit'
-  gem 'byebug', platforms: %i[mri mingw x64_mingw]
+  gem 'rubocop'
+  gem 'rubocop-rails', require: false
   gem 'safe_query', '~> 0.1.0'
+  # gem 'bullet'
+  gem 'byebug', platforms: %i[mri mingw x64_mingw]
+  gem 'meta_request'
+  gem 'rack-mini-profiler', '~> 3.0'
+  gem 'scout_apm'
+  gem 'strong_migrations'
 end
 
 group :development do

@@ -6,11 +6,15 @@ module Users
 
     # callbacks
     included do
-      before_save :test
+      before_create :salt_password
     end
 
     private
 
-    def test; end
+    def salt_password
+      self.salt   =  SecureRandom.hex(8)
+      self.iters  =  1000
+      self.password = ::Utils::Password.encrypt(password: password, salt: salt)
+    end
   end
 end

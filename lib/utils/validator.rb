@@ -10,8 +10,9 @@ module Utils
       (email =~ email_regex)
     end
 
-    def self.password_valid?(password)
-      (password.length >= 8) && (password.length < 128)
+    def self.password_valid?(_password)
+      # (password.length >= 8) && (password.length < 128)
+      (passwd.length >= 8) && (passwd.length < 128)
     end
 
     def self.valid_indian_phone_number?(phone_number)

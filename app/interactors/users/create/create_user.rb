@@ -13,7 +13,7 @@ module Users
         else
           # TODO: ERROR CODES
           error = user.errors.first
-          error_name = "#{error.attribute}_#{error.type}"
+          error_name = error.attribute.to_s + '_' + error.type.to_s
           code = ::Errors::Handler.code(error_name)
           context.fail!(error: user.errors.full_messages.to_sentence, code: code)
         end

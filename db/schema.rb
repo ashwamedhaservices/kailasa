@@ -92,7 +92,9 @@ ActiveRecord::Schema[7.0].define(version: 20_230_401_121_741) do
     t.string 'fname'
     t.string 'mname'
     t.string 'lname'
-    t.string 'password_digest'
+    t.integer 'iters'
+    t.string 'salt'
+    t.string 'password'
     t.string 'email'
     t.string 'mobile_number', null: false
     t.string 'state'
