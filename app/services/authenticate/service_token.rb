@@ -30,7 +30,7 @@ module Authenticate
         return ServiceResponse.error(msg: 'Authentication failed')
       end
 
-      ServiceResponse.success(data: { 'auth': true })
+      ServiceResponse.success(data: { auth: true })
     end
 
     def registered?

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CreateCourses < ActiveRecord::Migration[7.0] # rubocop:disable Style/Documentation
+class CreateCourses < ActiveRecord::Migration[7.0]
   def change # rubocop:disable Metrics/MethodLength
     create_table :courses do |t|
       t.string :name, limit: 60

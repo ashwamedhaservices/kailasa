@@ -12,7 +12,9 @@ module Profiles
     def call
       return ::ServiceResponse.error(msg: 'empty profile') unless profile
 
-      ::ServiceResponse.success(data: response)
+      res = response
+      Rails.logger.info("response is #{res}")
+      ::ServiceResponse.success(data: res)
     end
 
     def response
@@ -20,7 +22,7 @@ module Profiles
         profile: profile,
         popular_courses: Course.first(5),
         courses: Course.first(5),
-        enrollment: profile.enrollments.order(last_active_at: :desc).limit(3)
+        enrollment: profile.enrollments.order(last_active_at: :desc).first(3)
       }
     end
   end

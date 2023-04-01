@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CreateChapters < ActiveRecord::Migration[7.0] # rubocop:disable Style/Documentation
+class CreateChapters < ActiveRecord::Migration[7.0]
   def change
     create_table :chapters do |t|
       t.string :name, limit: 60

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CreateEnrollments < ActiveRecord::Migration[7.0] # rubocop:disable Style/Documentation
+class CreateEnrollments < ActiveRecord::Migration[7.0]
   def change # rubocop:disable Metrics/MethodLength
     create_table :enrollments do |t|
       t.references :profile, null: false, foreign_key: true

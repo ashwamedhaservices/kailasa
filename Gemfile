@@ -59,8 +59,6 @@ group :development, :test do
   gem 'brakeman'
   # gem 'bullet'
   gem 'bundler-audit'
-  gem 'rubocop'
-  gem 'rubocop-rails', require: false
   gem 'safe_query', '~> 0.1.0'
   # gem 'bullet'
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
