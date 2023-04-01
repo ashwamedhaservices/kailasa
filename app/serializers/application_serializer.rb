@@ -1,3 +1,3 @@
-class ApplicationSerializer # rubocop:disable Style/Documentation
+class ApplicationSerializer
   include JSONAPI::Serializer
 end

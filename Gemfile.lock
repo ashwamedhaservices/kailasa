@@ -69,7 +69,6 @@ GEM
       minitest (>= 5.1)
       tzinfo (~> 2.0)
     ast (2.4.2)
-    bcrypt (3.1.18)
     bootsnap (1.16.0)
       msgpack (~> 1.2)
     brakeman (5.4.1)
@@ -205,6 +204,8 @@ GEM
     spring-watcher-listen (2.0.1)
       listen (>= 2.7, < 4.0)
       spring (>= 1.2, < 3.0)
+    strong_migrations (1.4.4)
+      activerecord (>= 5.2)
     thor (1.2.1)
     timeout (0.3.2)
     tzinfo (2.0.6)
@@ -220,7 +221,6 @@ PLATFORMS
 
 DEPENDENCIES
   aasm (~> 5.1, >= 5.1.1)
-  bcrypt (~> 3.1.7)
   bootsnap (>= 1.1.0)
   brakeman
   bundler-audit
@@ -242,6 +242,7 @@ DEPENDENCIES
   scout_apm
   spring
   spring-watcher-listen (~> 2.0.0)
+  strong_migrations
   tzinfo-data
 
 RUBY VERSION

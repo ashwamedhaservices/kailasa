@@ -52,19 +52,19 @@ gem 'friendly_id', '~> 5.4.0'
 # https://github.com/activemerchant/active_merchant
 # gem 'activemerchant'
 
-
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'rubocop'
-  gem 'rubocop-rails', require: false
   gem 'brakeman'
   gem 'bundler-audit'
+  gem 'rubocop'
+  gem 'rubocop-rails', require: false
   gem 'safe_query', '~> 0.1.0'
   # gem 'bullet'
-  gem 'rack-mini-profiler', '~> 3.0'
-  gem 'meta_request'
-  gem 'scout_apm'
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
+  gem 'meta_request'
+  gem 'rack-mini-profiler', '~> 3.0'
+  gem 'scout_apm'
+  gem 'strong_migrations'
 end
 
 group :development do

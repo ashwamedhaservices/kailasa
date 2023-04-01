@@ -10,7 +10,7 @@ class Api::V1::UsersController < ApplicationController
     @interactor = ::Users::Create::Processor.call(params: create_params)
     if success?
       resp = Api::V1::UserSerializer.new(interactor.user).serializable_hash
-      i8n_msg = 'Verification OTP sent successfully, please verify.'# TODO: i8n_msg
+      i8n_msg = 'Verification OTP sent successfully, please verify.' # TODO: i8n_msg
       render json: success(msg: i8n_msg, data: resp), status: :created
     else
       render json: failure(msg: error, error_code: code), status: :unprocessable_entity
@@ -31,7 +31,7 @@ class Api::V1::UsersController < ApplicationController
   # POST accounts/api/v1/users/login
   # expects phone/email and password
   def login
-    if true #user.authenticate(login_params['password'])
+    if user.authenticate(login_params['password'])
       i8n_msg = 'User logged in successfully'
       render json: success(msg: i8n_msg, data: user_login_resp), status: :ok
     else
@@ -53,8 +53,8 @@ class Api::V1::UsersController < ApplicationController
 
   # POST accounts/api/v1/users/otp_verification
   def otp_verification
-    if Otp.verify!(login_params["otp"], verify_options)
-      i8n_msg =  'Otp verified successfully'
+    if Otp.verify!(login_params['otp'], verify_options)
+      i8n_msg = 'Otp verified successfully'
       render json: success(msg: i8n_msg, data: user_login_resp), status: :ok
     else
       render json: failure(msg: 'Incorrect OTP', error_code: error_code('wrong_otp')), status: :unauthorized
@@ -92,6 +92,6 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def user_login_resp
-    Api::V1::UserSerializer.new(user, params: {issue_token: true}).serializable_hash
+    Api::V1::UserSerializer.new(user, params: { issue_token: true }).serializable_hash
   end
 end

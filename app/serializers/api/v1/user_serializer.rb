@@ -7,11 +7,10 @@ module Api
         user.full_name
       end
 
-      attribute :token, if: Proc.new { |user, params|
+      attribute :token, if: proc { |user, params|
         # We will be creating a session and returning session ID inside token
         user.token if params[:issue_token]
       }
-
     end
   end
 end

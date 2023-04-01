@@ -10,10 +10,10 @@ module AuthorizationHandler
   def authorize_user!
     return render json: failure('Authentication failed', 401), status: :unauthorized unless jwt_token
 
-    @result = Authenticate::Users.call(request,jwt_token)
+    @result = Authenticate::Users.call(request, jwt_token)
     return render json: { status: 'failure', error: payload }, status: :unauthorized unless result.success
 
-    @current_user = User.find(data["id"])
+    @current_user = User.find(data['id'])
   end
 
   def authorize_admin!

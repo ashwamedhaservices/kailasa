@@ -12,7 +12,7 @@ module Users
     def salt_password
       self.salt   =  SecureRandom.hex(8)
       self.iters  =  1000
-      self.passwd = ::Utils::Password.encrypt(password: passwd, salt: salt)
+      self.password = ::Utils::Password.encrypt(password: password, salt: salt)
     end
   end
 end

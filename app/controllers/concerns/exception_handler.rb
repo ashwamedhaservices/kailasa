@@ -15,7 +15,8 @@ module ExceptionHandler
 
   def parameter_missing
     byebug
-    render json: failure(msg: 'Required parameter missing', error_code: error_code('required_params_missing')), status: :forbidden
+    render json: failure(msg: 'Required parameter missing', error_code: error_code('required_params_missing')),
+           status: :forbidden
   end
 
   def record_not_found

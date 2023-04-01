@@ -1,6 +1,4 @@
 class User < ApplicationRecord
-  # has_secure_password
-
   include Users::StateMachine
   include Users::Associatable
   include Users::Validatable
@@ -13,10 +11,10 @@ class User < ApplicationRecord
 
   # TODO: temp action
   def token
-    ::Kailasa::Jwt.encode({id: id, exp: 1.day.from_now.to_i})
+    ::Kailasa::Jwt.encode(id: id, exp: 1.day.from_now.to_i)
   end
 
-  def authenticate(password)
-    ::Utils::Password.encrypt(password: passwd, salt: salt)
+  def authenticate(pass)
+    password.eql? ::Utils::Password.encrypt(password: pass, salt: salt)
   end
 end
