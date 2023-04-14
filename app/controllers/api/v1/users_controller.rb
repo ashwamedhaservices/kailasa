@@ -61,6 +61,15 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
+  # GET accounts/api/v1/users/registered
+  def registered
+    user = User.find_by(mobile_number: params[:mobile_number])
+    return render json: success(msg: 'User not found'), status: :ok unless user
+
+    i8n_msg, code = existing_user_error(user)
+    render json: failure(msg: i8n_msg, code: code), status: :ok
+  end
+
   private
 
   def create_params
@@ -93,5 +102,18 @@ class Api::V1::UsersController < ApplicationController
 
   def user_login_resp
     Api::V1::UserSerializer.new(user, params: { issue_token: true }).serializable_hash
+  end
+
+  def existing_user_error(user)
+    if user.created?
+      Otp.generate!(user, 'login')
+      # send OTP async
+      i8n_msg = 'Mobile number verification pending, please entere otp'
+      code =  error_code('mobile_verification_pending')
+    else
+      i8n_msg = 'Mobile number has already been registered, please login.'
+      code = error_code('mobile_number_taken')
+    end
+    [i8n_msg, code]
   end
 end
