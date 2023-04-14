@@ -15,9 +15,8 @@ module Api
 
       def create
         @course = Course.find(params[:course_id])
-        @subject = Subject.new(params.require(:subject).permit(:name, :description, :image_url))
+        @subject = @course.subjects.new(params.require(:subject).permit(:name, :description, :image_url))
         if @subject.save
-          @course.subjects << @subject
           render json: { status: 'success', data: @subject }, status: :ok
         else
           render json: { status: 'failure', message: subject.errors.full_messages.to_sentence }, status: :bad_request

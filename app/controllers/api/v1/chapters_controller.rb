@@ -14,10 +14,9 @@ module Api
       end
 
       def create
-        @course = Subject.find(params[:subject_id])
-        @chapter = Chapter.new(params.require(:chapter).permit(:name, :description, :image_url))
+        @subject = Subject.find(params[:subject_id])
+        @chapter = subject.chapters.new(params.require(:chapter).permit(:name, :description, :image_url))
         if @chapter.save
-          @course.subjects << @chapter
           render json: { status: 'success', data: @chapter }, status: :ok
         else
           render json: { status: 'failure', message: chapter.errors.full_messages.to_sentence }, status: :bad_request
