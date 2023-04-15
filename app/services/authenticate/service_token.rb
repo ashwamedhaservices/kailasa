@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Authenticate
   class ServiceToken
     REGISTERED_SERVICES = Rails.application.credentials.registered_services
@@ -28,7 +30,7 @@ module Authenticate
         return ServiceResponse.error(msg: 'Authentication failed')
       end
 
-      ServiceResponse.success(data: { 'auth': true })
+      ServiceResponse.success(data: { auth: true })
     end
 
     def registered?

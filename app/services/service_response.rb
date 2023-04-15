@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# ServiceResponse class manages the response convention followed by all the services in the project
 class ServiceResponse
   class << self
     def success(msg: '', data: {})

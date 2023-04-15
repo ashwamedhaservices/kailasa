@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Authenticate
   class Users
     attr_reader :request, :token

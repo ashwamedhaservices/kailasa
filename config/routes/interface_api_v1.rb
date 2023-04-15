@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 scope :referrals do
   namespace :interface do
     namespace :api do

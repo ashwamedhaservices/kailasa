@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 scope :referrals do
   namespace :admin do
     namespace :api do
