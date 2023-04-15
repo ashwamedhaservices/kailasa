@@ -22,6 +22,7 @@ class Api::V1::UsersController < ApplicationController
     # OTP verify logic goes here
     @interactor = ::Users::Verify::Processor.call(params: verify_params.merge(user: user))
     if success?
+      user.mark_verified!
       render json: success(data: user_login_resp), status: :ok
     else
       render json: failure(msg: error, error_code: code), status: :unprocessable_entity
@@ -31,6 +32,8 @@ class Api::V1::UsersController < ApplicationController
   # POST accounts/api/v1/users/login
   # expects phone/email and password
   def login
+    return unverified_user_error if user.created?
+
     if user.authenticate(login_params['password'])
       i8n_msg = 'User logged in successfully'
       render json: success(msg: i8n_msg, data: user_login_resp), status: :ok
@@ -54,6 +57,7 @@ class Api::V1::UsersController < ApplicationController
   # POST accounts/api/v1/users/otp_verification
   def otp_verification
     if Otp.verify!(login_params['otp'], verify_options)
+      user.mark_verified!
       i8n_msg = 'Otp verified successfully'
       render json: success(msg: i8n_msg, data: user_login_resp), status: :ok
     else
@@ -66,8 +70,9 @@ class Api::V1::UsersController < ApplicationController
     user = User.find_by(mobile_number: params[:mobile_number])
     return render json: success(msg: 'User not found'), status: :ok unless user
 
-    i8n_msg, code = existing_user_error(user)
-    render json: failure(msg: i8n_msg, code: code), status: :ok
+    existing_user_error(user)
+    # i8n_msg, code = existing_user_error(user)
+    # render json: failure(msg: i8n_msg, error_code: code), status: :ok
   end
 
   private
@@ -106,14 +111,20 @@ class Api::V1::UsersController < ApplicationController
 
   def existing_user_error(user)
     if user.created?
-      Otp.generate!(user, 'login')
-      # send OTP async
-      i8n_msg = 'Mobile number verification pending, please entere otp'
-      code =  error_code('mobile_verification_pending')
+      unverified_user_error
     else
       i8n_msg = 'Mobile number has already been registered, please login.'
       code = error_code('mobile_number_taken')
+      render json: failure(msg: i8n_msg, error_code: code), status: :ok
     end
-    [i8n_msg, code]
+  end
+
+  def unverified_user_error
+    Otp.generate!(user, 'login')
+    otp = Otp.generate!(user, 'register')
+      # send OTP async
+    i8n_msg = 'Mobile number verification pending, please entere otp'
+    code =  error_code('mobile_verification_pending')
+    render json: failure(msg: i8n_msg, error_code: code, data: {id: user.id}), status: :ok
   end
 end

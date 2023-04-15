@@ -14,24 +14,32 @@ module ExceptionHandler
   private
 
   def parameter_missing
-    byebug
-    render json: failure(msg: 'Required parameter missing', error_code: error_code('required_params_missing')),
-           status: :forbidden
+    i18n_msg = 'Required parameter missing'
+    code = error_code('required_params_missing')
+    render json: failure(msg: i18n_msg, error_code: code), status: :forbidden
   end
 
   def record_not_found
-    render json: failure(msg: 'Record does not exists', error_code: error_code('record_not_found')), status: :not_found
+    i18n_msg = 'Record does not exists'
+    code = error_code('record_not_found')
+    render json: failure(msg: i18n_msg, error_code: code), status: :not_found
   end
 
   def standard_error(_exception)
-    render json: { status: 'failure', data: 'something went wrong' }, status: :internal_server_error
+    i18n_msg = 'something went wrong'
+    code = error_code('standard_error')
+    render json: failure(msg: i18n_msg, error_code: code), status: :internal_server_error
   end
 
   def forbidden
-    render json: { status: 'failure', data: 'invalid request' }, status: :forbidden
+    i18n_msg = 'something went wrong'
+    code = error_code('invalid_request')
+    render json: failure(msg: i18n_msg, error_code: code), status: :forbidden
   end
 
   def unauthorized_request
-    render json: { status: 'failure', data: 'unauthorized' }, status: :unauthorized
+    i18n_msg = 'unauthorized'
+    code = error_code('unauthorized')
+    render json: failure(msg: i18n_msg, error_code: code), status: :unauthorized
   end
 end

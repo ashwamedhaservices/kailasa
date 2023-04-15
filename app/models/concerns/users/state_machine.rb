@@ -9,7 +9,7 @@ module Users
         state :created, initial: true, after_enter: :send_verification_otp
         state :verified, before_enter: :update_referral_code
         state :active, :inactive, :blocked
-        event :verified do
+        event :mark_verified do
           transitions from: :created, to: :verified # , :if => :created?
         end
       end
