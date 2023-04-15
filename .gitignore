@@ -28,6 +28,7 @@
 
 /config/database.yml
 /config/mongoid.yml
+/config/credentials/*
 /config/credentials/development.key
 /config/credentials/staging.key
 

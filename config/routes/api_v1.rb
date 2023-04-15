@@ -9,6 +9,7 @@ scope :accounts do
           post 'login'
           post 'login_otp'
           post 'otp_verification'
+          get 'registered'
         end
       end
     end

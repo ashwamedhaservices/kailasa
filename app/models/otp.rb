@@ -29,6 +29,8 @@ class Otp
 
   def self.verify!(otp_value, options)
     otp = self.otp(options)
+    return false unless otp
+
     value = Rails.env.production? ? otp.value : '111111'
     return otp.update(verified: true) if otp_value.to_s == value
 
