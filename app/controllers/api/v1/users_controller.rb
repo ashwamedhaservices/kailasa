@@ -22,8 +22,8 @@ module Api
         # OTP verify logic goes here
         if user.verified?
           i18n_msg = 'Mobile number already verified pls, login'
-          code = error_code('already_verified_user')
-          render json: failure(msg: error, error_code: code), status: :unprocessable_entity
+          e_code = error_code('already_verified_user')
+          return render json: failure(msg: i18n_msg, error_code: e_code), status: :ok
         end
 
         @interactor = ::Users::Verify::Processor.call(params: verify_params.merge(user: user))
