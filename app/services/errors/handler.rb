@@ -11,6 +11,7 @@ module Errors
       'mobile_number_taken' => 'RE0002', # Register Error
       'mobile_number_blank' => 'RE0003', # Register Error
       'mobile_verification_pending' => 'RE0004', # Register Error
+      'already_verified_user' => 'RE0005',
       'wrong_otp' => 'WD0001', # Wrong Data
       'record_not_found' => 'WD0001', # Wrong Data
       'invalid_credentials' => 'SE0001', # Session Error

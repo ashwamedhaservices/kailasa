@@ -32,7 +32,8 @@ class User < ApplicationRecord
 
   # TODO: temp action
   def token
-    ::Kailasa::Jwt.encode({ id: id, profile_id: profiles.first.id, exp: 1.day.from_now.to_i })
+    # ::Kailasa::Jwt.encode({ id: id, profile_id: profiles.first.id, exp: 1.day.from_now.to_i })
+    ::Kailasa::Jwt.encode({ id: id, exp: 1.day.from_now.to_i })
   end
 
   def authenticate(pass)

@@ -20,6 +20,12 @@ module Api
       # POST accounts/api/v1/users#verify
       def verify
         # OTP verify logic goes here
+        if user.verified?
+          i18n_msg = 'Mobile number already verified pls, login'
+          code = error_code('already_verified_user')
+          render json: failure(msg: error, error_code: code), status: :unprocessable_entity
+        end
+
         @interactor = ::Users::Verify::Processor.call(params: verify_params.merge(user: user))
         if success?
           user.mark_verified!
@@ -120,6 +126,15 @@ module Api
       end
 
       def unverified_user_error
+        Otp.generate!(user, 'login')
+        otp = Otp.generate!(user, 'register')
+          # send OTP async
+        i8n_msg = 'Mobile number verification pending, please entere otp'
+        code =  error_code('mobile_verification_pending')
+        render json: failure(msg: i8n_msg, error_code: code, data: {id: user.id}), status: :ok
+      end
+
+      def verified_user_error
         Otp.generate!(user, 'login')
         otp = Otp.generate!(user, 'register')
           # send OTP async
