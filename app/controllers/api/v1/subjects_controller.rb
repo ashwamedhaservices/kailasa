@@ -19,7 +19,7 @@ module Api
         if @subject.save
           render json: { status: 'success', data: @subject }, status: :ok
         else
-          render json: { status: 'failure', message: subject.errors.full_messages.to_sentence }, status: :bad_request
+          render json: { status: 'failure', message: @subject.errors.full_messages.to_sentence }, status: :bad_request
         end
       end
     end
