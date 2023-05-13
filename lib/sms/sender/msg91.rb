@@ -16,7 +16,7 @@ module Sms
         Rails.logger.debug options
         # TODO
         # @resp = RestHandler.get(url, payload)
-      rescue StandardError => e
+      rescue StandardError
         # logger
         # sentry
       end

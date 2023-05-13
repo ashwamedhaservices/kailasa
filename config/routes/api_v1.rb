@@ -17,6 +17,7 @@ scope :accounts do
 end
 namespace :api do
   namespace :v1 do
+    resources :file_upload, only: %i[create]
     resources :profiles do
       collection do
         get 'dashboard'
@@ -24,7 +25,9 @@ namespace :api do
     end
     resources :courses do
       resources :subjects, shallow: true do
-        resources :chapters, shallow: true
+        resources :chapters, shallow: true do
+          resources :topics, shallow: true
+        end
       end
     end
   end

@@ -15,7 +15,7 @@ module Api
 
       def create
         @subject = Subject.find(params[:subject_id])
-        @chapter = subject.chapters.new(params.require(:chapter).permit(:name, :description, :image_url))
+        @chapter = @subject.chapters.new(params.require(:chapter).permit(:name, :description, :image_url))
         if @chapter.save
           render json: { status: 'success', data: @chapter }, status: :ok
         else

@@ -50,6 +50,9 @@ gem 'jsonapi-serializer'
 # generates friendly id
 gem 'friendly_id', '~> 5.4.0'
 
+# aws
+gem 'aws-sdk-s3'
+
 # Payment gateways -> supports PAYU and HDFC PAYPAL-> INDIA
 # https://github.com/activemerchant/active_merchant
 # gem 'activemerchant'

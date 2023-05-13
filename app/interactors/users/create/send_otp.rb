@@ -8,7 +8,7 @@ module Users
 
       def call
         # sms client trigger sms here
-        otp = Otp.generate!(user, 'register')
+        Otp.generate!(user, 'register')
         # # send async here
       end
     end

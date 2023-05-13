@@ -22,7 +22,7 @@ module Users
     def update_referral_code
       # 59999999 - 59 mn users with 5 char referral code
       Rails.logger.info 'referral code update'
-      referral_code = id.to_s(36).upcase.rjust(5, '0')
+      id.to_s(36).upcase.rjust(5, '0')
       save
     end
 
