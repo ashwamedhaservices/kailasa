@@ -18,7 +18,7 @@ module Errors
       'unauthorized' => 'SE0002', # Session Error
       'invalid_request' => 'RE0001', # request error
       'standard_error' => 'IE0001' # internal error
-    }
+    }.freeze
 
     # TODO
     # CODES.each do |error, code|

@@ -14,12 +14,13 @@ module Api
       end
 
       def create
-        @course = Course.new(params.require(:course)
-        .permit(:name, :description, :image_url, :price, :language, :level, :hours))
+        @course = Course.new(
+          params.require(:course).permit(:name, :description, :image_url, :price, :language, :level, :hours)
+        )
         if @course.save
           render json: { status: 'success', data: @course }, status: :ok
         else
-          render json: { status: 'failure', message: course.errors.full_messages.to_sentence }, status: :bad_request
+          render json: { status: 'failure', message: @course.errors.full_messages.to_sentence }, status: :bad_request
         end
       end
     end

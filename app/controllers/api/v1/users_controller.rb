@@ -127,11 +127,11 @@ module Api
 
       def unverified_user_error
         Otp.generate!(user, 'login')
-        otp = Otp.generate!(user, 'register')
-          # send OTP async
+        Otp.generate!(user, 'register')
+        # send OTP async
         i8n_msg = 'Mobile number verification pending, please entere otp'
         code =  error_code('mobile_verification_pending')
-        render json: failure(msg: i8n_msg, error_code: code, data: {id: user.id}), status: :ok
+        render json: failure(msg: i8n_msg, error_code: code, data: { id: user.id }), status: :ok
       end
     end
   end

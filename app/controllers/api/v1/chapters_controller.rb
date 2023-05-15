@@ -4,7 +4,7 @@ module Api
   module V1
     class ChaptersController < ApplicationController
       def index
-        @chapter = Subject.find(params[:course_id]).chapters
+        @chapter = Subject.find(params[:subject_id]).chapters
         render json: { status: 'success', data: @chapter }, status: :ok
       end
 
@@ -15,11 +15,11 @@ module Api
 
       def create
         @subject = Subject.find(params[:subject_id])
-        @chapter = subject.chapters.new(params.require(:chapter).permit(:name, :description, :image_url))
+        @chapter = @subject.chapters.new(params.require(:chapter).permit(:name, :description, :image_url))
         if @chapter.save
           render json: { status: 'success', data: @chapter }, status: :ok
         else
-          render json: { status: 'failure', message: chapter.errors.full_messages.to_sentence }, status: :bad_request
+          render json: { status: 'failure', message: @chapter.errors.full_messages.to_sentence }, status: :bad_request
         end
       end
     end

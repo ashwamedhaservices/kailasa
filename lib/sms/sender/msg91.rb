@@ -13,10 +13,10 @@ module Sms
       #   template_id: sms_params[:template_id]
       # }
       def call(options)
-        puts options
+        Rails.logger.debug options
         # TODO
         # @resp = RestHandler.get(url, payload)
-      rescue StandardError => e
+      rescue StandardError
         # logger
         # sentry
       end

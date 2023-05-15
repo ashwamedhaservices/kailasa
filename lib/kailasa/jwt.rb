@@ -20,7 +20,7 @@ module Kailasa
       rescue JWT::ExpiredSignature => e
         # Logger("token signer expired: #{e.message}")
         raise e
-      rescue StandardError => e
+      rescue StandardError
         # Logger("unable to decode the token: #{e.message}")
         nil
       end
