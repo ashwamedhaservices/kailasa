@@ -7,7 +7,7 @@ module Profiles
     # associations
     included do
       belongs_to :user
-      has_many :enrollments
+      has_many :enrollments, dependent: :destroy
     end
   end
 end
