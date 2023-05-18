@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-module ::Notifcation
-  class Email
+module ::Notification
+  class WhatsApp
     def trigger; end
 
     private

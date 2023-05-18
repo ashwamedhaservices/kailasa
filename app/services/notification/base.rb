@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module ::Notifcation
+module ::Notification
   class Base
     # class Base
 
