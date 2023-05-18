@@ -4,7 +4,6 @@ module Users
   module CallBackable
     extend ActiveSupport::Concern
 
-    # callbacks
     included do
       before_create :salt_password
     end
@@ -12,9 +11,8 @@ module Users
     private
 
     def salt_password
-      self.salt   =  SecureRandom.hex(8)
-      self.iters  =  1000
-      self.password = ::Utils::Password.encrypt(password: password, salt: salt)
+      self.password_digest = ::Utils::Password.encrypt(password: password_digest,
+                                                       salt: Rails.application.credentials.app.password_salt)
     end
   end
 end

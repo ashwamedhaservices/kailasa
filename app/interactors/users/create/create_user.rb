@@ -8,6 +8,7 @@ module Users
 
       def call
         user = ::User.new(create_attributes)
+        Rails.logger.debug create_attributes
         if user.save
           context.user = user
         else
@@ -21,10 +22,17 @@ module Users
 
       def create_attributes
         {}.tap do |options|
+          options[:fname] = full_name_array.first
+          options[:mname] = full_name_array.slice(1, full_name_array.length - 2).join(' ')
+          options[:lname] = full_name_array.last
           options[:mobile_number] = params[:mobile_number]
-          options[:password] = params[:password]
+          options[:password_digest] = params[:password]
           options[:referred_by] = referred_by if params[:referral_code]
         end
+      end
+
+      def full_name_array
+        @full_name_array ||= params[:full_name].split
       end
 
       def referred_by

@@ -36,7 +36,8 @@ class User < ApplicationRecord
     ::Kailasa::Jwt.encode({ id: id, exp: 1.day.from_now.to_i })
   end
 
-  def authenticate(pass)
-    password.eql? ::Utils::Password.encrypt(password: pass, salt: salt)
+  def authenticate(password)
+    password_digest.eql? ::Utils::Password.encrypt(password: password,
+                                                   salt: Rails.application.credentials.app.password_salt)
   end
 end
