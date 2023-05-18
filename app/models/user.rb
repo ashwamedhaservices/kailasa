@@ -9,6 +9,8 @@
 #  fname           :string(255)
 #  mname           :string(255)
 #  lname           :string(255)
+#  iters           :integer
+#  salt            :string(255)
 #  password_digest :string(255)
 #  email           :string(255)
 #  mobile_number   :string(255)      not null
@@ -33,11 +35,11 @@ class User < ApplicationRecord
   # TODO: temp action
   def token(profile_id = profiles.first.id)
     # ::Kailasa::Jwt.encode({ id: id, profile_id: profiles.first.id, exp: 1.day.from_now.to_i })
-    ::Kailasa::Jwt.encode({ id: id, profile_id: profile_id, exp: 1.day.from_now.to_i })
+    ::Kailasa::Jwt.encode({ id:, profile_id:, exp: 1.day.from_now.to_i })
   end
 
   def authenticate(password)
-    password_digest.eql? ::Utils::Password.encrypt(password: password,
-                                                   salt: Rails.application.credentials.app.password_salt)
+    password_digest.eql? ::Utils::Password.encrypt(password:,
+                                                   salt:)
   end
 end

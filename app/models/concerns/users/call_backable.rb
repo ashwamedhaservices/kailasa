@@ -11,8 +11,9 @@ module Users
     private
 
     def salt_password
-      self.password_digest = ::Utils::Password.encrypt(password: password_digest,
-                                                       salt: Rails.application.credentials.app.password_salt)
+      self.salt = SecureRandom.hex(8)
+      self.iters = 1000
+      self.password_digest = ::Utils::Password.encrypt(password: password_digest, salt:, iters:)
     end
   end
 end

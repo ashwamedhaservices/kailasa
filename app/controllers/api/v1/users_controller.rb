@@ -26,7 +26,7 @@ module Api
           return render json: failure(msg: i18n_msg, error_code: e_code), status: :ok
         end
 
-        @interactor = ::Users::Verify::Processor.call(params: verify_params.merge(user: user))
+        @interactor = ::Users::Verify::Processor.call(params: verify_params.merge(user:))
         if success?
           user.mark_verified!
           render json: success(data: user_login_resp), status: :ok

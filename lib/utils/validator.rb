@@ -3,7 +3,7 @@
 module Utils
   class Validator
     # may be use some gem or move all regexes to a file and load it
-    INDIAN_MOBILE_REGEX = /\A[4-9]{1}[0-9]{9}\z/.freeze
+    INDIAN_MOBILE_REGEX = /\A[4-9]{1}[0-9]{9}\z/
 
     def self.email_valid?(email)
       email_regex = /^([\w-]+(?:\.[\w-]+)*(?:\+[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/

@@ -38,9 +38,9 @@ module Users
 
       def create_attributes
         {
-          fname: full_name_array.first,
-          mname: full_name_array.slice(1, full_name_array.length - 2).join(' '),
-          lname: full_name_array.last,
+          fname: full_name_array.first.camelize,
+          mname: (full_name_array.slice(1, full_name_array.length - 2) || []).join(' ').camelize,
+          lname: full_name_array.last.camelize,
           mobile_number: params[:mobile_number],
           password_digest: params[:password],
           referrer_id: referred_by

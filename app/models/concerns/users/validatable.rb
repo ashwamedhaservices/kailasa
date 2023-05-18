@@ -5,7 +5,7 @@ module Users
     extend ActiveSupport::Concern
     # this format expect password to be atleast 8 char long.
     # atleast 1 digit, 1 lower or upper case charactor
-    PASSWORD_FORMAT = /\A(?=.*\d)(?=.*[a-zA-Z]).{8,}/x.freeze
+    PASSWORD_FORMAT = /\A(?=.*\d)(?=.*[a-zA-Z]).{8,}/x
 
     # PASSWORD_FORMAT = /\A
     #     (?=.{8,})          # Must contain 8 or more characters

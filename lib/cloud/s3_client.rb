@@ -16,7 +16,7 @@ module Cloud
 
     def upload_file(bucket, file_body, s3_object_key)
       s3.put_object({
-                      bucket: bucket,
+                      bucket:,
                       key: s3_object_key,
                       body: file_body,
                       acl: 'private'
@@ -27,7 +27,7 @@ module Cloud
       signer = Aws::S3::Presigner.new(client: s3)
       signer.presigned_url(
         :put_object,
-        bucket: bucket,
+        bucket:,
         key: s3_object_key,
         expires_in: expiration
       )

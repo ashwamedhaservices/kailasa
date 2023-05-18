@@ -9,6 +9,8 @@
 #  fname           :string(255)
 #  mname           :string(255)
 #  lname           :string(255)
+#  iters           :integer
+#  salt            :string(255)
 #  password_digest :string(255)
 #  email           :string(255)
 #  mobile_number   :string(255)      not null

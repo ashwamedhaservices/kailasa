@@ -7,7 +7,7 @@ class ServiceResponse
       OpenStruct.new({
                        success: true,
                        message: msg,
-                       data: data
+                       data:
                      })
     end
 
@@ -15,8 +15,8 @@ class ServiceResponse
       OpenStruct.new({
                        success: false,
                        message: msg,
-                       error_code: error_code,
-                       data: data
+                       error_code:,
+                       data:
                      })
     end
   end

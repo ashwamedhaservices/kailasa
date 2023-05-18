@@ -19,7 +19,7 @@ module Profiles
 
     def response
       {
-        profile: profile,
+        profile:,
         popular_courses: Course.first(5),
         courses: Course.first(5),
         enrollment: profile.enrollments.order(last_active_at: :desc).first(3)
