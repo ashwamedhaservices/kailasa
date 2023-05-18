@@ -31,12 +31,13 @@ class User < ApplicationRecord
   end
 
   # TODO: temp action
-  def token
+  def token(profile_id = profiles.first.id)
     # ::Kailasa::Jwt.encode({ id: id, profile_id: profiles.first.id, exp: 1.day.from_now.to_i })
-    ::Kailasa::Jwt.encode({ id: id, exp: 1.day.from_now.to_i })
+    ::Kailasa::Jwt.encode({ id: id, profile_id: profile_id, exp: 1.day.from_now.to_i })
   end
 
-  def authenticate(pass)
-    password.eql? ::Utils::Password.encrypt(password: pass, salt: salt)
+  def authenticate(password)
+    password_digest.eql? ::Utils::Password.encrypt(password: password,
+                                                   salt: Rails.application.credentials.app.password_salt)
   end
 end

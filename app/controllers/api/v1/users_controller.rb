@@ -84,7 +84,7 @@ module Api
       private
 
       def create_params
-        params.require(:users).permit(:mobile_number, :referral_code, :password)
+        params.require(:users).permit(:full_name, :mobile_number, :referral_code, :password)
       end
 
       def verify_params

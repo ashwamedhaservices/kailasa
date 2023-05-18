@@ -27,7 +27,7 @@ module Users
                 uniqueness: {
                   message: 'has already been registered, please login.'
                 }
-      validates :password,
+      validates :password_digest,
                 presence: true,
                 format: {
                   with: PASSWORD_FORMAT,
