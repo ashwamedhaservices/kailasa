@@ -164,6 +164,8 @@ GEM
     rack (2.2.7)
     rack-contrib (2.3.0)
       rack (~> 2.0)
+    rack-cors (2.0.1)
+      rack (>= 2.0.0)
     rack-mini-profiler (3.1.0)
       rack (>= 1.2.0)
     rack-test (2.1.0)
@@ -262,6 +264,7 @@ DEPENDENCIES
   mongoid
   mysql2
   puma (~> 3.11)
+  rack-cors
   rack-mini-profiler (~> 3.0)
   rails (~> 7.0.4.2)
   rubocop
