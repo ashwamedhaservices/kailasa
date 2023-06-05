@@ -3,8 +3,6 @@
 module Api
   module V1
     class UsersController < ApplicationController
-      before_action :authorize_user!, only: :index
-
       # POST accounts/api/v1/users
       def create
         @interactor = ::Users::Create::Processor.call(params: create_params)

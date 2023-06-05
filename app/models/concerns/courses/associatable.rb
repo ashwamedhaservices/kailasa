@@ -6,8 +6,8 @@ module Courses
 
     # associations
     included do
-      has_many :subjects
-      has_many :enrollments
+      has_many :subjects, dependent: :destroy
+      has_many :enrollments, dependent: :destroy
     end
   end
 end

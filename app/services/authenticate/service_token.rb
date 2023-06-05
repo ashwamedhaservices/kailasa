@@ -2,8 +2,9 @@
 
 module Authenticate
   class ServiceToken
-    REGISTERED_SERVICES = Rails.application.credentials.registered_services
     attr_reader :request
+
+    REGISTERED_SERVICES = Rails.application.credentials.registered_services
 
     def initialize(request)
       @request = request
@@ -22,12 +23,12 @@ module Authenticate
     def authenticate_service
       if auth_token.nil?
         # Kailasa::Logger.error('No Service Authorization header present in the request')
-        return ServiceResponse.error(msg: 'Authentication failed')
+        return ServiceResponse.error(message: 'Authentication failed')
       end
 
       unless registered?
         # Kailasa::Logger.error('Service token is not whitelisted')
-        return ServiceResponse.error(msg: 'Authentication failed')
+        return ServiceResponse.error(message: 'Authentication failed')
       end
 
       ServiceResponse.success(data: { auth: true })

@@ -23,7 +23,7 @@ module Authenticate
       # custom checks to go here
       return ::ServiceResponse.success(data: payload) if payload
 
-      ::ServiceResponse.error(msg: 'Authorization failed')
+      ::ServiceResponse.error(message: 'Authorization failed')
     end
 
     def payload

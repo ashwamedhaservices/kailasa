@@ -20,9 +20,13 @@ module Errors
       'standard_error' => 'IE0001' # internal error
     }.freeze
 
-    # TODO
+    # # TODO
     # CODES.each do |error, code|
-    #   define_singleton_method(error) { |*args| { "code" => code, "description" => error, "message" => args[0] || I18n.t(error) } }
+    #   define_singleton_method(error) do |*args|
+    #     {
+    #       'code' => code, 'description' => error, 'message:' => args[0] || I18n.t(error)
+    #     }
+    #   end
     # end
   end
 end

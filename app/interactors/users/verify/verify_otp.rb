@@ -9,7 +9,8 @@ module Users
       def call
         return if Otp.verify!(params[:otp], verify_options)
 
-        context.fail!(error: 'Invalid OTP entered', code: ::Errors::Handler.code('wrong_otp')) # unless response.success?
+        # unless response.success?
+        context.fail!(error: 'Invalid OTP entered', code: ::Errors::Handler.code('wrong_otp')) 
       end
 
       private

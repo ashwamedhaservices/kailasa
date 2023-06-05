@@ -10,7 +10,7 @@ module Profiles
     end
 
     def call
-      return ::ServiceResponse.error(msg: 'empty profile') unless profile
+      return ::ServiceResponse.error(message: 'empty profile') unless profile
 
       res = response
       Rails.logger.info("response is #{res}")

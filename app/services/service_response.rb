@@ -3,21 +3,12 @@
 # ServiceResponse class manages the response convention followed by all the services in the project
 class ServiceResponse
   class << self
-    def success(msg: '', data: {})
-      OpenStruct.new({
-                       success: true,
-                       message: msg,
-                       data:
-                     })
+    def success(message: '', data: {})
+      Struct.new({ success: true, message:, data: })
     end
 
-    def error(msg: '', error_code: '', data: {})
-      OpenStruct.new({
-                       success: false,
-                       message: msg,
-                       error_code:,
-                       data:
-                     })
+    def error(message: '', error_code: '', data: {})
+      Struct.new({ success: false, message:, error_code:, data: })
     end
   end
 end
