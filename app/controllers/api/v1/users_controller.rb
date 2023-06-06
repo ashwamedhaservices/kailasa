@@ -10,7 +10,7 @@ module Api
         if success?
           resp = Api::V1::UserSerializer.new(interactor.user).serializable_hash
           i8n_msg = 'Verification OTP sent successfully, please verify.' # TODO: i8n_msg
-          render json: success(msg: i8n_msg, data: resp), status: :created
+          render json: success(msg: i8n_msg, data: resp[:data]), status: :created
         else
           render json: failure(msg: error, error_code: code), status: :unprocessable_entity
         end
@@ -55,7 +55,8 @@ module Api
       # POST accounts/api/v1/users/otp_verification
       def otp_verification
         if Otp.verify!(login_params['otp'], verify_options)
-          user.mark_verified!
+          user.mark_verified! if User.last.created?
+
           i8n_msg = 'Otp verified successfully'
           render json: success(msg: i8n_msg, data: user_login_resp), status: :ok
         else

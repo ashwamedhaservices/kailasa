@@ -15,4 +15,6 @@
 #
 class Profile < ApplicationRecord
   include Profiles::Associatable
+
+  enum :status, %i[created deleted]
 end
