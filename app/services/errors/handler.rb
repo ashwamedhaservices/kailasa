@@ -3,7 +3,7 @@
 module Errors
   class Handler
     def self.code(error)
-      CODES[error]
+      CODES[error || 'invalid_request']
     end
 
     CODES = {

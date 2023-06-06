@@ -23,12 +23,12 @@ module Authenticate
     def authenticate_service
       if auth_token.nil?
         # Kailasa::Logger.error('No Service Authorization header present in the request')
-        return ServiceResponse.error(message: 'Authentication failed')
+        return ServiceResponse.error(msg: 'Authentication failed')
       end
 
       unless registered?
         # Kailasa::Logger.error('Service token is not whitelisted')
-        return ServiceResponse.error(message: 'Authentication failed')
+        return ServiceResponse.error(msg: 'Authentication failed')
       end
 
       ServiceResponse.success(data: { auth: true })

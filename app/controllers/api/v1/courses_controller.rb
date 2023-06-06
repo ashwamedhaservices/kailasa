@@ -5,12 +5,12 @@ module Api
     class CoursesController < ApplicationController
       def index
         @course = Course.all
-        render json: { status: 'success', data: @course }, status: :ok
+        render json: success(data: @course), status: :ok
       end
 
       def show
         @course = Course.find(params[:id])
-        render json: { status: 'success', data: @course }, status: :ok
+        render json: success(data: @course), status: :ok
       end
 
       def create
@@ -18,9 +18,9 @@ module Api
           params.require(:course).permit(:name, :description, :image_url, :price, :language, :level, :hours)
         )
         if @course.save
-          render json: { status: 'success', data: @course }, status: :ok
+          render json: success(data: @course), status: :ok
         else
-          render json: { status: 'failure', message: @course.errors.full_messages.to_sentence }, status: :bad_request
+          render json: error(msg: @course.errors.full_messages.to_sentence), status: :bad_request
         end
       end
     end

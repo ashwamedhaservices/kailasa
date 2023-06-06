@@ -3,6 +3,7 @@
 module Api
   module V1
     class UsersController < ApplicationController
+      before_action :authorize_user!, except: %i[create verify login login_otp otp_verification registered]
       # POST accounts/api/v1/users
       def create
         @interactor = ::Users::Create::Processor.call(params: create_params)
@@ -36,7 +37,7 @@ module Api
           render json: success(msg: i8n_msg, data: user_login_resp), status: :ok
         else
           i18n_msg = 'Wrong Mobile number or Password entered'
-          code = error_code('invalid_credentials')
+          code = errors_code('invalid_credentials')
           render json: failure(msg: i18n_msg, error_code: code), status: :unauthorized
         end
       end
@@ -58,7 +59,7 @@ module Api
           i8n_msg = 'Otp verified successfully'
           render json: success(msg: i8n_msg, data: user_login_resp), status: :ok
         else
-          render json: failure(msg: 'Incorrect OTP', error_code: error_code('wrong_otp')), status: :unauthorized
+          render json: failure(msg: 'Incorrect OTP', error_code: errors_code('wrong_otp')), status: :unauthorized
         end
       end
 
@@ -111,13 +112,13 @@ module Api
           unverified_user_error
         else
           i8n_msg = 'Mobile number has already been registered, please login.'
-          code = error_code('mobile_number_taken')
+          code = errors_code('mobile_number_taken')
           render json: failure(msg: i8n_msg, error_code: code), status: :ok
         end
       end
 
       def verified_user_error
-        failure(msg: 'Mobile number already verified pls, login', error_code: error_code('already_verified_user'))
+        failure(msg: 'Mobile number already verified pls, login', error_code: errors_code('already_verified_user'))
       end
 
       def unverified_user_error
@@ -125,7 +126,7 @@ module Api
         Otp.generate!(user, 'register')
         # send OTP async
         i8n_msg = 'Mobile number verification pending, please entere otp'
-        code =  error_code('mobile_verification_pending')
+        code =  errors_code('mobile_verification_pending')
         render json: failure(msg: i8n_msg, error_code: code, data: { id: user.id }), status: :ok
       end
     end

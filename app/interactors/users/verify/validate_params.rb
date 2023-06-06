@@ -11,7 +11,7 @@ module Users
         context.user = params[:user]
       end
 
-      def error_code(error: 'required_params_missing')
+      def errors_code(error: 'required_params_missing')
         ::Errors::Handler.code(error)
       end
     end
