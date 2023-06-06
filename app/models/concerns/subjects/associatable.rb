@@ -7,7 +7,7 @@ module Subjects
     # associations
     included do
       belongs_to :course
-      has_many :chapters, dependent: :destroy
+      has_many :chapters, dependent: :restrict_with_error
     end
   end
 end

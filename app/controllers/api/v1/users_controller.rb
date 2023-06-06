@@ -18,19 +18,12 @@ module Api
       # POST accounts/api/v1/users#verify
       def verify
         # OTP verify logic goes here
-        if user.verified?
-          i18n_msg = 'Mobile number already verified pls, login'
-          e_code = error_code('already_verified_user')
-          return render json: failure(msg: i18n_msg, error_code: e_code), status: :ok
-        end
+        return render json: verified_user_error, status: :ok if user.verified?
 
         @interactor = ::Users::Verify::Processor.call(params: verify_params.merge(user:))
-        if success?
-          user.mark_verified!
-          render json: success(data: user_login_resp), status: :ok
-        else
-          render json: failure(msg: error, error_code: code), status: :unprocessable_entity
-        end
+        return render json: success(data: user_login_resp), status: :ok if success?
+
+        render json: failure(msg: error, error_code: code), status: :unprocessable_entity
       end
 
       # POST accounts/api/v1/users/login
@@ -121,6 +114,10 @@ module Api
           code = error_code('mobile_number_taken')
           render json: failure(msg: i8n_msg, error_code: code), status: :ok
         end
+      end
+
+      def verified_user_error
+        failure(msg: 'Mobile number already verified pls, login', error_code: error_code('already_verified_user'))
       end
 
       def unverified_user_error

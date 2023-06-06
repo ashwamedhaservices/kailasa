@@ -7,7 +7,7 @@ module Chapters
     # associations
     included do
       belongs_to :subject
-      has_many :topics, dependent: :destroy
+      has_many :topics, dependent: :restrict_with_error
     end
   end
 end

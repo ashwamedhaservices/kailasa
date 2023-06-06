@@ -17,7 +17,8 @@ module Errors
       'invalid_credentials' => 'SE0001', # Session Error
       'unauthorized' => 'SE0002', # Session Error
       'invalid_request' => 'RE0001', # request error
-      'standard_error' => 'IE0001' # internal error
+      'standard_error' => 'IE0001', # internal error
+      'user_verification_failed' => 'IE0002' # internal error
     }.freeze
 
     # # TODO
