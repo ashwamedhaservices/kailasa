@@ -21,7 +21,7 @@ module Api
         if @topic.save
           render json: success(data: @topic), status: :ok
         else
-          render json: error(msg: @topic.errors.full_messages.to_sentence), status: :bad_request
+          render json: failure(msg: @topic.errors.full_messages.to_sentence), status: :bad_request
         end
       end
     end

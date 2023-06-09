@@ -7,7 +7,6 @@ module Enrollments
     # associations
     included do
       belongs_to :profile
-      belongs_to :course
       belongs_to :topic
     end
   end

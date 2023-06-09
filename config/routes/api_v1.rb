@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/BlockLength
 # frozen_string_literal: true
 
 namespace :api do
@@ -20,9 +21,13 @@ namespace :api do
     resources :courses do
       resources :subjects, shallow: true do
         resources :chapters, shallow: true do
-          resources :topics, shallow: true
+          resources :topics, shallow: true do
+            resources :enrollments, shallow: true
+          end
         end
       end
     end
   end
 end
+
+# rubocop:enable Metrics/BlockLength

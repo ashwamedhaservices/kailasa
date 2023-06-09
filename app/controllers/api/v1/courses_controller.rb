@@ -20,7 +20,7 @@ module Api
         if @course.save
           render json: success(data: @course), status: :ok
         else
-          render json: error(msg: @course.errors.full_messages.to_sentence), status: :bad_request
+          render json: failure(msg: @course.errors.full_messages.to_sentence), status: :bad_request
         end
       end
     end
