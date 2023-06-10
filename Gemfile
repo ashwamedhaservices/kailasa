@@ -57,6 +57,8 @@ gem 'aws-sdk-s3'
 # https://github.com/activemerchant/active_merchant
 # gem 'activemerchant'
 
+gem 'strong_migrations'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'brakeman'
@@ -68,7 +70,6 @@ group :development, :test do
   gem 'meta_request'
   gem 'rack-mini-profiler', '~> 3.0'
   gem 'scout_apm'
-  gem 'strong_migrations'
 end
 
 group :development do
