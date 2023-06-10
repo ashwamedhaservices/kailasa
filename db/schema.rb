@@ -41,7 +41,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_01_121741) do
     t.bigint "topic_id", null: false
     t.integer "status", limit: 1, default: 0
     t.float "percentage_completion"
-    t.time "video_timestamp"
+    t.string "video_timestamp"
     t.datetime "enrolled_at"
     t.datetime "last_active_at"
     t.datetime "created_at", null: false
