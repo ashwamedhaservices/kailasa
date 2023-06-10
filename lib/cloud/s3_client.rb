@@ -26,7 +26,7 @@ module Cloud
     def presigned_url(bucket, s3_object_key, expiration = nil)
       signer = Aws::S3::Presigner.new(client: s3)
       signer.presigned_url(
-        :put,
+        :put_object,
         bucket:,
         key: s3_object_key,
         expires_in: expiration,

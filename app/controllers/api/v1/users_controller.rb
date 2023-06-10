@@ -105,7 +105,7 @@ module Api
       end
 
       def user_login_resp
-        Api::V1::UserSerializer.new(user, params: { issue_token: true }).serializable_hash
+        Api::V1::UserSerializer.new(user, params: { issue_token: true }).serializable_hash[:data]
       end
 
       def existing_user_error(user)
