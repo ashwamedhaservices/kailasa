@@ -23,6 +23,15 @@ module Api
         end
       end
 
+      def update
+        @topic = Topic.find(params[:id])
+        if @topic.update(topic_update_params)
+          render json: success(data: @topic), status: :ok
+        else
+          render json: failure(msg: @topic.errors.full_messages.to_sentence), status: :bad_request
+        end
+      end
+
       private
 
       def generate_topic
@@ -34,6 +43,10 @@ module Api
         @topic_create_params ||= params
                                  .require(:topic)
                                  .permit(:name, :description, :image_url, :video_url, :content_url, :video_duration)
+      end
+
+      def topic_update_params
+        params.require(:topic).permit(:name, :description, :image_url, :video_url, :content_url, :video_duration)
       end
     end
   end
