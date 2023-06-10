@@ -9,7 +9,7 @@
 #  topic_id              :bigint           not null
 #  status                :integer          default("enrolled")
 #  percentage_completion :float(24)
-#  video_timestamp       :string(255)
+#  current_timestamp     :bigint
 #  enrolled_at           :datetime
 #  last_active_at        :datetime
 #  created_at            :datetime         not null
