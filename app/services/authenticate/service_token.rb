@@ -2,8 +2,9 @@
 
 module Authenticate
   class ServiceToken
-    REGISTERED_SERVICES = Rails.application.credentials.registered_services
     attr_reader :request
+
+    REGISTERED_SERVICES = Rails.application.credentials.registered_services
 
     def initialize(request)
       @request = request

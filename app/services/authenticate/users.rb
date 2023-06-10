@@ -21,9 +21,9 @@ module Authenticate
 
     def authenticate
       # custom checks to go here
-      return ::ServiceResponse.success(data: payload) if payload
+      return ServiceResponse.success(data: payload) if payload
 
-      ::ServiceResponse.error(msg: 'Authorization failed')
+      ServiceResponse.error(msg: 'Authorization failed')
     end
 
     def payload

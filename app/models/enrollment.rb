@@ -6,11 +6,10 @@
 #
 #  id                    :bigint           not null, primary key
 #  profile_id            :bigint           not null
-#  course_id             :bigint           not null
 #  topic_id              :bigint           not null
-#  status                :integer          default(0)
+#  status                :integer          default("enrolled")
 #  percentage_completion :float(24)
-#  video_timestamp       :datetime
+#  current_timestamp     :bigint
 #  enrolled_at           :datetime
 #  last_active_at        :datetime
 #  created_at            :datetime         not null
@@ -18,4 +17,6 @@
 #
 class Enrollment < ApplicationRecord
   include Enrollments::Associatable
+
+  enum :status, %i[enrolled active]
 end

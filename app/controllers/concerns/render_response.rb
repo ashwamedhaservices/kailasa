@@ -11,7 +11,7 @@ module RenderResponse
     {
       success: true,
       message: msg,
-      data: data[:data] || data
+      data:
     }
   end
 
@@ -24,7 +24,7 @@ module RenderResponse
     }
   end
 
-  def error_code(error)
+  def errors_code(error)
     ::Errors::Handler.code(error)
   end
 end

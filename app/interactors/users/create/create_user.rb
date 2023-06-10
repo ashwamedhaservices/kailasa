@@ -6,12 +6,12 @@ module Users
       include Interactor
       delegate :params, to: :context
 
-      def call
+      def call # rubocop:disable Metrics/AbcSize
         error = create_user_and_profile
         if error
           context.fail!(
             error: user.errors.full_messages.to_sentence,
-            ode: ::Errors::Handler.code("#{error.first.attribute}_#{error.first.type}")
+            code: ::Errors::Handler.code("#{error.first.attribute}_#{error.first.type}")
           )
         end
         context.user = user
@@ -36,15 +36,15 @@ module Users
         @profile ||= user.profiles.build(name: 'Default')
       end
 
-      def create_attributes
-        {
-          fname: full_name_array.first.camelize,
-          mname: (full_name_array.slice(1, full_name_array.length - 2) || []).join(' ').camelize,
-          lname: full_name_array.last.camelize,
-          mobile_number: params[:mobile_number],
-          password_digest: params[:password],
-          referrer_id: referred_by
-        }
+      def create_attributes # rubocop:disable Metrics/AbcSize
+        {}.tap do |ca|
+          ca[:fname] = full_name_array.first.camelize
+          ca[:mname] =  (full_name_array.slice(1, full_name_array.length - 2) || []).join(' ').camelize
+          ca[:lname] =  full_name_array.last.camelize
+          ca[:mobile_number] = params[:mobile_number]
+          ca[:password_digest] = params[:password]
+          ca[:referrer_id] = referred_by
+        end
       end
 
       def full_name_array

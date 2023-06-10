@@ -4,20 +4,46 @@
 class ServiceResponse
   class << self
     def success(msg: '', data: {})
-      OpenStruct.new({
-                       success: true,
-                       message: msg,
-                       data:
-                     })
+      Success.new(true, msg, data)
     end
 
-    def error(msg: '', error_code: '', data: {})
-      OpenStruct.new({
-                       success: false,
-                       message: msg,
-                       error_code:,
-                       data:
-                     })
+    def error(msg: '', code: '', data: {})
+      Error.new(false, msg, code, data)
+    end
+    Success = Struct.new(:success, :message, :body) do
+      def success?
+        true
+      end
+
+      def msg
+        message
+      end
+
+      def code
+        nil
+      end
+
+      def data
+        body
+      end
+    end
+
+    Error = Struct.new(:success, :message, :code, :body) do
+      def success?
+        false
+      end
+
+      def msg
+        message
+      end
+
+      def error_code
+        code
+      end
+
+      def data
+        body
+      end
     end
   end
 end

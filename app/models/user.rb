@@ -39,7 +39,6 @@ class User < ApplicationRecord
   end
 
   def authenticate(password)
-    password_digest.eql? ::Utils::Password.encrypt(password:,
-                                                   salt:)
+    password_digest.eql? ::Utils::Password.encrypt(password:, salt:)
   end
 end

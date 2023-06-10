@@ -7,6 +7,7 @@ module Topics
     # associations
     included do
       belongs_to :chapter
+      has_many :enrollments, dependent: :restrict_with_error
     end
   end
 end

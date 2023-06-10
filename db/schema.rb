@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_01_121741) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_10_081020) do
   create_table "chapters", charset: "utf8mb3", force: :cascade do |t|
     t.string "name", limit: 60
     t.string "description"
@@ -38,16 +38,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_01_121741) do
 
   create_table "enrollments", charset: "utf8mb3", force: :cascade do |t|
     t.bigint "profile_id", null: false
-    t.bigint "course_id", null: false
     t.bigint "topic_id", null: false
     t.integer "status", limit: 1, default: 0
     t.float "percentage_completion"
-    t.datetime "video_timestamp"
+    t.bigint "current_timestamp"
     t.datetime "enrolled_at"
     t.datetime "last_active_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["course_id"], name: "index_enrollments_on_course_id"
+    t.index ["profile_id", "topic_id"], name: "index_enrollments_on_profile_id_and_topic_id", unique: true
     t.index ["profile_id"], name: "index_enrollments_on_profile_id"
     t.index ["topic_id"], name: "index_enrollments_on_topic_id"
   end
@@ -82,6 +81,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_01_121741) do
     t.bigint "chapter_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "video_duration"
+    t.string "streaming_url"
     t.index ["chapter_id"], name: "index_topics_on_chapter_id"
   end
 
@@ -107,7 +108,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_01_121741) do
   end
 
   add_foreign_key "chapters", "subjects"
-  add_foreign_key "enrollments", "courses"
   add_foreign_key "enrollments", "profiles"
   add_foreign_key "enrollments", "topics"
   add_foreign_key "profiles", "users"
