@@ -4,7 +4,7 @@ module Api
   module V1
     class ProfilesController < ApplicationController
       def dashboard
-        @result = Profiles::DashboardService.new(current_profile).call
+        @result = Profiles::DashboardService.new(current_user, current_profile).call
         Rails.logger.info("this is data #{result}")
         return render json: success(data:), status: :ok if success?
 

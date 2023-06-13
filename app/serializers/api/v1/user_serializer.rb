@@ -3,7 +3,7 @@
 module Api
   module V1
     class UserSerializer < ApplicationSerializer
-      attribute :id
+      attribute :id, :referral_code, :type
 
       attribute :full_name, &:full_name
 

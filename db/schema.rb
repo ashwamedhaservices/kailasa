@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_10_081020) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_12_180209) do
   create_table "chapters", charset: "utf8mb3", force: :cascade do |t|
     t.string "name", limit: 60
     t.string "description"
@@ -83,6 +83,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_10_081020) do
     t.datetime "updated_at", null: false
     t.bigint "video_duration"
     t.string "streaming_url"
+    t.bigint "author_id"
+    t.index ["author_id"], name: "index_topics_on_author_id"
     t.index ["chapter_id"], name: "index_topics_on_chapter_id"
   end
 
@@ -97,7 +99,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_10_081020) do
     t.string "email"
     t.string "mobile_number", null: false
     t.string "state"
-    t.string "type"
+    t.integer "type", limit: 1
     t.string "referral_code"
     t.bigint "referrer_id"
     t.datetime "created_at", null: false
@@ -113,5 +115,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_10_081020) do
   add_foreign_key "profiles", "users"
   add_foreign_key "subjects", "courses"
   add_foreign_key "topics", "chapters"
+  add_foreign_key "topics", "users", column: "author_id"
   add_foreign_key "users", "users", column: "referrer_id"
 end

@@ -36,6 +36,7 @@ module Api
 
       def generate_topic
         @topic = @chapter.topics.new(topic_create_params)
+        @topic.author_id = current_user.id
         @topic.streaming_url = topic_create_params[:video_url].split('.').insert(2, 'cdn').join('.')
       end
 

@@ -15,6 +15,7 @@
 #  updated_at     :datetime         not null
 #  video_duration :bigint
 #  streaming_url  :string(255)
+#  author_id      :bigint
 #
 require 'test_helper'
 

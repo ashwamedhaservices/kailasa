@@ -3,14 +3,16 @@
 module Profiles
   # service to generate information visible on profile dashboard
   class DashboardService
-    attr_reader :profile
+    attr_reader :user, :profile
 
-    def initialize(profile)
+    def initialize(user, profile)
+      @user = user
       @profile = profile
     end
 
     def call
       return ServiceResponse.error(msg: 'empty profile') unless profile
+      return ServiceResponse.error(msg: 'empty user') unless profile
 
       res = response
       Rails.logger.info("response is #{res}")
@@ -19,6 +21,7 @@ module Profiles
 
     def response
       {
+        user: Api::V1::UserSerializer.new(user).serializable_hash.dig(:data, :attributes),
         profile:,
         popular_courses: Course.first(5),
         courses: all_courses_by_level,

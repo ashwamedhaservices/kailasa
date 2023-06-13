@@ -15,7 +15,7 @@
 #  email           :string(255)
 #  mobile_number   :string(255)      not null
 #  state           :string(255)
-#  type            :string(255)
+#  type            :integer
 #  referral_code   :string(255)
 #  referrer_id     :bigint
 #  created_at      :datetime         not null
@@ -26,6 +26,8 @@ class User < ApplicationRecord
   include Users::Associatable
   include Users::Validatable
   include Users::CallBackable
+
+  enum :type, %i[customer admin super_admin author student]
 
   def full_name
     name = "#{fname} #{mname} #{lname}"

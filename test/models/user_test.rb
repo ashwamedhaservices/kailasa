@@ -15,7 +15,7 @@
 #  email           :string(255)
 #  mobile_number   :string(255)      not null
 #  state           :string(255)
-#  type            :string(255)
+#  type            :integer
 #  referral_code   :string(255)
 #  referrer_id     :bigint
 #  created_at      :datetime         not null

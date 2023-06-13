@@ -43,7 +43,9 @@ module Users
           ca[:lname] =  full_name_array.last.camelize
           ca[:mobile_number] = params[:mobile_number]
           ca[:password_digest] = params[:password]
+          ca[:type] = 'student'
           ca[:referrer_id] = referred_by
+          ca[:referral_code] = Users::ReferralCodeGenerator.call
         end
       end
 
@@ -52,11 +54,12 @@ module Users
       end
 
       def referred_by
-        # sentry
         return nil unless params[:referral_code]
 
-        user_id = params[:referral_code].downcase.to_i(36)
-        ::User.exists?(user_id) ? user_id : nil
+        referr = ::User.find_by(referral_code: params[:referral_code])
+        return referr.id if referr
+
+        nil
       end
     end
   end
