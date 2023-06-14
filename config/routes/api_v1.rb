@@ -3,6 +3,8 @@
 
 namespace :api do
   namespace :v1 do
+    resources :referrals, only: %i[index]
+
     resources :users, only: %i[create index show] do
       collection do
         post 'verify'

@@ -36,7 +36,7 @@ module Users
         @profile ||= user.profiles.build(name: 'Default')
       end
 
-      def create_attributes # rubocop:disable Metrics/AbcSize
+      def create_attributes # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
         {}.tap do |ca|
           ca[:fname] = full_name_array.first.camelize
           ca[:mname] =  (full_name_array.slice(1, full_name_array.length - 2) || []).join(' ').camelize
@@ -46,6 +46,7 @@ module Users
           ca[:type] = 'student'
           ca[:referrer_id] = referred_by
           ca[:referral_code] = Users::ReferralCodeGenerator.call
+          ca[:state] = :verified # TODO: remove later once otp is working
         end
       end
 

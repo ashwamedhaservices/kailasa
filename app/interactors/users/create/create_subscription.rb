@@ -7,7 +7,25 @@ module Users
       delegate :user, to: :context
 
       def call
-        Subscriptions::ActivateTrial.call
+        subscription_status_change_fail unless activate_trial.success?
+
+        user.subscribed = true
+        user_subscription_status_change_fail unless user.save
+      end
+
+      private
+
+      def activate_trial
+        @activate_trial ||= Subscriptions::ActivateTrial.call(user)
+      end
+
+      def subscription_status_change_fail
+        context.fail!(error: activate_trial.msg, code: ::Errors::Handler.code('subscription_change_failed'))
+      end
+
+      def user_subscription_status_change_fail
+        context.fail!(error: user.errors.full_messages.to_sentence,
+                      code: ::Errors::Handler.code('subscription_change_failed'))
       end
     end
   end
