@@ -10,11 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_13_200020) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_14_201754) do
   create_table "chapters", charset: "utf8mb3", force: :cascade do |t|
     t.string "name", limit: 60
     t.string "description"
     t.string "image_url"
+    t.string "photo_url"
     t.bigint "subject_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -25,6 +26,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_13_200020) do
     t.string "name", limit: 60
     t.string "description"
     t.string "image_url"
+    t.string "photo_url"
     t.integer "status", limit: 1, default: 0
     t.decimal "price", precision: 10
     t.integer "language", limit: 2, default: 0
@@ -66,6 +68,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_13_200020) do
     t.string "name", limit: 60
     t.string "description"
     t.string "image_url"
+    t.string "photo_url"
     t.bigint "course_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -87,6 +90,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_13_200020) do
     t.string "name", limit: 60
     t.string "description"
     t.string "image_url"
+    t.string "photo_url"
     t.string "video_url"
     t.string "content_url"
     t.bigint "chapter_id", null: false

@@ -1,0 +1,23 @@
+<!-- app/views/api/v1/referrals/index.html.erb -->
+<h1>Create Referral</h1>
+
+<%= form_with url: 'create_referral_path', method: :post do |form| %>
+  <div>
+    <%= form.label :full_name, 'Full Name:' %>
+    <%= form.text_field :full_name %>
+  </div>
+
+  <div>
+    <%= form.label :phone_number, 'Phone Number:' %>
+    <%= form.text_field :phone_number %>
+  </div>
+
+  <div>
+    <%= form.label :password, 'Password:' %>
+    <%= form.password_field :password %>
+  </div>
+
+  <%= form.hidden_field :referral_code, value: @referral_code %>
+
+  <%= form.submit 'Create Referral' %>
+<% end %>

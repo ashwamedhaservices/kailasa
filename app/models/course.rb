@@ -8,6 +8,7 @@
 #  name        :string(60)
 #  description :string(255)
 #  image_url   :string(255)
+#  photo_url   :string(255)
 #  status      :integer          default("created")
 #  price       :decimal(10, )
 #  language    :integer          default("unspecified")

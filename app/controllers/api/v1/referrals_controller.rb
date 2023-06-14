@@ -6,7 +6,9 @@ module Api
       before_action :authorize_user!, except: %i[index]
 
       def index
-        Rails.logger.info("logs check #{params[:referral_code]}")
+        Rails.logger.info('controller')
+        @referral_code = params[:referral_code]
+        render_to_string
       end
     end
   end

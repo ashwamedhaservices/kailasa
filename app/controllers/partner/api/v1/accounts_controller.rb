@@ -32,7 +32,7 @@ module Partner
         def index
           # TODO: this should be devided into payout service and network service
           resp = payout_info.merge(performance_info)
-          render json: resp, status: :ok
+          render json: success(data: resp), status: :ok
         end
 
         # GET /partner/api/v1/accounts/partners
