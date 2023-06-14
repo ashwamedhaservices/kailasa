@@ -5,7 +5,7 @@ module Users
     class Processor
       include Interactor::Organizer
 
-      organize ValidateParams, CreateUser, SendOtp
+      organize ValidateParams, CreateUser, SendOtp, CreateSubscription
     end
   end
 end

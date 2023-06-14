@@ -20,8 +20,10 @@
 #  referrer_id     :bigint
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
+#  subscribed      :boolean          default(FALSE), not null
 #
 class User < ApplicationRecord
+  self.inheritance_column = nil
   include Users::StateMachine
   include Users::Associatable
   include Users::Validatable

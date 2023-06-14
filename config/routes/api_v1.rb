@@ -10,6 +10,7 @@ namespace :api do
         post 'login_otp'
         post 'otp_verification'
         get 'registered'
+        get 'subscribed'
       end
     end
     resources :file_upload, only: %i[create]

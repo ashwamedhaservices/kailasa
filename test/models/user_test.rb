@@ -20,6 +20,7 @@
 #  referrer_id     :bigint
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
+#  subscribed      :boolean          default(FALSE), not null
 #
 require 'test_helper'
 

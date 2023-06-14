@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_12_180209) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_13_200020) do
   create_table "chapters", charset: "utf8mb3", force: :cascade do |t|
     t.string "name", limit: 60
     t.string "description"
@@ -72,6 +72,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_12_180209) do
     t.index ["course_id"], name: "index_subjects_on_course_id"
   end
 
+  create_table "subscriptions", charset: "utf8mb3", force: :cascade do |t|
+    t.integer "status", limit: 1, default: 0
+    t.integer "kind", limit: 1, default: 0
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_subscriptions_on_user_id"
+  end
+
   create_table "topics", charset: "utf8mb3", force: :cascade do |t|
     t.string "name", limit: 60
     t.string "description"
@@ -104,9 +115,20 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_12_180209) do
     t.bigint "referrer_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "subscribed", default: false, null: false
     t.index ["mobile_number"], name: "index_users_on_mobile_number", unique: true
     t.index ["referrer_id"], name: "index_users_on_referrer_id"
     t.index ["state"], name: "index_users_on_state"
+  end
+
+  create_table "versions", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+    t.string "item_type", limit: 191, null: false
+    t.bigint "item_id", null: false
+    t.string "event", null: false
+    t.string "whodunnit"
+    t.text "object", size: :long
+    t.datetime "created_at"
+    t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 
   add_foreign_key "chapters", "subjects"
@@ -114,6 +136,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_12_180209) do
   add_foreign_key "enrollments", "topics"
   add_foreign_key "profiles", "users"
   add_foreign_key "subjects", "courses"
+  add_foreign_key "subscriptions", "users"
   add_foreign_key "topics", "chapters"
   add_foreign_key "topics", "users", column: "author_id"
   add_foreign_key "users", "users", column: "referrer_id"

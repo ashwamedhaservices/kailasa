@@ -30,6 +30,7 @@ module Kailasa
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
     config.eager_load_paths << config.root.join('lib')
+    config.payouts = config_for(:payouts)
     config.generators do |g|
       g.orm :active_record
     end

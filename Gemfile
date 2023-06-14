@@ -57,6 +57,7 @@ gem 'aws-sdk-s3'
 # https://github.com/activemerchant/active_merchant
 # gem 'activemerchant'
 
+gem 'paper_trail'
 gem 'strong_migrations'
 
 group :development, :test do

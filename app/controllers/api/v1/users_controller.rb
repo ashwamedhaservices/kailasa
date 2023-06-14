@@ -74,6 +74,10 @@ module Api
         # render json: failure(msg: i8n_msg, error_code: code), status: :ok
       end
 
+      def subscribed
+        render json: success(data: current_user.subscribed), status: :ok
+      end
+
       private
 
       def create_params
@@ -126,7 +130,7 @@ module Api
         Otp.generate!(user, 'login')
         Otp.generate!(user, 'register')
         # send OTP async
-        i8n_msg = 'Mobile number verification pending, please entere otp'
+        i8n_msg = 'Mobile number verification pending, please enter otp'
         code =  errors_code('mobile_verification_pending')
         render json: failure(msg: i8n_msg, error_code: code, data: { id: user.id }), status: :ok
       end

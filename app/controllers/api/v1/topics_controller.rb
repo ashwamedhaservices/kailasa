@@ -4,8 +4,8 @@ module Api
   module V1
     class TopicsController < ApplicationController
       def index
-        @topic = Chapter.find(params[:chapter_id]).topics
-        render json: success(data: @topic), status: :ok
+        @topics = Chapter.find(params[:chapter_id]).topics
+        render json: success(data: @topics), status: :ok
       end
 
       def show

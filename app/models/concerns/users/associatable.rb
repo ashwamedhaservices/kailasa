@@ -11,6 +11,7 @@ module Users
       belongs_to :referrer, class_name: 'User', optional: true
       has_many :profiles, dependent: :restrict_with_error
       has_many :enrollments, dependent: :restrict_with_error
+      has_one :subscription, dependent: :restrict_with_error
     end
   end
 end

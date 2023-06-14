@@ -54,12 +54,7 @@ module Users
       end
 
       def referred_by
-        return nil unless params[:referral_code]
-
-        referr = ::User.find_by(referral_code: params[:referral_code])
-        return referr.id if referr
-
-        nil
+        Users::Refer.call(params[:referral_code])
       end
     end
   end
