@@ -45,4 +45,8 @@ class User < ApplicationRecord
   def authenticate(password)
     password_digest.eql? ::Utils::Password.encrypt(password:, salt:)
   end
+
+  def referral_url
+    "https://sea-turtle-app-ncn9d.ondigitalocean.app/?referral_code=#{referral_code}"
+  end
 end

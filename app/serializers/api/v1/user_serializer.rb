@@ -7,6 +7,8 @@ module Api
 
       attribute :full_name, &:full_name
 
+      attribute :referral_url, &:referral_url
+
       attribute :token, if: proc { |user, params|
         # We will be creating a session and returning session ID inside token
         user.token if params[:issue_token]
