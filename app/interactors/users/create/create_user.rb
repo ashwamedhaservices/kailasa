@@ -14,6 +14,7 @@ module Users
             code: ::Errors::Handler.code("#{error.first.attribute}_#{error.first.type}")
           )
         end
+        credit_referral_reward
         context.user = user
         context.profile = profile
       end
@@ -56,6 +57,10 @@ module Users
 
       def referred_by
         Users::Refer.call(params[:referral_code])
+      end
+
+      def credit_referral_reward
+        ::Referral::Credit::Processor.call(user)
       end
     end
   end

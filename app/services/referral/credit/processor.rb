@@ -25,12 +25,13 @@ module Referral
         ReferralCredit.create credits
       end
 
-      def build_credit(referrer, level)
+      def build_credit(referrer, level) # rubocop:disable Metrics/AbcSize
         {}.tap do |credit|
           credit[:amount] = configs[:bv_value] * configs[:level_payout][level]
           credit[:user_id] = referrer.id
           credit[:level] = level
           credit[:type] = ReferralCredit::ReferralType::PARTNER
+          credit[:date] = DateTime.current
           credit[:subscribed_user_id] = user.id
         end
       end
