@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_14_201754) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_25_084609) do
   create_table "chapters", charset: "utf8mb3", force: :cascade do |t|
     t.string "name", limit: 60
     t.string "description"
@@ -51,6 +51,38 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_14_201754) do
     t.index ["profile_id", "topic_id"], name: "index_enrollments_on_profile_id_and_topic_id", unique: true
     t.index ["profile_id"], name: "index_enrollments_on_profile_id"
     t.index ["topic_id"], name: "index_enrollments_on_topic_id"
+  end
+
+  create_table "payment_gateways", charset: "utf8mb3", force: :cascade do |t|
+    t.string "name"
+    t.integer "status", limit: 1, default: 0
+    t.string "api_key"
+    t.string "secret"
+    t.string "success_url"
+    t.string "failure_url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "payments", charset: "utf8mb3", force: :cascade do |t|
+    t.string "amount"
+    t.integer "status", limit: 1, default: 0
+    t.integer "mode", limit: 1
+    t.integer "platform", limit: 1
+    t.integer "for", limit: 1
+    t.string "notes"
+    t.string "pg_transaction_no"
+    t.string "txn_reference_no"
+    t.datetime "settlement_time"
+    t.datetime "refund_time"
+    t.bigint "user_id", null: false
+    t.bigint "subscription_id", null: false
+    t.bigint "payment_gateway_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["payment_gateway_id"], name: "index_payments_on_payment_gateway_id"
+    t.index ["subscription_id"], name: "index_payments_on_subscription_id"
+    t.index ["user_id"], name: "index_payments_on_user_id"
   end
 
   create_table "profiles", charset: "utf8mb3", force: :cascade do |t|
@@ -138,6 +170,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_14_201754) do
   add_foreign_key "chapters", "subjects"
   add_foreign_key "enrollments", "profiles"
   add_foreign_key "enrollments", "topics"
+  add_foreign_key "payments", "payment_gateways"
+  add_foreign_key "payments", "subscriptions"
+  add_foreign_key "payments", "users"
   add_foreign_key "profiles", "users"
   add_foreign_key "subjects", "courses"
   add_foreign_key "subscriptions", "users"

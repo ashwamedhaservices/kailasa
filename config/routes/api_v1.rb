@@ -30,6 +30,12 @@ namespace :api do
         end
       end
     end
+    resources :payments, only: %i[create] do
+      collection do
+        post 'callback'
+        post 'return_url'
+      end
+    end
   end
 end
 

@@ -1,13 +1,14 @@
 # frozen_string_literal: true
 
-module Subscriptions
+module Payments
   module Associatable
     extend ActiveSupport::Concern
 
     # associations
     included do
       belongs_to :user
-      has_many :payments, dependent: :restrict_with_error
+      belongs_to :subscription
+      belongs_to :payment_gateway
     end
   end
 end
