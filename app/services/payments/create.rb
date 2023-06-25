@@ -63,7 +63,7 @@ module Payments
     end
 
     def hash_string
-      "#{payment.uuid}||#{payment.amount}||#{product_info}||#{user.fname}||#{user.email}||||||||||||#{payment_gateway.secret}" # rubocop:disable Layout/LineLength
+      "#{payment_gateway.api_key}|#{payment.uuid}|#{payment.amount}|#{product_info}|#{user.fname}|#{user.email}|||||||||||#{payment_gateway.secret}" # rubocop:disable Layout/LineLength
     end
   end
 end
