@@ -3,7 +3,7 @@
 module Api
   module V1
     class PaymentsController < ApplicationController
-      before_action :authorize_user!
+      before_action :authorize_user!, except: %i[return_url callback]
 
       def create
         @result = Payments::Create.call(current_user)
@@ -14,10 +14,12 @@ module Api
 
       def callback
         Rails.logger.info "response: #{params}"
+        render json: success(data: params), status: :ok
       end
 
       def return_url
         Rails.logger.info "response: #{params}"
+        render json: success(data: params), status: :ok
       end
     end
   end
