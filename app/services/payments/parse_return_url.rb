@@ -13,7 +13,7 @@ module Payments
     end
 
     def call
-      Payu::Success.call(payment, params[:unmappedstatus]) if params[:status] == 'success'
+      Payu::Success.call(payment, params[:unmappedstatus], success_options) if params[:status] == 'success'
       Payu::Failure.call(payment, params[:unmappedstatus])
     end
 
@@ -25,7 +25,7 @@ module Payments
 
     def success_options
       { mode: params[:mode], pg_transaction_no: params[:bank_ref_num], txn_reference_no: params[:mihpayid],
-        settlement_time: params[:addedon] }
+        settlement_time: params[:addedon], notes: params[:bankcode] }
     end
   end
 end

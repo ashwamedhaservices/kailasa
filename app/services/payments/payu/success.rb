@@ -5,7 +5,7 @@ module Payments
     class Success
       attr_reader :payment, :status, :options
 
-      # options {:mode, :pg_transaction_no, :txn_reference_no, :settlement_time}
+      # options {:mode, :pg_transaction_no, :txn_reference_no, :settlement_time, :notes}
       def initialize(payment, status, options)
         @payment = payment
         @status = status
@@ -17,11 +17,18 @@ module Payments
       end
 
       def call
-        if payment.update(options.merge(status: Payment.payu_status(status)))
-          return ServiceResponse.success(data: payment)
-        end
+        return ServiceResponse.success(data: payment) if payment.update(update_params)
 
         ServiceResponse.error(message: 'Payment update failed', data: payment)
+      end
+
+      private
+
+      def update_params
+        options[:mode] = Payment.payu_payment_mode(options[:mode])
+        options[:status] = Payment.payu_status(status)
+        options[:platform] = :android
+        options
       end
     end
   end

@@ -26,7 +26,7 @@ class Payment < ApplicationRecord
   include Payments::Associatable
 
   enum :status, %i[created initiated pending success failed refunded cancelled]
-  enum :mode, %i[card upi net_banking]
+  enum :mode, %i[card upi net_banking emi bnpl]
   enum :platform, %i[web android ios]
   enum :for, %i[one_year_subscription]
 
@@ -43,7 +43,21 @@ class Payment < ApplicationRecord
     'in progress': :pending
   }.freeze
 
+  PAYU_MODE = {
+    CC: :card,
+    DC: :card,
+    NB: :net_banking,
+    CASH: :upi,
+    EMI: :emi,
+    CLEMI: :emi,
+    BNPL: :bnpl
+  }.freeze
+
   def self.payu_status(status)
     PAYU_STATUS[status.to_sym]
+  end
+
+  def self.payu_payment_mode(status)
+    PAYU_MODE[status.to_sym]
   end
 end
