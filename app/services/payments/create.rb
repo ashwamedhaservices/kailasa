@@ -45,7 +45,7 @@ module Payments
         txnid: payment.uuid,
         productinfo: product_info,
         amount: payment.amount,
-        email: payment.amount,
+        email: user.email,
         firstname: user.fname,
         lastname: user.lname,
         hash:,
