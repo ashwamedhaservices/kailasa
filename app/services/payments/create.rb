@@ -31,8 +31,8 @@ module Payments
     def one_year_subscription_payment
       payment.uuid = SecureRandom.uuid
       payment.for = 'one_year_subscription'
-      payment.amount = '359.9'
-      payment.status = 'pending'
+      payment.amount = '1.0'
+      payment.status = 'initiated'
     end
 
     def payment_gateway
@@ -50,7 +50,8 @@ module Payments
         lastname: user.lname,
         hash:,
         surl: payment_gateway.success_url,
-        furl: payment_gateway.failure_url
+        furl: payment_gateway.failure_url,
+        status: payment.status
       }
     end
 
