@@ -25,8 +25,25 @@
 class Payment < ApplicationRecord
   include Payments::Associatable
 
-  enum :status, %i[created pending completed rejected refunded]
+  enum :status, %i[created initiated pending success failed refunded cancelled]
   enum :mode, %i[card upi net_banking]
   enum :platform, %i[web android ios]
   enum :for, %i[one_year_subscription]
+
+  # source https://devguide.payu.in/api/miscellaneous/status-explanations/
+  PAYU_STATUS = {
+    auth: :pending,
+    captured: :success,
+    userCancelled: :cancelled,
+    bounced: :failed,
+    dropped: :failed,
+    failed: :failed,
+    autoRefund: :refunded,
+    initiated: :pending,
+    'in progress': :pending
+  }.freeze
+
+  def self.payu_status(status)
+    PAYU_STATUS[status.to_sym]
+  end
 end
