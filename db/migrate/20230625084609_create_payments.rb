@@ -3,6 +3,7 @@
 class CreatePayments < ActiveRecord::Migration[7.0]
   def change # rubocop:disable Metrics/MethodLength
     create_table :payments do |t|
+      t.string :uuid
       t.string :amount
       t.integer :status, limit: 1, default: 0
       t.integer :mode, limit: 1

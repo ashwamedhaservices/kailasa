@@ -3,6 +3,7 @@
 # Table name: payments
 #
 #  id                 :bigint           not null, primary key
+#  uuid               :string(255)
 #  amount             :string(255)
 #  status             :integer          default("created")
 #  mode               :integer

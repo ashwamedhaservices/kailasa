@@ -29,6 +29,7 @@ module Payments
     end
 
     def one_year_subscription_payment
+      payment.uuid = SecureRandom.uuid
       payment.for = 'one_year_subscription'
       payment.amount = '359.9'
       payment.status = 'pending'
@@ -38,12 +39,31 @@ module Payments
       @payment_gateway ||= PaymentGateway.first
     end
 
-    def create_response
+    def create_response # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
       {
-        user:,
-        payment:,
-        payment_gateway:
+        key: payment_gateway.api_key,
+        txnid: payment.uuid,
+        productinfo: product_info,
+        amount: payment.amount,
+        email: payment.amount,
+        firstname: user.fname,
+        lastname: user.lname,
+        hash:,
+        surl: payment_gateway.success_url,
+        furl: payment_gateway.failure_url
       }
+    end
+
+    def product_info
+      'app_subscription'
+    end
+
+    def hash
+      Digest::SHA2.new(512).hexdigest(hash_string)
+    end
+
+    def hash_string
+      "#{payment.uuid}||#{payment.amount}||#{product_info}||#{user.fname}||#{user.email}||||||||||||#{payment_gateway.secret}" # rubocop:disable Layout/LineLength
     end
   end
 end

@@ -65,6 +65,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_25_084609) do
   end
 
   create_table "payments", charset: "utf8mb3", force: :cascade do |t|
+    t.string "uuid"
     t.string "amount"
     t.integer "status", limit: 1, default: 0
     t.integer "mode", limit: 1
