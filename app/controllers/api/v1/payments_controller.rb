@@ -19,9 +19,14 @@ module Api
 
       def return_url
         @result = Payments::ParseReturnUrl.call(return_url_params)
-        return render json: success(data:), status: :ok if success?
+        # return render json: success(data:), status: :ok if success?
+        if data.status == 'success'
+          return redirect_to 'https://www.ashwamedha.net/payments/payu/response?status=success', allow_other_host: true
+        end
 
-        render json: failure(msg:), status: :bad_request
+        redirect_to 'https://www.ashwamedha.net/payments/payu/response?status=failure', allow_other_host: true
+
+        # render json: failure(msg:), status: :bad_request
       end
 
       private

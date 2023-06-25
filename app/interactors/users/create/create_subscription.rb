@@ -15,8 +15,12 @@ module Users
 
       private
 
+      def unsubscribed
+        Subscriptions::Purchase.call(user, :unsubscribed)
+      end
+
       def activate_trial
-        @activate_trial ||= Subscriptions::ActivateTrial.call(user)
+        @activate_trial ||= unsubscribed # Subscriptions::ActivateTrial.call(user)
       end
 
       def subscription_status_change_fail
