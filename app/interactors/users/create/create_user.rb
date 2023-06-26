@@ -6,48 +6,35 @@ module Users
       include Interactor
       delegate :params, to: :context
 
-      def call # rubocop:disable Metrics/AbcSize
-        error = create_user_and_profile
-        if error
-          context.fail!(
-            error: user.errors.full_messages.to_sentence,
-            code: ::Errors::Handler.code("#{error.first.attribute}_#{error.first.type}")
-          )
-        end
-        credit_referral_reward
-        context.user = user
-        context.profile = profile
+      def call
+        user = context.user = create_user_and_profile
+        context_fail(user) unless user.errors.empty?
+        referral_code_assign(user)
+        credit_referral_reward(user)
+        context.profile = user.profiles.first
       end
 
       private
 
-      def create_user_and_profile
-        if user.save
-          profile.save ? nil : profile.errors
-        else
-          user.errors
-        end
+      def context_fail(user)
+        context.fail!(
+          error: user.errors.full_messages.to_sentence,
+          code: ::Errors::Handler.code("#{user.errors.first.attribute}_#{user.errors.first.type}")
+        )
       end
 
-      def user
-        @user ||= ::User.new(create_attributes)
-      end
+      def create_user_and_profile # rubocop:disable Metrics
+        ::User.new.tap do |user|
+          user.fname = full_name_array.first.camelize
+          user.mname =  (full_name_array.slice(1, full_name_array.length - 2) || []).join(' ').camelize
+          user.lname =  full_name_array.last.camelize
+          user.mobile_number = params[:mobile_number]
+          user.password_digest = params[:password]
+          user.type = 'student'
+          user.referrer_id = referred_by
+          user.profiles = [user.profiles.build(name: 'Default')]
 
-      def profile
-        @profile ||= user.profiles.build(name: 'Default')
-      end
-
-      def create_attributes # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
-        {}.tap do |ca|
-          ca[:fname] = full_name_array.first.camelize
-          ca[:mname] =  (full_name_array.slice(1, full_name_array.length - 2) || []).join(' ').camelize
-          ca[:lname] =  full_name_array.last.camelize
-          ca[:mobile_number] = params[:mobile_number]
-          ca[:password_digest] = params[:password]
-          ca[:type] = 'student'
-          ca[:referrer_id] = referred_by
-          ca[:referral_code] = Users::ReferralCodeGenerator.call
-          ca[:state] = :verified # TODO: remove later once otp is working
+          user.save
         end
       end
 
@@ -56,11 +43,21 @@ module Users
       end
 
       def referred_by
-        Users::Refer.call(params[:referral_code])
+        return unless params[:referral_code]
+
+        if params[:referral_code].size == 10
+          User.find_by(mobile_number: params[:referral_code])
+        else
+          User.find_by(referral_code: params[:referral_code])
+        end
       end
 
-      def credit_referral_reward
-        ::Referral::Credit::Processor.call(user)
+      def referral_code_assign(user)
+        user.update(referral_code: user.id.to_s.upcase.rjust(7, '0'))
+      end
+
+      def credit_referral_reward(user)
+        ::Referral::Credit::Processor.call(user) if user.referrer_id
       end
     end
   end

@@ -11,8 +11,7 @@ module Sms
     private
 
     def sms_active_client
-      # to pick from configs
-      Sms::Sender::Msg91.instance
+      Sms::Sender::Msg91
     end
   end
 end

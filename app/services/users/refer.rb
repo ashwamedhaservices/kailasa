@@ -4,7 +4,7 @@ module Users
   class Refer
     attr_reader :referral_code
 
-    DEFAULT_REFER = Rails.application.credentials.referral.default_refers
+    DEFAULT_REFER = %w[00001 00002 00003].freeze # Rails.application.credentials.referral.default_refers
 
     def self.call(referral_code)
       new(referral_code).call
@@ -21,7 +21,7 @@ module Users
     private
 
     def refer
-      return default_refer unless referral_code
+      return DEFAULT_REFER.sample unless referral_code
       return referring_user.id if referring_user
 
       nil

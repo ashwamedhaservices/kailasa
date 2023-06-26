@@ -152,10 +152,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_25_084609) do
     t.bigint "referrer_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "subscription"
     t.boolean "subscribed", default: false, null: false
     t.index ["mobile_number"], name: "index_users_on_mobile_number", unique: true
     t.index ["referrer_id"], name: "index_users_on_referrer_id"
     t.index ["state"], name: "index_users_on_state"
+    t.index ["subscription"], name: "index_users_on_subscription"
   end
 
   create_table "versions", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|

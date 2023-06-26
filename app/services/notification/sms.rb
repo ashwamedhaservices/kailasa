@@ -1,13 +1,9 @@
 # frozen_string_literal: true
 
-module ::Notification
+module Notification
   class Sms
-    def trigger
+    def self.trigger(options)
       ::Sms::Client.trigger(options)
     end
-
-    private
-
-    def options; end
   end
 end
