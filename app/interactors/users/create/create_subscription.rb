@@ -8,9 +8,6 @@ module Users
 
       def call
         subscription_status_change_fail unless activate_trial.success?
-
-        user.subscribed = true
-        user_subscription_status_change_fail unless user.save
       end
 
       private
