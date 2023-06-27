@@ -2,7 +2,7 @@
 
 module Api
   module V1
-    class UsersController < ApplicationController
+    class UsersController < ApplicationController # rubocop:disable Metrics/
       before_action :authorize_user!, except: %i[create verify login login_otp otp_verification registered]
       # POST accounts/api/v1/users
       def create
@@ -19,7 +19,6 @@ module Api
 
       # POST accounts/api/v1/users#verify
       def verify
-        # OTP verify logic goes here
         return render json: verified_user_error, status: :ok if user.verified?
 
         @interactor = ::Users::Verify::Processor.call(params: verify_params.merge(user:))
@@ -44,11 +43,9 @@ module Api
       end
 
       # POST accounts/api/v1/users/login_otp
-      # OTP request to login
       # TODO: block user if requests too many OTPs
       def login_otp
-        Otp.generate!(user, 'login')
-        # send OTP async
+        Notification::Sms.trigger sms_params
         i8n_msg = 'Login OTP sent successfully, please verify.' # TODO: i8n_msg
         render json: success(msg: i8n_msg), status: :created
       end
@@ -134,6 +131,14 @@ module Api
         i8n_msg = 'Mobile number verification pending, please enter otp'
         code =  errors_code('mobile_verification_pending')
         render json: failure(msg: i8n_msg, error_code: code, data: { id: user.id }), status: :ok
+      end
+
+      def sms_params
+        {
+          mobile: user.mobile_number,
+          template_type: 'sign_in',
+          params: { 'otp' => Otp.generate!(user, 'login') }
+        }
       end
     end
   end
