@@ -47,6 +47,6 @@ class User < ApplicationRecord
   end
 
   def referral_url
-    "https://www.ashwamedha.net/register?referral_code=#{referral_code}"
+    "https://ashwamedhaservices.com/register?referral_code=#{referral_code}"
   end
 end

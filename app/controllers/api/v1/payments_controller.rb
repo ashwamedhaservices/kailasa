@@ -25,10 +25,10 @@ module Api
           current_user.update(subscribed: true)
           Subscriptions::Purchase.call(current_user, :one_year)
           ::Referral::Credit::Processor.call(current_user) if current_user.referrer_id
-          return redirect_to 'https://www.ashwamedha.net/payments/payu/response?status=success', allow_other_host: true
+          return redirect_to 'https://ashwamedhaservices.com/payments/payu/response?status=success', allow_other_host: true
         end
 
-        redirect_to 'https://www.ashwamedha.net/payments/payu/response?status=failure', allow_other_host: true
+        redirect_to 'https://ashwamedhaservices.com/payments/payu/response?status=failure', allow_other_host: true
 
         # render json: failure(msg:), status: :bad_request
       end
