@@ -21,6 +21,7 @@ module Api
         @result = Payments::ParseReturnUrl.call(return_url_params)
         # return render json: success(data:), status: :ok if success?
         if data.status == 'success'
+          current_user = data.user
           current_user.update(subscribed: true)
           Subscriptions::Purchase.call(current_user, :one_year)
           return redirect_to 'https://www.ashwamedha.net/payments/payu/response?status=success', allow_other_host: true
