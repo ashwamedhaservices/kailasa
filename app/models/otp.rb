@@ -28,13 +28,14 @@ class Otp
   end
 
   def self.verify!(otp_value, options)
-    otp = self.otp(options)
-    return false unless otp
+    last_otp = where(user_id: options[:user_id], receiver: options[:receiver], otp_type: options[:otp_type],
+                     verified: false).last
+    return false unless last_otp
 
     # value = Rails.env.production? ? otp.value : '111111'
-    return otp.update(verified: true) if otp_value.to_s == otp.value.to_s
+    return last_otp.update(verified: true) if otp_value.to_s == last_otp.value.to_s
 
-    otp.update(retry_count: otp.retry_count + 1)
+    last_otp.update(retry_count: last_otp.retry_count + 1)
 
     false # can do better here
   end
