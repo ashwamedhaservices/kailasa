@@ -10,7 +10,6 @@ module Users
         user = context.user = create_user_and_profile
         context_fail(user) unless user.errors.empty?
         referral_code_assign(user)
-        credit_referral_reward(user)
         context.profile = user.profiles.first
       end
 
