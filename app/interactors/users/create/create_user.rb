@@ -55,10 +55,6 @@ module Users
       def referral_code_assign(user)
         user.update(referral_code: user.id.to_s.upcase.rjust(7, '0'))
       end
-
-      def credit_referral_reward(user)
-        ::Referral::Credit::Processor.call(user) if user.referrer_id
-      end
     end
   end
 end
