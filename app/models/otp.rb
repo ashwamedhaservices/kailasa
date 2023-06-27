@@ -45,6 +45,6 @@ class Otp
       receiver: options[:receiver],
       otp_type: options[:otp_type],
       verified: false
-    ).limit(1).last
+    ).last
   end
 end

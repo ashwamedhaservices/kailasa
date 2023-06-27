@@ -53,12 +53,12 @@ module Api
       # POST accounts/api/v1/users/otp_verification
       def otp_verification
         if Otp.verify!(login_params['otp'], verify_options)
-          user.mark_verified! if User.last.created?
+          user.mark_verified! unless user.verified?
 
           i8n_msg = 'Otp verified successfully'
           render json: success(msg: i8n_msg, data: user_login_resp), status: :ok
         else
-          render json: failure(msg: 'Incorrect OTP', error_code: errors_code('wrong_otp')), status: :unauthorized
+          render json: failure(msg: 'Incorrect OTP', error_code: errors_code('wrong_otp')), status: :bad_request
         end
       end
 
