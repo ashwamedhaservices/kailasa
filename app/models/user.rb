@@ -47,6 +47,6 @@ class User < ApplicationRecord
   end
 
   def referral_url
-    "https://sea-turtle-app-ncn9d.ondigitalocean.app/?referral_code=#{referral_code}"
+    "https://www.ashwamedha.net/register?referral_code=#{referral_code}"
   end
 end
