@@ -11,7 +11,7 @@ module Api
           # resp = Api::V1::UserSerializer.new(interactor.user, params: { issue_token: true }).serializable_hash
           # i8n_msg = 'User created successfully'
           i8n_msg = 'Verification OTP sent successfully, please verify.' # TODO: i8n_msg
-          render json: success(msg: i8n_msg, data: resp[:data]), status: :created
+          render json: success(msg: i8n_msg), status: :created
         else
           render json: failure(msg: error, error_code: code), status: :unprocessable_entity
         end
