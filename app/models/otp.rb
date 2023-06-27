@@ -22,7 +22,7 @@ class Otp
              user_id: user.id,
              receiver: user.mobile_number,
              receiver_type: 'mobile_number',
-             value: SecureRandom.random_number(900_000),
+             value: (SecureRandom.random_number(9e5) + 1e5).to_i,
              otp_type: type
            }).value
   end
@@ -31,8 +31,8 @@ class Otp
     otp = self.otp(options)
     return false unless otp
 
-    value = Rails.env.production? ? otp.value : '111111'
-    return otp.update(verified: true) if otp_value.to_s == value
+    # value = Rails.env.production? ? otp.value : '111111'
+    return otp.update(verified: true) if otp_value.to_s == otp.value.to_s
 
     otp.update(retry_count: otp.retry_count + 1)
 

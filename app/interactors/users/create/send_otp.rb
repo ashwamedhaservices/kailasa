@@ -21,7 +21,7 @@ module Users
         {
           mobile: user.mobile_number,
           template_type: 'sign_up',
-          params: { 'otp' => Otp.generate!(user, 'mobile') }
+          params: { 'otp' => Otp.generate!(user, 'register') }
         }
       end
     end
