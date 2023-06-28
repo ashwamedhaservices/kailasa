@@ -13,7 +13,7 @@ module Api
           i8n_msg = 'Verification OTP sent successfully, please verify.' # TODO: i8n_msg
           render json: success(msg: i8n_msg, data: resp[:data]), status: :created
         else
-          render json: failure(msg: error, error_code: code), status: :unprocessable_entity
+          render json: failure(msg: error, error_code: code), status: :ok
         end
       end
 
