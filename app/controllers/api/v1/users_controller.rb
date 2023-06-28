@@ -3,7 +3,7 @@
 module Api
   module V1
     class UsersController < ApplicationController # rubocop:disable Metrics/
-      before_action :authorize_user!, except: %i[create verify login login_otp otp_verification registered]
+      before_action :authorize_user!, except: %i[create verify login login_otp otp_verification registered referrer]
       # POST accounts/api/v1/users
       def create
         @interactor = ::Users::Create::Processor.call(params: create_params)
@@ -74,14 +74,16 @@ module Api
 
       # GET accounts/api/v1/users/referrer
       def referrer
-        user = if params[:referral_code].length > 7
-                 User.find_by(mobile_number: params[:referral_code])
-               else
-                 User.find_by(referral_code: params[:referral_code])
-               end
-        return render json: success(msg: 'referrer not found'), status: :ok unless user
+        return render json: success(msg: 'referral code not found') unless params[:referral_code]
 
-        render json: success(msg: 'referrer found', data: { name: user.full_name }), status: :ok
+        referrer_user = if params[:referral_code].length > 7
+                          User.find_by(mobile_number: params[:referral_code])
+                        else
+                          User.find_by(referral_code: params[:referral_code])
+                        end
+        return render json: success(msg: 'referrer not found'), status: :ok unless referrer_user
+
+        render json: success(msg: 'referrer found', data: { name: referrer_user.full_name }), status: :ok
       end
 
       def subscribed

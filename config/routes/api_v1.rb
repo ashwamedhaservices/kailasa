@@ -5,7 +5,7 @@ namespace :api do
   namespace :v1 do
     resources :referrals, only: %i[index]
 
-    resources :users, only: %i[create index show] do
+    resources :users, only: %i[create] do
       collection do
         post 'verify'
         post 'login'
@@ -13,7 +13,7 @@ namespace :api do
         post 'otp_verification'
         get 'registered'
         get 'subscribed'
-        get 'refererr'
+        get 'referrer'
       end
     end
     resources :file_upload, only: %i[create]
