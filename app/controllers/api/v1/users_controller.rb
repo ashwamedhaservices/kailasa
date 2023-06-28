@@ -72,6 +72,18 @@ module Api
         # render json: failure(msg: i8n_msg, error_code: code), status: :ok
       end
 
+      # GET accounts/api/v1/users/referrer
+      def referrer
+        user = if params[:referral_code].length > 7
+                 User.find_by(mobile_number: params[:referral_code])
+               else
+                 User.find_by(referral_code: params[:referral_code])
+               end
+        return render json: success(msg: 'referrer not found'), status: :ok unless user
+
+        render json: success(msg: 'referrer found', data: { name: user.full_name }), status: :ok
+      end
+
       def subscribed
         render json: success(data: current_user.subscribed), status: :ok
       end

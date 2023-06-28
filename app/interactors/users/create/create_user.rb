@@ -30,7 +30,7 @@ module Users
           user.mobile_number = params[:mobile_number]
           user.password_digest = params[:password]
           user.type = 'student'
-          user.referrer_id = referred_by
+          user.referrer_id = referred_by.id
           user.profiles = [user.profiles.build(name: 'Default')]
 
           user.save

@@ -13,10 +13,11 @@ namespace :api do
         post 'otp_verification'
         get 'registered'
         get 'subscribed'
+        get 'refererr'
       end
     end
     resources :file_upload, only: %i[create]
-    resources :profiles do
+    resources :profiles, only: [] do
       collection do
         get 'dashboard'
       end

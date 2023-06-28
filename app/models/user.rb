@@ -49,4 +49,12 @@ class User < ApplicationRecord
   def referral_url
     "https://ashwamedhaservices.com/register?referral_code=#{referral_code}"
   end
+
+  def earnings
+    {
+      balance: ReferralCredit.where(user_id: id, status: 'credited').sum(:amount),
+      processing: ReferralCredit.where(user_id: id, status: 'processed').sum(:amount),
+      withdrawn: ReferralCredit.where(user_id: id, status: 'paid').sum(:amount)
+    }
+  end
 end

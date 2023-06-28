@@ -33,6 +33,7 @@ module Referral
           credit[:type] = ReferralCredit::ReferralType::PARTNER
           credit[:date] = DateTime.current
           credit[:subscribed_user_id] = user.id
+          credit[:status] = ReferralCredit::Status::CREDITED
         end
       end
 
