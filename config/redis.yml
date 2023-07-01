@@ -1,0 +1,17 @@
+default: &default
+  host: 127.0.0.1
+  port: 6379
+  pool_size: 20
+  timeout: 1
+
+development: &development
+  <<: *default
+
+staging: &staging
+  <<: *default
+
+test: &test
+  <<: *default
+
+production: &production
+  <<: *default
