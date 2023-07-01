@@ -2,12 +2,12 @@
 
 module Payments
   module Payu
-    class Failure
-      attr_reader :payment, :status, :options
+    class Failure < Base
+      attr_reader :status, :options
 
       def initialize(payment, status)
-        @payment = payment
         @status = status
+        super(payment)
       end
 
       def self.call(payment, status)
