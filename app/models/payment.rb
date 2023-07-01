@@ -53,6 +53,10 @@ class Payment < ApplicationRecord
     BNPL: :bnpl
   }.freeze
 
+  def finalized?
+    %i[success failed refunded cancelled].include?(status)
+  end
+
   def self.payu_status(status)
     PAYU_STATUS[status.to_sym]
   end

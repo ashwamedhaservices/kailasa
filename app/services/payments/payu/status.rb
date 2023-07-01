@@ -10,10 +10,25 @@ module Payments
       end
 
       def call
-        RestRequestHandler.new(status_api_base_url).post(status_api)
+        return unless payment.finalized?
+
+        response = RestRequestHandler.new(status_api_base_url).post(status_api)
+        Rails.logger.info("payment status fetch failed: #{response.body}") unless response.status.eql?(200)
+
+        update_payment_status(response.body[payment.uuid])
       end
 
       private
+
+      def update_payment_status(params)
+        Payu::Success.call(payment, params[:unmappedstatus], success_options(params)) if params[:status] == 'success'
+        Payu::Failure.call(payment, params[:unmappedstatus])
+      end
+
+      def success_options(params)
+        { mode: params[:mode], pg_transaction_no: params[:bank_ref_num], txn_reference_no: params[:mihpayid],
+          settlement_time: params[:addedon], notes: params[:bankcode] }
+      end
 
       def payload
         {

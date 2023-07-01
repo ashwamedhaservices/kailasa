@@ -16,6 +16,7 @@ module Payments
 
     def call
       one_year_subscription_payment
+      FetchPaymentStatusJob.perform_in(30.minutes, payment.id)
       return ServiceResponse.success(data: create_response) if payment.save!
 
       ServiceResponse.error(msg: 'unable to create payment', data: payment)
@@ -31,7 +32,7 @@ module Payments
     def one_year_subscription_payment
       payment.uuid = SecureRandom.uuid
       payment.for = 'one_year_subscription'
-      payment.amount = '369.0'
+      payment.amount = Rails.application.credentials.subscriptions.price
       payment.status = 'initiated'
     end
 
