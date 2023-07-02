@@ -38,7 +38,9 @@ module Partner
         # GET /partner/api/v1/accounts/partners
         # NOTE: no pagination as of now.
         # no filter by level, its plane dirct referral list of an user
-        def newtork; end
+        def network
+          render json: success(data: User.where(referrer_id: current_user.id)), status: :ok
+        end
 
         # # GET /partner/api/v1/accounts/earning
         # def earning
