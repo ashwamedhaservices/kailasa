@@ -106,6 +106,7 @@ module Partner
         def network_details(user)
           {
             id: user.id,
+            name: user.full_name,
             mobile: user.mobile_number,
             earnings: ReferralCredit.where(user_id: user.id).sum(:amount),
             network_width: user.referees.size,
