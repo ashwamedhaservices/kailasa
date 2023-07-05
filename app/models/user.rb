@@ -32,7 +32,7 @@ class User < ApplicationRecord
   enum :type, %i[customer admin super_admin author student]
 
   def full_name
-    name = "#{fname} #{mname} #{lname}"
+    name = [fname, mname, lname].reject!(&:empty?).join(' ')
     name.blank? ? 'Guest' : "#{title} #{name}".titlecase
   end
 

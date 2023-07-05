@@ -39,7 +39,7 @@ module Partner
         # NOTE: no pagination as of now.
         # no filter by level, its plane dirct referral list of an user
         def network
-          render json: success(data: User.where(referrer_id: current_user.id)), status: :ok
+          render json: success(data: partner_users_network), status: :ok
         end
 
         # # GET /partner/api/v1/accounts/earning
@@ -97,6 +97,32 @@ module Partner
 
         def level_1_ids
           User.where(referrer_id: current_user.id, created_at: DateTime.now.all_week).pluck(:id)
+        end
+
+        def partner_user
+          @partner_user ||= params[:id] ? User.find(params[:id]) : current_user
+        end
+
+        def network_details(user)
+          {
+            id: user.id,
+            mobile: user.mobile_number,
+            earnings: ReferralCredit.where(user_id: user.id).sum(:amount),
+            network_width: user.referees.size,
+            referal_link: user.referral_url
+          }
+        end
+
+        def partner_users_network
+          network = []
+          partner_user_referees.find_each do |user|
+            network << network_details(user)
+          end
+          network_details(partner_user).merge(network:)
+        end
+
+        def partner_user_referees
+          @partner_user_referees ||= partner_user.referees
         end
       end
     end
