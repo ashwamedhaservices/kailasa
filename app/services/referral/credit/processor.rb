@@ -13,13 +13,17 @@ module Referral
         new(user).call
       end
 
-      def call
-        credits = []
+      def call # rubocop:disable Metrics/*
         configs[:depth].times do |level|
           referrer = referee.referrer
           break if referrer.nil?
 
-          credits << build_credit(referrer, level + 1)
+          ReferralCredit.find_or_create_by(user_id: referrer.id, subscribed_user_id: user.id).tap do |credit|
+            credit[:amount] = configs[:bv_value] * configs[:level_payout][level]
+            credit[:level] = level
+            credit[:type] = ReferralCredit::ReferralType::PARTNER
+            credit.save!
+          end
           @referee = referrer
         end
         ReferralCredit.create credits
