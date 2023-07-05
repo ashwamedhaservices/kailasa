@@ -110,7 +110,7 @@ module Partner
             mobile: user.mobile_number,
             earnings: ReferralCredit.where(user_id: user.id).sum(:amount),
             network_width: user.referees.size,
-            referal_link: user.referral_url,
+            referral_link: user.referral_url,
             last_payout: 0
           }
         end
