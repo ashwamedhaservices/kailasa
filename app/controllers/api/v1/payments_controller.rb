@@ -6,7 +6,7 @@ module Api
       before_action :authorize_user!, except: %i[return_url callback]
 
       def create
-        @result = Payments::Create.call(current_user)
+        @result = Payments::Payu::Create.call(current_user)
         return render json: success(data:), status: :ok if success?
 
         render json: failure(msg:, error_code:), status: :bad_request
@@ -18,7 +18,7 @@ module Api
       end
 
       def return_url
-        @result = Payments::ParseReturnUrl.call(return_url_params)
+        @result = Payments::Payu::ParseReturnUrl.call(return_url_params)
         # return render json: success(data:), status: :ok if success?
         if data.status == 'success'
           current_user = data.user
