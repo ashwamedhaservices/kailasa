@@ -13,6 +13,10 @@
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #
+# Indexes
+#
+#  index_chapters_on_subject_id  (subject_id)
+#
 class Chapter < ApplicationRecord
   include Chapters::Associatable
 end

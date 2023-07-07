@@ -10,7 +10,39 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_25_084609) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_07_200555) do
+  create_table "addresses", charset: "utf8mb3", force: :cascade do |t|
+    t.string "name"
+    t.integer "status", limit: 1, default: 0
+    t.integer "type", limit: 1, default: 0
+    t.string "address_line_one"
+    t.string "address_line_two"
+    t.string "address_line_three"
+    t.string "city"
+    t.string "state"
+    t.string "country"
+    t.string "postal_code"
+    t.bigint "kycs_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["kycs_id"], name: "index_addresses_on_kycs_id"
+  end
+
+  create_table "bank_accounts", charset: "utf8mb3", force: :cascade do |t|
+    t.string "account_number"
+    t.integer "status", limit: 1, default: 0
+    t.integer "type", limit: 1, default: 0
+    t.string "ifsc"
+    t.string "micr"
+    t.integer "proof_type", limit: 1, default: 0
+    t.string "proof_url"
+    t.bigint "users_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_number"], name: "index_bank_accounts_on_account_number"
+    t.index ["users_id"], name: "index_bank_accounts_on_users_id"
+  end
+
   create_table "chapters", charset: "utf8mb3", force: :cascade do |t|
     t.string "name", limit: 60
     t.string "description"
@@ -53,6 +85,38 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_25_084609) do
     t.index ["topic_id"], name: "index_enrollments_on_topic_id"
   end
 
+  create_table "kycs", charset: "utf8mb3", force: :cascade do |t|
+    t.integer "status", limit: 1, default: 0
+    t.string "name"
+    t.string "id_proof_no"
+    t.string "id_proof_url"
+    t.integer "id_proof_type", limit: 1
+    t.string "address_proof_no"
+    t.string "address_proof_url"
+    t.integer "address_proof_type", limit: 1
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_kycs_on_user_id"
+  end
+
+  create_table "nominees", charset: "utf8mb3", force: :cascade do |t|
+    t.string "name"
+    t.integer "status", limit: 1, default: 0
+    t.integer "type", limit: 1, default: 0
+    t.string "dob"
+    t.integer "relationship", limit: 1
+    t.bigint "kycs_id", null: false
+    t.bigint "addresses_id"
+    t.bigint "guardian_id"
+    t.integer "relationship_with_guardian", limit: 1
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["addresses_id"], name: "index_nominees_on_addresses_id"
+    t.index ["guardian_id"], name: "index_nominees_on_guardian_id"
+    t.index ["kycs_id"], name: "index_nominees_on_kycs_id"
+  end
+
   create_table "payment_gateways", charset: "utf8mb3", force: :cascade do |t|
     t.string "name"
     t.integer "status", limit: 1, default: 0
@@ -84,6 +148,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_25_084609) do
     t.index ["payment_gateway_id"], name: "index_payments_on_payment_gateway_id"
     t.index ["subscription_id"], name: "index_payments_on_subscription_id"
     t.index ["user_id"], name: "index_payments_on_user_id"
+  end
+
+  create_table "penny_drops", charset: "utf8mb3", force: :cascade do |t|
+    t.string "name"
+    t.string "name_at_bank"
+    t.integer "status", limit: 1, default: 0
+    t.string "remarks"
+    t.bigint "bank_accounts_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["bank_accounts_id"], name: "index_penny_drops_on_bank_accounts_id"
   end
 
   create_table "profiles", charset: "utf8mb3", force: :cascade do |t|
@@ -152,12 +227,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_25_084609) do
     t.bigint "referrer_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "subscription"
     t.boolean "subscribed", default: false, null: false
     t.index ["mobile_number"], name: "index_users_on_mobile_number", unique: true
     t.index ["referrer_id"], name: "index_users_on_referrer_id"
     t.index ["state"], name: "index_users_on_state"
-    t.index ["subscription"], name: "index_users_on_subscription"
   end
 
   create_table "versions", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
@@ -170,12 +243,19 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_25_084609) do
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 
+  add_foreign_key "addresses", "kycs", column: "kycs_id"
+  add_foreign_key "bank_accounts", "users", column: "users_id"
   add_foreign_key "chapters", "subjects"
   add_foreign_key "enrollments", "profiles"
   add_foreign_key "enrollments", "topics"
+  add_foreign_key "kycs", "users"
+  add_foreign_key "nominees", "addresses", column: "addresses_id"
+  add_foreign_key "nominees", "kycs", column: "kycs_id"
+  add_foreign_key "nominees", "nominees", column: "guardian_id"
   add_foreign_key "payments", "payment_gateways"
   add_foreign_key "payments", "subscriptions"
   add_foreign_key "payments", "users"
+  add_foreign_key "penny_drops", "bank_accounts", column: "bank_accounts_id"
   add_foreign_key "profiles", "users"
   add_foreign_key "subjects", "courses"
   add_foreign_key "subscriptions", "users"
