@@ -1,0 +1,2 @@
+class PennyDrop < ApplicationRecord
+end
