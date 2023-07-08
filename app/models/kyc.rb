@@ -22,6 +22,5 @@
 #  index_kycs_on_user_id  (user_id)
 #
 class Kyc < ApplicationRecord
-
-    belongs_to :users
+  belongs_to :users
 end
