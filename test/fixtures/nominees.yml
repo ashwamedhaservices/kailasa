@@ -4,8 +4,8 @@
 #
 #  id                         :bigint           not null, primary key
 #  name                       :string(255)
-#  status                     :integer          default(0)
-#  type                       :integer          default(0)
+#  status                     :integer          default("active")
+#  type                       :integer          default("primary")
 #  dob                        :string(255)
 #  relationship               :integer
 #  kycs_id                    :bigint           not null

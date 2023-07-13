@@ -10,16 +10,19 @@
 #  type           :integer          default(0)
 #  ifsc           :string(255)
 #  micr           :string(255)
+#  bank           :string(255)
+#  branch         :string(255)
+#  city           :string(255)
 #  proof_type     :integer          default(0)
 #  proof_url      :string(255)
-#  users_id       :bigint
+#  kyc_id         :bigint
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #
 # Indexes
 #
 #  index_bank_accounts_on_account_number  (account_number)
-#  index_bank_accounts_on_users_id        (users_id)
+#  index_bank_accounts_on_kyc_id          (kyc_id)
 #
 require 'test_helper'
 

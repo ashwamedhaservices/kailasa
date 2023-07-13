@@ -12,6 +12,7 @@ module Users
       has_many :profiles, dependent: :restrict_with_error
       has_many :enrollments, dependent: :restrict_with_error
       has_one :subscription, dependent: :restrict_with_error
+      has_one :kyc, dependent: :restrict_with_error
     end
   end
 end

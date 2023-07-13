@@ -34,13 +34,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_07_200555) do
     t.integer "type", limit: 1, default: 0
     t.string "ifsc"
     t.string "micr"
+    t.string "bank"
+    t.string "branch"
+    t.string "city"
     t.integer "proof_type", limit: 1, default: 0
     t.string "proof_url"
-    t.bigint "users_id"
+    t.bigint "kyc_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["account_number"], name: "index_bank_accounts_on_account_number"
-    t.index ["users_id"], name: "index_bank_accounts_on_users_id"
+    t.index ["kyc_id"], name: "index_bank_accounts_on_kyc_id"
   end
 
   create_table "chapters", charset: "utf8mb3", force: :cascade do |t|
@@ -244,7 +247,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_07_200555) do
   end
 
   add_foreign_key "addresses", "kycs", column: "kycs_id"
-  add_foreign_key "bank_accounts", "users", column: "users_id"
+  add_foreign_key "bank_accounts", "kycs"
   add_foreign_key "chapters", "subjects"
   add_foreign_key "enrollments", "profiles"
   add_foreign_key "enrollments", "topics"

@@ -8,9 +8,12 @@ class CreateBankAccounts < ActiveRecord::Migration[7.0]
       t.integer :type, limit: 1, default: 0
       t.string :ifsc
       t.string :micr
+      t.string :bank
+      t.string :branch
+      t.string :city
       t.integer :proof_type, limit: 1, default: 0
       t.string :proof_url
-      t.references :users, foreign_key: true
+      t.references :kyc, foreign_key: true
       t.timestamps
     end
     add_index :bank_accounts, :account_number

@@ -18,4 +18,5 @@
 #  index_penny_drops_on_bank_accounts_id  (bank_accounts_id)
 #
 class PennyDrop < ApplicationRecord
+  belongs_to :bank_account
 end
