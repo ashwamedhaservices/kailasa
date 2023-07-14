@@ -31,7 +31,7 @@ module Payments
     def one_year_subscription_payment
       payment.uuid = SecureRandom.uuid
       payment.for = 'one_year_subscription'
-      payment.amount = '1.0'
+      payment.amount = '369.0'
       payment.status = 'initiated'
     end
 

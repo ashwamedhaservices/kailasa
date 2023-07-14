@@ -15,6 +15,7 @@ module Subscriptions
 
     def call
       kind.eql?(:unsubscribed) ? unsubscribe : subscribe
+      Rails.logger.info("Purchase Subscription #{kind} for user #{user.id}, subscription #{subscription}")
       return ServiceResponse.success(data: subscription) if subscription.save
 
       ServiceResponse.error(msg: 'unable to perform subscription action', data: subscription)
