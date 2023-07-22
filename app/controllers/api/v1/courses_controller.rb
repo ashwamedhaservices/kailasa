@@ -4,7 +4,7 @@ module Api
   module V1
     class CoursesController < ApplicationController
       def index
-        @course = Course.all
+        @course = Course.all.to_a.reject { |c| c.name.match(/ to /) }
         render json: success(data: @course), status: :ok
       end
 
