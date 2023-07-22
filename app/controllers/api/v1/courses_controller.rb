@@ -31,6 +31,11 @@ module Api
         end
       end
 
+      def bundle
+        @course = Course.where("name like '%to%'")
+        render json: success(data: @course), status: :ok
+      end
+
       private
 
       def course_create_params
