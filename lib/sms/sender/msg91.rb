@@ -3,6 +3,9 @@
 module Sms
   module Sender
     class Msg91
+      extend Callable
+      include Service
+
       attr_reader :options, :resp
 
       # @param
@@ -22,13 +25,6 @@ module Sms
       end
 
       private_class_method :new
-
-      def self.call(options)
-        new(options).call
-      rescue StandardError
-        # logger
-        # sentry
-      end
 
       def call
         base_url = credentials[:base_url]

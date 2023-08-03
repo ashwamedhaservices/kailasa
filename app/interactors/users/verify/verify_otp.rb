@@ -18,8 +18,8 @@ module Users
       def verify_options
         {}.tap do |options|
           options[:user_id] = user.id
-          options[:receiver] =  user.mobile_number
-          options[:otp_type] =  'register'
+          options[:receiver] = user.mobile_number
+          options[:otp_type] = 'register'
         end
       end
     end

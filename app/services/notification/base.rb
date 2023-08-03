@@ -19,8 +19,8 @@ module ::Notification
       @user = User.find(receiver_id)
     end
 
-    def self.call(**args)
-      new(**args).process
+    def self.call(**)
+      new(**).process
     end
 
     def process

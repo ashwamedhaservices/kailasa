@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Callable
-  def call(*args)
-    new(*args).call
+  def call(*)
+    new(*).call
   end
 end

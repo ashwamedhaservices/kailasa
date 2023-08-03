@@ -2,13 +2,12 @@
 
 module Users
   class Refer
+    extend Callable
+    include Service
+
     attr_reader :referral_code
 
     DEFAULT_REFER = %w[00001 00002 00003].freeze # Rails.application.credentials.referral.default_refers
-
-    def self.call(referral_code)
-      new(referral_code).call
-    end
 
     def initialize(referral_code)
       @referral_code = referral_code

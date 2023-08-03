@@ -3,6 +3,9 @@
 module Profiles
   # service to generate information visible on profile dashboard
   class DashboardService
+    extend Callable
+    include Service
+
     attr_reader :user, :profile
 
     def initialize(user, profile)
@@ -11,12 +14,12 @@ module Profiles
     end
 
     def call
-      return ServiceResponse.error(msg: 'empty profile') unless profile
-      return ServiceResponse.error(msg: 'empty user') unless profile
+      return error(msg: 'empty profile') unless profile
+      return error(msg: 'empty user') unless profile
 
       res = response
       Rails.logger.info("response is #{res}")
-      ServiceResponse.success(data: res)
+      success(data: res)
     end
 
     def response

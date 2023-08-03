@@ -10,8 +10,8 @@ module Utils
       @iters = options[:iters] || 1000
     end
 
-    def self.encrypt(**args)
-      new(**args).encrypt
+    def self.encrypt(**)
+      new(**).encrypt
     end
 
     def encrypt

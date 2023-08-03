@@ -10,14 +10,10 @@ module Payments
         super(payment)
       end
 
-      def self.call(payment, status)
-        new(payment, status).call
-      end
-
       def call
-        return ServiceResponse.success(data: payment) if payment.update(status: Payment.payu_status(status))
+        return success(data: payment) if payment.update(status: Payment.payu_status(status))
 
-        ServiceResponse.error(message: 'Payment update failed', data: payment)
+        error(message: 'Payment update failed', data: payment)
       end
     end
   end

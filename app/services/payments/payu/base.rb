@@ -3,6 +3,9 @@
 module Payments
   module Payu
     class Base
+      extend Callable
+      include Service
+
       attr_reader :payment
 
       def initialize(payment)

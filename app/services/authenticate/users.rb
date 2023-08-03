@@ -2,15 +2,14 @@
 
 module Authenticate
   class Users
+    extend Callable
+    include Service
+
     attr_reader :request, :token
 
     def initialize(request, token)
       @request = request
       @token = token
-    end
-
-    def self.call(*args)
-      new(*args).call
     end
 
     def call
@@ -21,9 +20,9 @@ module Authenticate
 
     def authenticate
       # custom checks to go here
-      return ServiceResponse.success(data: payload) if payload
+      return success(data: payload) if payload
 
-      ServiceResponse.error(msg: 'Authorization failed')
+      error(msg: 'Authorization failed')
     end
 
     def payload

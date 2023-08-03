@@ -5,10 +5,6 @@ module Payments
     class Status < Base
       attr_reader :payment
 
-      def self.call(payment)
-        new(payment).call
-      end
-
       def call
         return unless payment.finalized?
 

@@ -2,9 +2,8 @@
 
 module Users
   class ReferralCodeGenerator
-    def self.call
-      new.call
-    end
+    extend Callable
+    include Service
 
     def call
       generate_unique_code

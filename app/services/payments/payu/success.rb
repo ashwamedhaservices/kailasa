@@ -12,14 +12,10 @@ module Payments
         @options = options
       end
 
-      def self.call(payment, status, options)
-        new(payment, status, options).call
-      end
-
       def call
-        return ServiceResponse.success(data: payment) if payment.update(update_params)
+        return success(data: payment) if payment.update(update_params)
 
-        ServiceResponse.error(message: 'Payment update failed', data: payment)
+        error(message: 'Payment update failed', data: payment)
       end
 
       private

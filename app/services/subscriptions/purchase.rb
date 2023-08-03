@@ -2,11 +2,10 @@
 
 module Subscriptions
   class Purchase
-    attr_reader :user, :kind
+    extend Callable
+    include Service
 
-    def self.call(user, kind)
-      new(user, kind).call
-    end
+    attr_reader :user, :kind
 
     def initialize(user, kind)
       @user = user
@@ -16,9 +15,9 @@ module Subscriptions
     def call
       kind.eql?(:unsubscribed) ? unsubscribe : subscribe
       Rails.logger.info("Purchase Subscription #{kind} for user #{user.id}, subscription #{subscription}")
-      return ServiceResponse.success(data: subscription) if subscription.save
+      return success(data: subscription) if subscription.save
 
-      ServiceResponse.error(msg: 'unable to perform subscription action', data: subscription)
+      error(msg: 'unable to perform subscription action', data: subscription)
     end
 
     private

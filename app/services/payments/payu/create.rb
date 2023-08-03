@@ -3,6 +3,9 @@
 module Payments
   module Payu
     class Create
+      extend Callable
+      include Service
+
       attr_reader :user
 
       delegate :subscription, to: :user, prefix: true
@@ -11,16 +14,12 @@ module Payments
         @user = user
       end
 
-      def self.call(user)
-        new(user).call
-      end
-
       def call
         one_year_subscription_payment
         Payments::Payu::StatusJob.perform_in(30.minutes, payment.id)
-        return ServiceResponse.success(data: create_response) if payment.save!
+        return success(data: create_response) if payment.save!
 
-        ServiceResponse.error(msg: 'unable to create payment', data: payment)
+        error(msg: 'unable to create payment', data: payment)
       end
 
       private
