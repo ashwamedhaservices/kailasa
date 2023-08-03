@@ -4,7 +4,7 @@ module Api
   module V1
     class CoursesController < ApplicationController
       def index
-        @course = Course.all
+        @course = Course.all.to_a.reject { |c| c.name.match(/ to /) }
         render json: success(data: @course), status: :ok
       end
 
@@ -29,6 +29,11 @@ module Api
         else
           render json: failure(msg: @course.errors.full_messages.to_sentence), status: :bad_request
         end
+      end
+
+      def bundle
+        @course = Course.where("name like '%to%'")
+        render json: success(data: @course), status: :ok
       end
 
       private

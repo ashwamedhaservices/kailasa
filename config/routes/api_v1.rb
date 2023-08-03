@@ -23,6 +23,9 @@ namespace :api do
       end
     end
     resources :courses do
+      collection do
+        get 'bundle'
+      end
       resources :subjects, shallow: true do
         resources :chapters, shallow: true do
           resources :topics, shallow: true do
