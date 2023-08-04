@@ -31,7 +31,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_07_200555) do
   create_table "bank_accounts", charset: "utf8mb3", force: :cascade do |t|
     t.string "account_number"
     t.integer "status", limit: 1, default: 0
-    t.integer "type", limit: 1, default: 0
+    t.integer "account_type", limit: 1, default: 0
     t.string "ifsc"
     t.string "micr"
     t.string "bank"

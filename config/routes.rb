@@ -6,4 +6,5 @@ Rails.application.routes.draw do
   draw :admin_api_v1
   draw :partner_api_v1
   draw :interface_api_v1
+  draw :accounts
 end

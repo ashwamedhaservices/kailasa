@@ -26,4 +26,8 @@
 #
 class BankAccount < ApplicationRecord
   belongs_to :kyc
+
+  enum status: { created: 0, verified: 1 }
+  enum account_type: { savings: 0, current: 1 }
+  enum proof_type: { not_submitted: 0, cancelled_cheque: 1 }
 end

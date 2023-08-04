@@ -7,6 +7,18 @@ module RenderResponse
     alias_method :failure, :render_failure
   end
 
+  def json_success(msg: '', data: {})
+    render json: render_success(msg:, data:), status: :ok
+  end
+
+  def json_created(msg: '', data: {})
+    render json: render_success(msg:, data:), status: :created
+  end
+
+  def json_failure(msg: '', error_code: '', data: {})
+    render json: render_failure(msg:, error_code:, data:), status: :bad_request
+  end
+
   def render_success(msg: '', data: {})
     {
       success: true,
@@ -24,7 +36,7 @@ module RenderResponse
     }
   end
 
-  def errors_code(error)
+  def errors_code(error = nil)
     ::Errors::Handler.code(error)
   end
 end

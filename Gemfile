@@ -73,6 +73,7 @@ group :development, :test do
   gem 'meta_request'
   gem 'rack-mini-profiler', '~> 3.0'
   gem 'scout_apm'
+  gem 'solargraph'
 end
 
 group :development do

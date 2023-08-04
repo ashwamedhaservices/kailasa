@@ -5,7 +5,7 @@ class CreateBankAccounts < ActiveRecord::Migration[7.0]
     create_table :bank_accounts do |t|
       t.string :account_number
       t.integer :status, limit: 1, default: 0
-      t.integer :type, limit: 1, default: 0
+      t.integer :account_type, limit: 1, default: 0
       t.string :ifsc
       t.string :micr
       t.string :bank
