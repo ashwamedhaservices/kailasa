@@ -25,6 +25,7 @@ class Kyc < ApplicationRecord
   belongs_to :user
   has_many :bank_accounts, dependent: :restrict_with_error
   has_many :addresses, dependent: :restrict_with_error
+  has_many :nominees, dependent: :restrict_with_error
 
   enum status: { created: 0, verified: 1 }
   enum id_proof_type: { pan: 0, aadhaar: 1 }, _prefix: :id_prood

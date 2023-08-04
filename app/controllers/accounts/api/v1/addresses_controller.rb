@@ -14,7 +14,7 @@ module Accounts
         def create
           return json_failure(msg: 'Kyc does not exists', error_code: 'record_not_found') unless kyc
 
-          address = addresses.build(addresses_create_params)
+          address = addresses.build(address_create_params)
           if address.save
             json_created(msg: 'Address created successfully', data: address)
           else
@@ -26,7 +26,7 @@ module Accounts
           json_failure(msg: 'Kyc does not exists', error_code: 'record_not_found') unless kyc
           json_failure(msg: 'Address does not exists', error_code: 'record_not_found') unless address
 
-          if address.update(addresses_update_params)
+          if address.update(address_update_params)
             json_success(msg: 'Address updated successfully', data: address)
           else
             json_failure(msg: address.errors.full_messages.to_sentence)
@@ -51,12 +51,12 @@ module Accounts
           addresses.present?
         end
 
-        def addresses_create_params
+        def address_create_params
           params.require(:address).permit(:name, :address_type, :address_line_one, :address_line_two,
                                           :address_line_three, :city, :state, :country, :postal_code)
         end
 
-        def addresses_update_params
+        def address_update_params
           params.require(:address).permit(:name, :address_type, :address_line_one, :address_line_two,
                                           :address_line_three, :city, :state, :country, :postal_code)
         end

@@ -25,12 +25,11 @@
 #
 class Nominee < ApplicationRecord
   belongs_to :kyc
-  has_one :guardian, class_name: 'Nominee', foreign_key: 'guardian_id', dependent: :restrict_with_error,
-                     inverse_of: :guardian
+  belongs_to :guardian, class_name: 'Nominee', optional: true
+  belongs_to :address
 
   enum status: { active: 0, inactive: 1 }
-  enum type: { primary: 0, secondary: 1 }
-  enum relationship: { self: 0, spouse: 1, child: 2, parent: 3, other: 4 }, _prefix: :relationship_is
-  enum relationship_with_guardian: { self: 0, spouse: 1, child: 2, parent: 3, other: 4 },
-       _prefix: :relationship_with_guardian_is
+  enum nominee_type: { primary: 0, secondary: 1 }
+  enum relationship: { self: 0, spouse: 1, child: 2, parent: 3, other: 4 }, _prefix: :relation_is
+  enum relationship_with_guardian: { others: 0, parent: 1 }, _prefix: :guardian_is
 end

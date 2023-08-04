@@ -27,5 +27,5 @@ class Address < ApplicationRecord
   belongs_to :kyc
 
   enum status: { created: 0, active: 1, disabled: 2 }
-  enum address_type: { home: 0, work: 1, billing: 2, shipping: 3 }
+  enum address_type: { home: 0, work: 1, billing: 2, shipping: 3, nominee: 4 }
 end
