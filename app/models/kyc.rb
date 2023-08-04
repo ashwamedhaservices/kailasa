@@ -5,7 +5,7 @@
 # Table name: kycs
 #
 #  id                 :bigint           not null, primary key
-#  status             :integer          default(0)
+#  status             :integer          default("created")
 #  name               :string(255)
 #  id_proof_no        :string(255)
 #  id_proof_url       :string(255)
@@ -24,6 +24,7 @@
 class Kyc < ApplicationRecord
   belongs_to :user
   has_many :bank_accounts, dependent: :restrict_with_error
+  has_many :addresses, dependent: :restrict_with_error
 
   enum status: { created: 0, verified: 1 }
   enum id_proof_type: { pan: 0, aadhaar: 1 }, _prefix: :id_prood

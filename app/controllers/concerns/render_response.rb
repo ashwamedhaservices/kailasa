@@ -31,7 +31,7 @@ module RenderResponse
     {
       success: false,
       message: msg,
-      error_code:,
+      error_code: errors_code(error_code),
       data:
     }
   end

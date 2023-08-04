@@ -14,7 +14,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_07_200555) do
   create_table "addresses", charset: "utf8mb3", force: :cascade do |t|
     t.string "name"
     t.integer "status", limit: 1, default: 0
-    t.integer "type", limit: 1, default: 0
+    t.integer "address_type", limit: 1, default: 0
     t.string "address_line_one"
     t.string "address_line_two"
     t.string "address_line_three"
@@ -22,10 +22,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_07_200555) do
     t.string "state"
     t.string "country"
     t.string "postal_code"
-    t.bigint "kycs_id", null: false
+    t.bigint "kyc_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["kycs_id"], name: "index_addresses_on_kycs_id"
+    t.index ["kyc_id"], name: "index_addresses_on_kyc_id"
   end
 
   create_table "bank_accounts", charset: "utf8mb3", force: :cascade do |t|
@@ -106,18 +106,18 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_07_200555) do
   create_table "nominees", charset: "utf8mb3", force: :cascade do |t|
     t.string "name"
     t.integer "status", limit: 1, default: 0
-    t.integer "type", limit: 1, default: 0
+    t.integer "nominee_type", limit: 1, default: 0
     t.string "dob"
     t.integer "relationship", limit: 1
-    t.bigint "kycs_id", null: false
-    t.bigint "addresses_id"
+    t.bigint "kyc_id", null: false
+    t.bigint "address_id"
     t.bigint "guardian_id"
     t.integer "relationship_with_guardian", limit: 1
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["addresses_id"], name: "index_nominees_on_addresses_id"
+    t.index ["address_id"], name: "index_nominees_on_address_id"
     t.index ["guardian_id"], name: "index_nominees_on_guardian_id"
-    t.index ["kycs_id"], name: "index_nominees_on_kycs_id"
+    t.index ["kyc_id"], name: "index_nominees_on_kyc_id"
   end
 
   create_table "payment_gateways", charset: "utf8mb3", force: :cascade do |t|
@@ -158,10 +158,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_07_200555) do
     t.string "name_at_bank"
     t.integer "status", limit: 1, default: 0
     t.string "remarks"
-    t.bigint "bank_accounts_id", null: false
+    t.bigint "bank_account_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["bank_accounts_id"], name: "index_penny_drops_on_bank_accounts_id"
+    t.index ["bank_account_id"], name: "index_penny_drops_on_bank_account_id"
   end
 
   create_table "profiles", charset: "utf8mb3", force: :cascade do |t|
@@ -246,19 +246,19 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_07_200555) do
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 
-  add_foreign_key "addresses", "kycs", column: "kycs_id"
+  add_foreign_key "addresses", "kycs"
   add_foreign_key "bank_accounts", "kycs"
   add_foreign_key "chapters", "subjects"
   add_foreign_key "enrollments", "profiles"
   add_foreign_key "enrollments", "topics"
   add_foreign_key "kycs", "users"
-  add_foreign_key "nominees", "addresses", column: "addresses_id"
-  add_foreign_key "nominees", "kycs", column: "kycs_id"
+  add_foreign_key "nominees", "addresses"
+  add_foreign_key "nominees", "kycs"
   add_foreign_key "nominees", "nominees", column: "guardian_id"
   add_foreign_key "payments", "payment_gateways"
   add_foreign_key "payments", "subscriptions"
   add_foreign_key "payments", "users"
-  add_foreign_key "penny_drops", "bank_accounts", column: "bank_accounts_id"
+  add_foreign_key "penny_drops", "bank_accounts"
   add_foreign_key "profiles", "users"
   add_foreign_key "subjects", "courses"
   add_foreign_key "subscriptions", "users"

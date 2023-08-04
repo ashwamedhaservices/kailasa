@@ -6,14 +6,14 @@
 #
 #  id             :bigint           not null, primary key
 #  account_number :string(255)
-#  status         :integer          default(0)
-#  type           :integer          default(0)
+#  status         :integer          default("created")
+#  account_type   :integer          default("savings")
 #  ifsc           :string(255)
 #  micr           :string(255)
 #  bank           :string(255)
 #  branch         :string(255)
 #  city           :string(255)
-#  proof_type     :integer          default(0)
+#  proof_type     :integer          default("not_submitted")
 #  proof_url      :string(255)
 #  kyc_id         :bigint
 #  created_at     :datetime         not null

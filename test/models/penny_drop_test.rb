@@ -4,18 +4,18 @@
 #
 # Table name: penny_drops
 #
-#  id               :bigint           not null, primary key
-#  name             :string(255)
-#  name_at_bank     :string(255)
-#  status           :integer          default(0)
-#  remarks          :string(255)
-#  bank_accounts_id :bigint           not null
-#  created_at       :datetime         not null
-#  updated_at       :datetime         not null
+#  id              :bigint           not null, primary key
+#  name            :string(255)
+#  name_at_bank    :string(255)
+#  status          :integer          default(0)
+#  remarks         :string(255)
+#  bank_account_id :bigint           not null
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
 #
 # Indexes
 #
-#  index_penny_drops_on_bank_accounts_id  (bank_accounts_id)
+#  index_penny_drops_on_bank_account_id  (bank_account_id)
 #
 require 'test_helper'
 

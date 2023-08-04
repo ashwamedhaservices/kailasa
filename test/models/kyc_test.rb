@@ -5,7 +5,7 @@
 # Table name: kycs
 #
 #  id                 :bigint           not null, primary key
-#  status             :integer          default(0)
+#  status             :integer          default("created")
 #  name               :string(255)
 #  id_proof_no        :string(255)
 #  id_proof_url       :string(255)
