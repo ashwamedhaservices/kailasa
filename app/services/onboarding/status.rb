@@ -7,7 +7,7 @@ module Onboarding
 
     attr_reader :user, :status, :flow
 
-    ONBOARDING_FLOW = %i[id_proof address address_proof bank_account nominee].freeze
+    ONBOARDING_FLOW = %i[pan pan_upload address address_proof_upload bank bank_status nominee].freeze
 
     def initialize(user)
       @user = user
@@ -41,33 +41,45 @@ module Onboarding
       @address ||= kyc&.addresses&.first
     end
 
-    def bank_account
-      @bank_account ||= kyc&.bank_accounts&.first
+    def bank
+      @bank ||= kyc&.bank_accounts&.first
+    end
+
+    def bank_status
+      true
     end
 
     def nominee
       @nominee ||= kyc&.nominees&.first
     end
 
-    def id_proof
-      kyc.present? && kyc.id_proof_no.present? && kyc.id_proof_type.present? && kyc.id_proof_url.present?
+    def kyc_present
+      @kyc_present ||= kyc.present?
     end
 
-    def address_proof
-      kyc.present? && kyc.address_proof_no.present? && kyc.address_proof_type.present? && kyc.address_proof_url.present?
+    def pan
+      kyc_present && kyc.id_proof_no.present?
+    end
+
+    def pan_upload
+      kyc_present && kyc.id_proof_type.present? && kyc.id_proof_url.present?
+    end
+
+    def address_proof_upload
+      kyc_present && kyc.address_proof_no.present? && kyc.address_proof_type.present? && kyc.address_proof_url.present?
     end
 
     def checklist_item_success(item)
       {
         status: true,
-        page: item
+        page: item.to_s.gsub('_', '-')
       }
     end
 
     def checklist_item_failure(item)
       {
         status: false,
-        page: item
+        page: item.to_s.gsub('_', '-')
       }
     end
 
