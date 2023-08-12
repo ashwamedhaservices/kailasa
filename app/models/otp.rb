@@ -27,7 +27,7 @@ class Otp
            }).value
   end
 
-  def otp_value
+  def self.otp_value
     return 111_111 if Rails.env.development?
 
     (SecureRandom.random_number(9e5) + 1e5).to_i
