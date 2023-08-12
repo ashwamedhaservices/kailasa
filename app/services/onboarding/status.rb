@@ -58,15 +58,15 @@ module Onboarding
     end
 
     def pan
-      kyc_present && kyc.id_proof_no.present?
+      kyc_present && kyc.id_proof_no.present? && kyc.id_proof_type.present?
     end
 
     def pan_upload
-      kyc_present && kyc.id_proof_type.present? && kyc.id_proof_url.present?
+      kyc_present # && kyc.id_proof_type.present? #&& kyc.id_proof_url.present?
     end
 
     def address_proof_upload
-      kyc_present && kyc.address_proof_no.present? && kyc.address_proof_type.present? && kyc.address_proof_url.present?
+      kyc_present && kyc.address_proof_no.present? && kyc.address_proof_type.present? # && kyc.address_proof_url.present?
     end
 
     def checklist_item_success(item)
