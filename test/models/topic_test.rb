@@ -18,6 +18,11 @@
 #  streaming_url  :string(255)
 #  author_id      :bigint
 #
+# Indexes
+#
+#  index_topics_on_author_id   (author_id)
+#  index_topics_on_chapter_id  (chapter_id)
+#
 require 'test_helper'
 
 class TopicTest < ActiveSupport::TestCase

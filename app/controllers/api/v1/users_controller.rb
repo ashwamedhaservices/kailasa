@@ -73,7 +73,7 @@ module Api
       end
 
       # GET accounts/api/v1/users/referrer
-      def referrer
+      def referrer # rubocop:disable Metrics/AbcSize
         return render json: success(msg: 'referral code not found') unless params[:referral_code]
 
         referrer_user = if params[:referral_code].length > 7
@@ -86,6 +86,7 @@ module Api
         render json: success(msg: 'referrer found', data: { name: referrer_user.full_name }), status: :ok
       end
 
+      # GET api/v1/users/subscribed
       def subscribed
         render json: success(data: current_user.subscribed), status: :ok
       end

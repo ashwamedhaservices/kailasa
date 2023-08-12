@@ -3,14 +3,13 @@
 module Referral
   module Credit
     class Processor
+      extend Callable
+      include Service
+
       attr_reader :user, :referee
 
       def initialize(user)
         @referee = @user = user
-      end
-
-      def self.call(user)
-        new(user).call
       end
 
       def call # rubocop:disable Metrics/*

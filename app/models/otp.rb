@@ -22,9 +22,15 @@ class Otp
              user_id: user.id,
              receiver: user.mobile_number,
              receiver_type: 'mobile_number',
-             value: (SecureRandom.random_number(9e5) + 1e5).to_i,
+             value: otp_value,
              otp_type: type
            }).value
+  end
+
+  def self.otp_value
+    return 111_111 if Rails.env.development?
+
+    (SecureRandom.random_number(9e5) + 1e5).to_i
   end
 
   def self.verify!(otp_value, options)

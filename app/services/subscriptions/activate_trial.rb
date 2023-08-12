@@ -2,13 +2,12 @@
 
 module Subscriptions
   class ActivateTrial
+    extend Callable
+    include Service
+
     attr_reader :user
 
     TRIAL_TYPE = Rails.application.credentials.subscriptions.trial_type.to_sym
-
-    def self.call(user)
-      new(user).call
-    end
 
     def initialize(user)
       @user = user

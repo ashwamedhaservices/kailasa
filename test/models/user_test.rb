@@ -22,6 +22,12 @@
 #  updated_at      :datetime         not null
 #  subscribed      :boolean          default(FALSE), not null
 #
+# Indexes
+#
+#  index_users_on_mobile_number  (mobile_number) UNIQUE
+#  index_users_on_referrer_id    (referrer_id)
+#  index_users_on_state          (state)
+#
 require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase

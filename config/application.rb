@@ -31,6 +31,7 @@ module Kailasa
     # the framework and any gems in your application.
     config.eager_load_paths << config.root.join('lib')
     config.payouts = config_for(:payouts)
+    config.redis = config_for(:redis)
     config.generators do |g|
       g.orm :active_record
     end

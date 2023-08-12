@@ -16,6 +16,11 @@
 #  streaming_url  :string(255)
 #  author_id      :bigint
 #
+# Indexes
+#
+#  index_topics_on_author_id   (author_id)
+#  index_topics_on_chapter_id  (chapter_id)
+#
 
 # This model initially had no columns defined. If you add columns to the
 # model remove the "{}" from the fixture names and add the columns immediately

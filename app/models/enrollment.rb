@@ -15,6 +15,12 @@
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
 #
+# Indexes
+#
+#  index_enrollments_on_profile_id               (profile_id)
+#  index_enrollments_on_profile_id_and_topic_id  (profile_id,topic_id) UNIQUE
+#  index_enrollments_on_topic_id                 (topic_id)
+#
 class Enrollment < ApplicationRecord
   include Enrollments::Associatable
 
