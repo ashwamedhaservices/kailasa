@@ -5,7 +5,7 @@
 #  id                         :bigint           not null, primary key
 #  name                       :string(255)
 #  status                     :integer          default("active")
-#  nominee_type               :integer          default(0)
+#  nominee_type               :integer          default("primary")
 #  dob                        :string(255)
 #  relationship               :integer
 #  kyc_id                     :bigint           not null
