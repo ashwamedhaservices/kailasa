@@ -24,5 +24,7 @@
 #  index_topics_on_chapter_id  (chapter_id)
 #
 class Topic < ApplicationRecord
-  include Topics::Associatable
+  belongs_to :chapter
+  has_many :enrollments, dependent: :restrict_with_error
+  has_many :question_papers, as: :testable, dependent: :nullify
 end

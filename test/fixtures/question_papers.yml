@@ -1,12 +1,17 @@
 # == Schema Information
 #
-# Table name: questions
+# Table name: question_papers
 #
 #  id            :bigint           not null, primary key
+#  name          :string(255)      not null
+#  testable_type :string(255)      not null
+#  testable_id   :bigint           not null
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
-#  value         :string(255)
-#  question_type :integer          default("mcq")
+#
+# Indexes
+#
+#  index_question_papers_on_testable  (testable_type,testable_id)
 #
 
 # This model initially had no columns defined. If you add columns to the

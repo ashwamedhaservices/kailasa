@@ -2,7 +2,7 @@
 
 module Api
   module V1
-    class QuestionSetsController < ApplicationController
+    class QuestionPapersController < ApplicationController
     end
   end
 end

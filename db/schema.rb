@@ -185,13 +185,24 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_29_191137) do
     t.index ["user_id"], name: "index_profiles_on_user_id"
   end
 
-  create_table "question_sets", charset: "utf8mb3", force: :cascade do |t|
+  create_table "question_paper_questions", charset: "utf8mb3", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "question_number"
+    t.bigint "question_paper_id", null: false
+    t.bigint "question_id", null: false
+    t.index ["question_id"], name: "index_question_paper_questions_on_question_id"
+    t.index ["question_paper_id"], name: "index_question_paper_questions_on_question_paper_id"
+  end
+
+  create_table "question_papers", charset: "utf8mb3", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "name", null: false
-    t.string "questionable_type", null: false
-    t.bigint "questionable_id", null: false
-    t.index ["questionable_type", "questionable_id"], name: "index_question_sets_on_questionable"
+    t.text "notes"
+    t.string "testable_type", null: false
+    t.bigint "testable_id", null: false
+    t.index ["testable_type", "testable_id"], name: "index_question_papers_on_testable"
   end
 
   create_table "questions", charset: "utf8mb3", force: :cascade do |t|
@@ -287,6 +298,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_29_191137) do
   add_foreign_key "payments", "users"
   add_foreign_key "penny_drops", "bank_accounts"
   add_foreign_key "profiles", "users"
+  add_foreign_key "question_paper_questions", "question_papers"
+  add_foreign_key "question_paper_questions", "questions"
   add_foreign_key "subjects", "courses"
   add_foreign_key "subscriptions", "users"
   add_foreign_key "topics", "chapters"
