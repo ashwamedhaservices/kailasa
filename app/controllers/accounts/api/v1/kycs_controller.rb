@@ -42,7 +42,7 @@ module Accounts
         end
 
         def kyc_update_params
-          params.require(:kyc).permit(:name, :id_proof_no, :id_proof_url, :id_proof_type, :address_proof_no,
+          params.require(:kyc).permit(:name, :status, :id_proof_no, :id_proof_url, :id_proof_type, :address_proof_no,
                                       :address_proof_url, :address_proof_type)
         end
       end

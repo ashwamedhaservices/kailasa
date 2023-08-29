@@ -1,0 +1,30 @@
+default: &default
+  mrp: 500.0
+  dp: 369.0
+  bv_value: 150.0
+  bv_distribution_value: 0.96 # of bv_value
+  bv_reward: 0.04 # of bv_value
+  width: -1
+  depth: 8
+  level_payout:
+    1: 0.4
+    2: 0.12
+    3: 0.12
+    4: 0.06
+    5: 0.06
+    6: 0.06
+    7: 0.06
+    8: 0.08
+  tds: 0.05
+
+development: &development
+  <<: *default
+
+staging: &staging
+  <<: *default
+
+test: &test
+  <<: *default
+
+production: &production
+  <<: *default

@@ -26,7 +26,7 @@
 class Nominee < ApplicationRecord
   belongs_to :kyc
   belongs_to :guardian, class_name: 'Nominee', optional: true
-  belongs_to :address
+  belongs_to :address, optional: true
 
   enum status: { active: 0, inactive: 1 }
   enum nominee_type: { primary: 0, secondary: 1 }
