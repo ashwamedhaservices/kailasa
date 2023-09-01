@@ -40,6 +40,11 @@ namespace :api do
         post 'return_url'
       end
     end
+    resources :question_papers, only: %i[] do
+      collection do
+        get ':testable_type/:testable_id', action: :question_paper_for_testable
+      end
+    end
   end
 end
 

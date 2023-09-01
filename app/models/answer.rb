@@ -18,4 +18,8 @@
 #
 class Answer < ApplicationRecord
   belongs_to :question
+
+  def to_response
+    { id:, value:, correct:, explanation: }
+  end
 end

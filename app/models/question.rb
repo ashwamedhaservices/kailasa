@@ -16,4 +16,8 @@ class Question < ApplicationRecord
   has_many :question_papers, through: :question_paper_questions
 
   enum :question_type, %i[mcq passage one_word]
+
+  def to_response
+    { id:, value:, question_type: }
+  end
 end
