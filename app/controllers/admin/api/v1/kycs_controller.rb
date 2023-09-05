@@ -17,6 +17,11 @@ module Admin
           json_success(data: res)
         end
 
+        def show
+          @kyc = Kyc.find(params[:id])
+          render json: success(data: @kyc), status: :ok
+        end
+
         private
 
         def all_kyc

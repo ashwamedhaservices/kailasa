@@ -32,6 +32,11 @@ module Api
         end
       end
 
+      def question_paper
+        @topic = Topic.find(params[:id])
+        @question_set = @topic
+      end
+
       private
 
       def generate_topic
