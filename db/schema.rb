@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_29_191137) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_07_200555) do
   create_table "addresses", charset: "utf8mb3", force: :cascade do |t|
     t.string "name"
     t.integer "status", limit: 1, default: 0
@@ -26,16 +26,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_29_191137) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["kyc_id"], name: "index_addresses_on_kyc_id"
-  end
-
-  create_table "answers", charset: "utf8mb3", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.boolean "correct", default: false, null: false
-    t.text "value"
-    t.text "explanation"
-    t.bigint "question_id", null: false
-    t.index ["question_id"], name: "index_answers_on_question_id"
   end
 
   create_table "bank_accounts", charset: "utf8mb3", force: :cascade do |t|
@@ -284,7 +274,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_29_191137) do
   end
 
   add_foreign_key "addresses", "kycs"
-  add_foreign_key "answers", "questions"
   add_foreign_key "bank_accounts", "kycs"
   add_foreign_key "chapters", "subjects"
   add_foreign_key "enrollments", "profiles"
