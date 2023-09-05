@@ -3,7 +3,7 @@
 module Admin
   module Api
     module V1
-      class AsnwersController < ApplicationController
+      class AnswersController < ApplicationController
         def index
           return answer_not_found unless answer
 
