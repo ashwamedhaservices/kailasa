@@ -10,7 +10,10 @@ module AuthorizationHandler
   delegate :data, to: :result
 
   def authorize_user!
-    return render json: failure(msg: 'Authentication failed', error_code: 'unauthorized'), status: :unauthorized unless jwt_token
+    unless jwt_token
+      return render json: failure(msg: 'Authentication failed', error_code: 'unauthorized'),
+                    status: :unauthorized
+    end
 
     @result = Authenticate::Users.call(request, jwt_token)
     unless result.success

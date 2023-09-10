@@ -26,8 +26,8 @@ module Accounts
         end
 
         def update
-          json_failure(msg: 'Kyc does not exists', error_code: 'record_not_found') unless kyc
-          json_failure(msg: 'Bank Account does not exists', error_code: 'record_not_found') unless bank_account
+          return json_failure(msg: 'Kyc does not exists', error_code: 'record_not_found') unless kyc
+          return json_failure(msg: 'Bank Account does not exists', error_code: 'record_not_found') unless bank_account
 
           if bank_account.update(bank_account_update_params)
             json_success(msg: 'Bank Account updated successfully', data: bank_account)

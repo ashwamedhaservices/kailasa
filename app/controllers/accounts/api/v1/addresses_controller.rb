@@ -23,8 +23,8 @@ module Accounts
         end
 
         def update
-          json_failure(msg: 'Kyc does not exists', error_code: 'record_not_found') unless kyc
-          json_failure(msg: 'Address does not exists', error_code: 'record_not_found') unless address
+          return json_failure(msg: 'Kyc does not exists', error_code: 'record_not_found') unless kyc
+          return json_failure(msg: 'Address does not exists', error_code: 'record_not_found') unless address
 
           if address.update(address_update_params)
             json_success(msg: 'Address updated successfully', data: address)
