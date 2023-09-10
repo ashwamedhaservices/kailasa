@@ -33,10 +33,10 @@ scope :accounts do
   namespace :admin do
     namespace :api do
       namespace :v1 do
-        resources :kycs, only: %i[index show]
-        resources :addresses, only: %i[show]
-        resources :nominees, only: %i[show]
-        resources :bank_accounts, only: %i[show]
+        resources :kycs, only: %i[index show update]
+        resources :addresses, only: %i[show update]
+        resources :nominees, only: %i[show update]
+        resources :bank_accounts, only: %i[show update]
       end
     end
   end
