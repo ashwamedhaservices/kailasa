@@ -12,7 +12,7 @@ module Admin
             users_all_data[:kyc] = kyc
             users_all_data[:bank_accounts] = kyc.bank_accounts
             users_all_data[:nominees] = kyc.nominees
-            users_all_data[:address] = kyc.addresses
+            users_all_data[:addresses] = kyc.addresses
             res << users_all_data
           end
           json_success(data: res)
