@@ -25,6 +25,11 @@ scope :learnings do
           end
         end
         resources :answers, only: %i[index create update show]
+        resources :question_papers, only: %i[create show] do
+          member do
+            post :question
+          end
+        end
       end
     end
   end

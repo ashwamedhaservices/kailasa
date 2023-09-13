@@ -24,4 +24,21 @@ class QuestionPaper < ApplicationRecord
   def to_response
     { name:, notes: }
   end
+
+  def questions_with_answers
+    response = {}
+    question_number = 1
+    questions&.includes(:answers)&.order(:question_number)&.each do |question|
+      response[question_number] = question.to_response.merge(answers: [])
+      question.answers.each do |answer|
+        response[question_number][:answers] << answer.to_response
+      end
+      question_number += 1
+    end
+    response
+  end
+
+  def add_question(question_no, question)
+    question_paper_questions.create!(question_number: question_no, question:)
+  end
 end

@@ -65,9 +65,26 @@ class User < ApplicationRecord
 
   def earnings
     {
-      balance: ReferralCredit.where(user_id: id, status: 'credited').sum(:amount),
-      processing: ReferralCredit.where(user_id: id, status: 'processed').sum(:amount),
-      withdrawn: ReferralCredit.where(user_id: id, status: 'paid').sum(:amount)
+      balance:,
+      withdrawable_fund:,
+      processing:,
+      withdrawn:
     }
+  end
+
+  def balance
+    @balance ||= ReferralCredit.where(user_id: id, status: 'credited').sum(:amount)
+  end
+
+  def withdrawable_fund
+    @withdrawable_fund ||= balance / 1.5
+  end
+
+  def processing
+    ReferralCredit.where(user_id: id, status: 'processed').sum(:amount)
+  end
+
+  def withdrawn
+    ReferralCredit.where(user_id: id, status: 'paid').sum(:amount)
   end
 end

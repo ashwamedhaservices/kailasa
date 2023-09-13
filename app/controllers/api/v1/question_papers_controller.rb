@@ -8,7 +8,7 @@ module Api
           return render json: failure(msg: 'question paper not found', error_code: 'record_not_found'),
                         status: :not_found
         end
-        render json: success(data: build_question_paper), status: :ok
+        render json: success(data: testable_question_paper.questions_with_answers), status: :ok
       end
 
       private
@@ -17,20 +17,7 @@ module Api
         @testable_question_paper ||= QuestionPaper.find_by(
           testable_id: params[:testable_id],
           testable_type: params[:testable_type]&.camelcase
-        )&.questions&.includes(:answers)&.order(:question_number)
-      end
-
-      def build_question_paper
-        response = {}
-        question_number = 1
-        testable_question_paper.each do |question|
-          response[question_number] = question.to_response.merge(answers: [])
-          question.answers.each do |answer|
-            response[question_number][:answers] << answer.to_response
-          end
-          question_number += 1
-        end
-        response
+        )
       end
     end
   end
