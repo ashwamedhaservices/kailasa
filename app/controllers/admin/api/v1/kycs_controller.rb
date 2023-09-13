@@ -7,13 +7,7 @@ module Admin
         def index
           res = []
           all_kyc.each do |kyc|
-            users_all_data = {}
-            users_all_data[:user] = kyc.user
-            users_all_data[:kyc] = kyc
-            users_all_data[:bank_accounts] = kyc.bank_accounts
-            users_all_data[:nominees] = kyc.nominees
-            users_all_data[:addresses] = kyc.addresses
-            res << users_all_data
+            res << all_user_data(kyc)
           end
           json_success(data: res)
         end
@@ -51,6 +45,16 @@ module Admin
         def kyc_update_params
           params.require(:kyc).permit(:name, :status, :id_proof_no, :id_proof_url, :id_proof_type, :address_proof_no,
                                       :address_proof_url, :address_proof_type)
+        end
+
+        def all_user_data(kyc)
+          {
+            user: kyc.user,
+            kyc:,
+            bank_accounts: kyc.bank_accounts,
+            nominees: kyc.nominees,
+            addresses: kyc.addresses
+          }
         end
       end
     end

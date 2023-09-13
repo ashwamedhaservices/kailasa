@@ -46,6 +46,17 @@ module Partner
         # def earning
         # end
 
+        def network_report
+          [2, 3, 4, 5, 6, 7].each do |i|
+            break unless users_network_report[i - 1]
+
+            users_network_report[i - 1].each do |user|
+              users_network_report[i] = users_network_report.fetch(i, []).concat(user.referees)
+            end
+          end
+          json_success(msg: 'the report is generated', data: users_network_report)
+        end
+
         private
 
         def payout_info
@@ -125,6 +136,13 @@ module Partner
 
         def partner_user_referees
           @partner_user_referees ||= partner_user.referees
+        end
+
+        def users_network_report
+          {
+            0 => [current_user],
+            1 => current_user.referees.to_a
+          }
         end
       end
     end

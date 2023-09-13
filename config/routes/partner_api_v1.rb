@@ -6,6 +6,7 @@ namespace :partner do
       resources :accounts, only: %i[index] do
         collection do
           get :network
+          get :network_report
         end
       end
     end
