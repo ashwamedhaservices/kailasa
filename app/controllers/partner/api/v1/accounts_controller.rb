@@ -51,7 +51,8 @@ module Partner
             break unless users_network_report[i - 1]
 
             users_network_report[i - 1].each do |user|
-              users_network_report[i] = users_network_report.fetch(i, []).concat(user.referees)
+              users_network_report[i] ||= []
+              users_network_report[i].concat(user.referees)
             end
           end
           json_success(msg: 'the report is generated', data: users_network_report)
@@ -139,7 +140,7 @@ module Partner
         end
 
         def users_network_report
-          {
+          @users_network_report ||= {
             0 => [current_user],
             1 => current_user.referees.to_a
           }
