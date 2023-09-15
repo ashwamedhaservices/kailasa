@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_14_150556) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_15_163409) do
   create_table "addresses", charset: "utf8mb3", force: :cascade do |t|
     t.string "name"
     t.integer "status", limit: 1, default: 0
@@ -111,6 +111,20 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_14_150556) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_kycs_on_user_id"
+  end
+
+  create_table "meetings", charset: "utf8mb3", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "name"
+    t.string "description"
+    t.integer "status", limit: 1, default: 0
+    t.integer "provider", limit: 1, default: 0
+    t.string "id_at_provider"
+    t.string "url"
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.index ["start_time", "end_time"], name: "index_meetings_on_start_time_and_end_time"
   end
 
   create_table "nominees", charset: "utf8mb3", force: :cascade do |t|
