@@ -17,6 +17,7 @@
 #  video_duration :bigint
 #  streaming_url  :string(255)
 #  author_id      :bigint
+#  notes_url      :string(255)
 #
 # Indexes
 #
@@ -27,4 +28,8 @@ class Topic < ApplicationRecord
   belongs_to :chapter
   has_many :enrollments, dependent: :restrict_with_error
   has_many :question_papers, as: :testable, dependent: :nullify
+
+  def question_paper
+    question_papers.last.questions_with_answers
+  end
 end

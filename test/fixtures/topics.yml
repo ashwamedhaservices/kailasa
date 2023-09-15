@@ -15,6 +15,7 @@
 #  video_duration :bigint
 #  streaming_url  :string(255)
 #  author_id      :bigint
+#  notes_url      :string(255)
 #
 # Indexes
 #

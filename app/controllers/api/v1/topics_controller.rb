@@ -33,11 +33,16 @@ module Api
       end
 
       def question_paper
-        @topic = Topic.find(params[:id])
-        @question_set = @topic
+        return topic_not_found unless topic
+
+        json_success(data: topic.question_paper)
       end
 
       private
+
+      def topic
+        @topic ||= Topic.find(params[:id])
+      end
 
       def generate_topic
         @topic = @chapter.topics.new(topic_create_params)
@@ -53,6 +58,10 @@ module Api
 
       def topic_update_params
         params.require(:topic).permit(:name, :description, :image_url, :video_url, :content_url, :video_duration)
+      end
+
+      def topic_not_found
+        json_failure(msg: 'Topic not found', error_code: 'record_not_found')
       end
     end
   end

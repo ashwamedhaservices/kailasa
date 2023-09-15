@@ -30,6 +30,9 @@ namespace :api do
         resources :chapters, shallow: true do
           resources :topics, shallow: true do
             resources :enrollments, shallow: true
+            member do
+              get :question_paper
+            end
           end
         end
       end
