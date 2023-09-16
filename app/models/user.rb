@@ -66,18 +66,17 @@ class User < ApplicationRecord
   def earnings
     {
       balance:,
-      withdrawable_fund:,
       processing:,
-      withdrawn:
+      withdrawn:,
+      credited_points:,
+      withdrawable_amount:,
+      withdrawn_points:,
+      remaining_points:
     }
   end
 
   def balance
     @balance ||= ReferralCredit.where(user_id: id, status: 'credited').sum(:amount)
-  end
-
-  def withdrawable_fund
-    @withdrawable_fund ||= balance / 1.5
   end
 
   def processing
@@ -86,5 +85,21 @@ class User < ApplicationRecord
 
   def withdrawn
     ReferralCredit.where(user_id: id, status: 'paid').sum(:amount)
+  end
+
+  def credited_points
+    @credited_points ||= ReferralCredit.where(user_id: id, status: 'credited').sum(:amount)
+  end
+
+  def withdrawable_amount
+    @withdrawable_amount ||= credited_points / 1.5
+  end
+
+  def withdrawn_points
+    @withdrawn_points ||= ReferralCredit.where(user_id: id, status: 'paid').sum(:amount)
+  end
+
+  def remaining_points
+    balance - withdrawn
   end
 end
