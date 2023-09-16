@@ -92,7 +92,7 @@ class User < ApplicationRecord
   end
 
   def withdrawable_amount
-    @withdrawable_amount ||= credited_points / 1.5
+    @withdrawable_amount ||= remaining_points / 1.5
   end
 
   def withdrawn_points
@@ -100,6 +100,6 @@ class User < ApplicationRecord
   end
 
   def remaining_points
-    balance - withdrawn
+    @remaining_points ||= credited_points - withdrawn_points
   end
 end
