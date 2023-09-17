@@ -23,6 +23,6 @@ class Course < ApplicationRecord
   include Courses::Associatable
 
   enum :status, %i[created published archived]
-  enum :level, %i[primary secondary higher_secondary bachelors masters professional]
+  enum :level, %i[primary secondary higher_secondary bachelors masters professional life_skill]
   enum :language, %i[unspecified english hindi kannada]
 end

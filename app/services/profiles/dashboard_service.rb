@@ -28,7 +28,8 @@ module Profiles
         profile:,
         popular_courses: Course.first(5),
         courses: all_courses_by_level,
-        enrollment: profile.enrollments.order(last_active_at: :desc).first(3)
+        enrollment: profile.enrollments.order(last_active_at: :desc).first(3),
+        life_skills: Course.life_skill
       }
     end
 
@@ -36,10 +37,11 @@ module Profiles
     def all_courses_by_level
       {}.tap do |r|
         Course.find_each do |c|
-          if r[c.level]
-            r[c.level] << c
+          level = c.level.to_s.gsub('_', ' ')
+          if r[level]
+            r[level] << c
           else
-            r[c.level] = [c]
+            r[level] = [c]
           end
         end
       end
