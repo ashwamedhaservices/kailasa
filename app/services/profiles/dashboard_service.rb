@@ -34,10 +34,11 @@ module Profiles
     end
 
     # TODO: cache it
-    def all_courses_by_level
+    def all_courses_by_level # rubocop:disable Metrics/MethodLength
       {}.tap do |r|
         Course.find_each do |c|
           level = c.level.to_s.gsub('_', ' ')
+          c.level = level
           if r[level]
             r[level] << c
           else

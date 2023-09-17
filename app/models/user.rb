@@ -92,7 +92,7 @@ class User < ApplicationRecord
   end
 
   def withdrawable_amount
-    @withdrawable_amount ||= remaining_points / 1.5
+    @withdrawable_amount ||= (remaining_points / 1.5).round(2)
   end
 
   def withdrawn_points
