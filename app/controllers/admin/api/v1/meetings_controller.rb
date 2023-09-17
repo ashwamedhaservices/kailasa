@@ -16,6 +16,8 @@ module Admin
           json_success(msg: 'The meeting was created successfully', data: meeting)
         end
 
+        # show meetings that are yet to start not have not ended
+
         private
 
         def available_meetings

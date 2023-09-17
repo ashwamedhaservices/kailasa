@@ -28,7 +28,8 @@ module Profiles
         profile:,
         popular_courses: Course.first(5),
         courses: all_courses_by_level,
-        enrollment: profile.enrollments.order(last_active_at: :desc).first(3)
+        enrollment: profile.enrollments.order(last_active_at: :desc).first(3),
+        life_skills: Course.life_skill
       }
     end
 
