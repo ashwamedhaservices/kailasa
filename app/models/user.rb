@@ -77,7 +77,7 @@ class User < ApplicationRecord
   end
 
   def withdrawable_fund
-    @withdrawable_fund ||= balance / 1.5
+    @withdrawable_fund ||= balance * 1.5
   end
 
   def processing

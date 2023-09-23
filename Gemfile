@@ -62,6 +62,10 @@ gem 'paper_trail'
 gem 'strong_migrations'
 gem 'symmetric-encryption'
 
+# PDF response
+gem 'wicked_pdf', '1.4.0'
+gem 'wkhtmltopdf-binary'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'brakeman'

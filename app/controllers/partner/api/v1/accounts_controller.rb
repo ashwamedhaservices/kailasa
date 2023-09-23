@@ -47,15 +47,11 @@ module Partner
         # end
 
         def network_report
-          [2, 3, 4, 5, 6, 7].each do |i|
-            break unless users_network_report[i - 1]
-
-            users_network_report[i - 1].each do |user|
-              users_network_report[i] ||= []
-              users_network_report[i].concat(user.referees)
-            end
+          calculate_network_report
+          respond_to do |format|
+            format.json { json_success(data: { user: current_user, network: referred_users_by_level }) }
+            format.pdf { render pdf: 'network_report', zoom: 1.5 }
           end
-          json_success(msg: 'the report is generated', data: users_network_report)
         end
 
         private
@@ -139,11 +135,27 @@ module Partner
           @partner_user_referees ||= partner_user.referees
         end
 
-        def users_network_report
-          @users_network_report ||= {
-            0 => [current_user],
-            1 => current_user.referees.to_a
-          }
+        def users_entire_network
+          @users_entire_network ||= ReferralCredit.where(user_id: current_user.id).pluck(:level, :subscribed_user_id)
+        end
+
+        def referred_user_ids_by_level
+          @referred_user_ids_by_level ||= { '1': [], '2': [], '3': [], '4': [], '5': [], '6': [], '7': [], '8': [] }
+        end
+
+        def referred_users_by_level
+          @referred_users_by_level ||= { '1': [], '2': [], '3': [], '4': [], '5': [], '6': [], '7': [], '8': [] }
+        end
+
+        def calculate_network_report
+          users_entire_network.each do |level_and_id|
+            referred_user_ids_by_level[level_and_id[0].to_sym] << level_and_id[1]
+          end
+          referred_user_ids_by_level.each do |level, ids|
+            next unless ids.size.positive?
+
+            referred_users_by_level[level] = User.where(id: ids).to_a
+          end
         end
       end
     end

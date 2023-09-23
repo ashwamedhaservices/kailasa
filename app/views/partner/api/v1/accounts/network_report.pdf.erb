@@ -1,0 +1,25 @@
+<html>
+<body>
+<p>
+<h1> User Report </h1>
+  <h2>User</h2>
+  Name: <%=@current_user.full_name%><br>
+  Referral Code: <%=@current_user.referral_code%><br>
+  Mobile Number: <%=@current_user.mobile_number%><br>
+
+<%@referred_users_by_level.each do |level, users|%>
+  <%if users.present?%>
+    <h2>Level: <%=level%></h2>
+    <%count = 1%>
+    <%users.each do |user|%>
+      Count: <%=count%>
+      Name: <%=user.full_name%><br>
+      Referral Code: <%=user.referral_code%><br>
+      Mobile Number: <%=user.mobile_number%><br>
+      <%count += 1%><br>
+    <% end %>
+  <%end%>
+<% end %>
+</p>
+</body>
+</html>
