@@ -15,7 +15,7 @@ class Question < ApplicationRecord
   has_many :question_paper_questions, dependent: :destroy
   has_many :question_papers, through: :question_paper_questions
 
-  enum :question_type, %i[mcq passage one_word]
+  enum :question_type, %i[samcq mamcq passage one_word]
 
   def to_response
     { id:, value:, question_type: }

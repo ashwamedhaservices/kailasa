@@ -29,6 +29,11 @@ module Admin
           json_failure(msg: e.message, error_code: 'standard_error')
         end
 
+        # list all question papers based on testable
+        # update question paper
+        # delete api for question and answers
+        # active inactive question paper
+
         private
 
         def question_paper

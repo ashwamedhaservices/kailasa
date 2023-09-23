@@ -30,6 +30,7 @@ scope :learnings do
             post :question
           end
         end
+        resources :meetings, only: %i[index create]
       end
     end
   end

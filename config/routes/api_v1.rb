@@ -48,6 +48,7 @@ namespace :api do
         get ':testable_type/:testable_id', action: :question_paper_for_testable
       end
     end
+    resources :meetings, only: [:index]
   end
 end
 
