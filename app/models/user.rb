@@ -76,7 +76,7 @@ class User < ApplicationRecord
   end
 
   def balance
-    @balance ||= ReferralCredit.where(user_id: id, status: 'credited').sum(:amount)
+    @balance ||= withdrawable_amount
   end
 
   def processing
