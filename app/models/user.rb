@@ -88,18 +88,26 @@ class User < ApplicationRecord
   end
 
   def credited_points
-    @credited_points ||= ReferralCredit.where(user_id: id, status: 'credited').sum(:amount)
+    @credited_points ||= (withdrawable_amount / 1.5).round(2)
   end
 
   def withdrawable_amount
-    @withdrawable_amount ||= (remaining_points * 1.5).round(2)
+    @withdrawable_amount ||= ReferralCredit.where(user_id: id, status: 'credited').sum(:amount)
   end
 
   def withdrawn_points
-    @withdrawn_points ||= ReferralCredit.where(user_id: id, status: 'paid').sum(:amount)
+    @withdrawn_points ||= (withdrawn_amount / 1.5).round(2)
+  end
+
+  def withdrawn_amount
+    @withdrawn_amount ||= ReferralCredit.where(user_id: id, status: 'paid').sum(:amount)
   end
 
   def remaining_points
     @remaining_points ||= credited_points - withdrawn_points
+  end
+
+  def subscribed!
+    update(subscribed: true)
   end
 end

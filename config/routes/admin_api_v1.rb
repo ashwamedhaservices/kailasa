@@ -28,6 +28,10 @@ scope :learnings do
         resources :question_papers, only: %i[create show] do
           member do
             post :question
+            delete 'question/:question_id', action: :remove_question
+          end
+          collection do
+            get 'list/:testable_type/:testable_id', action: :list_questions
           end
         end
         resources :meetings, only: %i[index create]

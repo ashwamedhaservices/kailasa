@@ -41,4 +41,8 @@ class QuestionPaper < ApplicationRecord
   def add_question(question_no, question)
     question_paper_questions.create!(question_number: question_no, question:)
   end
+
+  def del_question(id)
+    question_paper_questions.find_by(question_id: id)&.destroy
+  end
 end

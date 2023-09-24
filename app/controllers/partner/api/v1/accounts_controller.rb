@@ -119,7 +119,8 @@ module Partner
             earnings: ReferralCredit.where(user_id: user.id).sum(:amount),
             network_width: user.referees.size,
             referral_link: user.referral_url,
-            last_payout: 0
+            last_payout: 0,
+            subscribed: user.subscribed
           }
         end
 

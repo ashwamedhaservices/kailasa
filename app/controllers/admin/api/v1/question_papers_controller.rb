@@ -34,10 +34,27 @@ module Admin
         # delete api for question and answers
         # active inactive question paper
 
+        def list_questions
+          json_success(data: question_papers)
+        end
+
+        def remove_question
+          question_paper_not_found unless question_paper
+
+          return json_success(msg: 'question removed successfully') if question_paper.del_question(params[:question_id])
+
+          json_failure(msg: question_paper.errors.full_messages.to_sentence)
+        end
+
         private
 
         def question_paper
           @question_paper ||= QuestionPaper.find(params[:id])
+        end
+
+        def question_papers
+          @question_papers ||= params[:testable_type].camelize.constantize
+                                                     .find_by(id: params[:testable_id])&.question_papers
         end
 
         def question_params
@@ -51,6 +68,10 @@ module Admin
 
         def question_paper_create_params
           params.require(:question_paper).permit(:name, :notes, :testable_type, :testable_id)
+        end
+
+        def list_params
+          params.permit(:testable_type, :testable_id)
         end
 
         def testable
