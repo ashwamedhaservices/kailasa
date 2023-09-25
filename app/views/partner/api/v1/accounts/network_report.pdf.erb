@@ -12,10 +12,10 @@
     <h2>Level: <%=level%></h2>
     <%count = 1%>
     <%users.each do |user|%>
-      Count: <%=count%>
+      Sl no: <%=count%><br>
       Name: <%=user.full_name%><br>
-      Referral Code: <%=user.referral_code%><br>
-      Mobile Number: <%=user.mobile_number%><br>
+      Ref Codde: <%=user.referral_code%><br>
+      Mobile: <%=user.mobile_number%><br>
       <%count += 1%><br>
     <% end %>
   <%end%>

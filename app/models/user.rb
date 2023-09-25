@@ -71,12 +71,13 @@ class User < ApplicationRecord
       credited_points:,
       withdrawable_amount:,
       withdrawn_points:,
+      remaining_amount:,
       remaining_points:
     }
   end
 
   def balance
-    @balance ||= withdrawable_amount
+    @balance ||= ReferralCredit.where(user_id: id, status: 'credited').sum(:amount)
   end
 
   def processing
@@ -103,8 +104,13 @@ class User < ApplicationRecord
     @withdrawn_amount ||= ReferralCredit.where(user_id: id, status: 'paid').sum(:amount)
   end
 
+  def remaining_amount
+    @remaining_amount ||= withdrawable_amount - withdrawn_amount
+  end
+
   def remaining_points
-    @remaining_points ||= credited_points - withdrawn_points
+    # @remaining_points ||= credited_points - withdrawn_points
+    @remaining_points ||= withdrawable_amount - withdrawn_amount
   end
 
   def subscribed!
