@@ -5,15 +5,13 @@ module Admin
     module V1
       class AnswersController < ApplicationController
         def index
-          return answer_not_found unless answer
-
-          json_success(data: answer)
+          json_success(data: answers)
         end
 
         def show
           return answer_not_found unless answer
 
-          json_success(data: res)
+          json_success(data: answer)
         end
 
         def create
@@ -36,8 +34,16 @@ module Admin
 
         private
 
+        def answers
+          @answers ||= Question.find_by(id: params[:question_id])&.answers
+        end
+
         def answer
-          @answer ||= params[:id].present? ? Answer.find_by(id: params[:id]) : Answer.new(answer_create_params)
+          @answer ||= if params[:id].present?
+                        Answer.find_by(id: params[:id])
+                      else
+                        Answer.new(answer_create_params.merge(question_id: params[:question_id]))
+                      end
         end
 
         def answer_create_params

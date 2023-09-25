@@ -14,8 +14,8 @@ module Admin
           return question_not_found unless question
 
           res = question.to_response.merge(answers: [])
-          question.answers.each do |answer|
-            res[:answers] << answer.to_respons
+          question.answers.to_a.each do |answer|
+            res[:answers] << answer.to_response
           end
           json_success(data: res)
         end
@@ -65,7 +65,7 @@ module Admin
 
         def add_answer_params
           params.require(:answers).permit(
-            answers: %i[value correct explanation]
+            answer: %i[value correct explanation]
           )
         end
 

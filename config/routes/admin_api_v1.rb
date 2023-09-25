@@ -20,11 +20,9 @@ scope :learnings do
     namespace :api do
       namespace :v1 do
         resources :questions, only: %i[index create update show] do
-          collection do
-            post :add_answer
-          end
+          resources :answers, only: %i[index create update show], shallow: true
         end
-        resources :answers, only: %i[index create update show]
+
         resources :question_papers, only: %i[create show] do
           member do
             post :question
