@@ -2,5 +2,6 @@
 
 REDIS = ConnectionPool::Wrapper.new(size: Rails.configuration.redis.pool_size,
                                     timeout: Rails.configuration.redis.timeout) do
-  Redis.new(host: Rails.configuration.redis.host, port: Rails.configuration.redis.port)
+  Redis.new(host: Rails.configuration.redis.host, port: Rails.configuration.redis.port,
+            ssl: Rails.configuration.redis.ssl)
 end
