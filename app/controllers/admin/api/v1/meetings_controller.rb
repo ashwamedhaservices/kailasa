@@ -10,18 +10,15 @@ module Admin
 
         def create
           meeting = Meeting.new(meetings_create_params)
-          meeting.id_at_provider = meeting.jitsi_id_at_provider(meetings_create_params[:url])
           return json_failure(msg: meeting.errors.full_messages.to_sentence) unless meeting.save
 
           json_success(msg: 'The meeting was created successfully', data: meeting)
         end
 
-        # show meetings that are yet to start not have not ended
-
         private
 
         def available_meetings
-          @available_meetings ||= Meeting.where('start_time < ? and end_time > ?', current_time, current_time)
+          @available_meetings ||= Meeting.visible
         end
 
         def current_time

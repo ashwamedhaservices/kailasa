@@ -10,7 +10,7 @@ module Api
       private
 
       def available_meetings
-        @available_meetings ||= Meeting.where('start_time < ? and end_time > ?', current_time, current_time)
+        @available_meetings ||= Meeting.visible
       end
 
       def current_time

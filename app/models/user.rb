@@ -44,6 +44,11 @@ class User < ApplicationRecord
 
   enum :type, %i[customer admin super_admin author student]
 
+  scope :subscribed, -> { where(subscribed: true) }
+
+  def subscribed! =  update(subscribed: true)
+  def subscribed? = subscribed.eql? true
+
   def full_name
     name = [fname, mname, lname].reject(&:empty?).join(' ')
     name.blank? ? 'Guest' : "#{title} #{name}".titlecase
@@ -111,9 +116,5 @@ class User < ApplicationRecord
   def remaining_points
     # @remaining_points ||= credited_points - withdrawn_points
     @remaining_points ||= withdrawable_amount - withdrawn_amount
-  end
-
-  def subscribed!
-    update(subscribed: true)
   end
 end

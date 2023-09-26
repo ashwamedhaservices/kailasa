@@ -24,7 +24,8 @@ class Meeting < ApplicationRecord
   enum status: { created: 0, started: 1, ended: 2  }
   enum provider: { jitsi: 0, google_meet: 1, zoom: 2 }
 
-  def jitsi_id_at_provider(url)
-    url.split('/')[-1]
-  end
+  scope :visible, lambda {
+                    current_time = DateTime.current
+                    where('start_time < ? and end_time > ?', (current_time - 30.minutes), (current_time + 30.minutes))
+                  }
 end
