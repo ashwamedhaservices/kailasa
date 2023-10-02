@@ -8,7 +8,7 @@
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #  value         :string(255)
-#  question_type :integer          default("mcq")
+#  question_type :integer          default("samcq")
 #
 require 'test_helper'
 

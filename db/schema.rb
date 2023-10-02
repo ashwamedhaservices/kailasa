@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_15_163409) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_02_070601) do
   create_table "addresses", charset: "utf8mb3", force: :cascade do |t|
     t.string "name"
     t.integer "status", limit: 1, default: 0
@@ -262,6 +262,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_15_163409) do
     t.string "streaming_url"
     t.bigint "author_id"
     t.string "notes_url"
+    t.string "assignment_url"
+    t.string "notification_url"
     t.index ["author_id"], name: "index_topics_on_author_id"
     t.index ["chapter_id"], name: "index_topics_on_chapter_id"
   end
