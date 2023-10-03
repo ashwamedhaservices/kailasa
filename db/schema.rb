@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_02_070601) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_03_054642) do
   create_table "addresses", charset: "utf8mb3", force: :cascade do |t|
     t.string "name"
     t.integer "status", limit: 1, default: 0
@@ -31,9 +31,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_02_070601) do
   create_table "answers", charset: "utf8mb3", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "correct", default: false, null: false
     t.text "value"
     t.text "explanation"
+    t.boolean "correct", default: false, null: false
     t.bigint "question_id", null: false
     t.index ["question_id"], name: "index_answers_on_question_id"
   end

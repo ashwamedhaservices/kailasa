@@ -7,9 +7,9 @@
 #  id          :bigint           not null, primary key
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
-#  correct     :boolean          default(FALSE), not null
 #  value       :text(65535)
 #  explanation :text(65535)
+#  correct     :boolean          default(FALSE), not null
 #  question_id :bigint           not null
 #
 # Indexes
