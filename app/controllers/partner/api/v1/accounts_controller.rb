@@ -137,7 +137,10 @@ module Partner
         end
 
         def users_entire_network
-          @users_entire_network ||= ReferralCredit.where(user_id: current_user.id).pluck(:level, :subscribed_user_id)
+          @users_entire_network ||= ReferralCredit.where(
+            user_id: current_user.id,
+            status: ReferralCredit::Status::CREDITED
+          ).pluck(:level, :subscribed_user_id)
         end
 
         def referred_user_ids_by_level
