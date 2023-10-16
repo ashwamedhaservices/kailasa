@@ -53,11 +53,15 @@ module Api
       def topic_create_params
         @topic_create_params ||= params
                                  .require(:topic)
-                                 .permit(:name, :description, :image_url, :video_url, :content_url, :video_duration)
+                                 .permit(:name, :description, :image_url,
+                                         :video_url, :content_url, :video_duration,
+                                         :notes_url, :assignment_url, :notification_url)
       end
 
       def topic_update_params
-        params.require(:topic).permit(:name, :description, :image_url, :video_url, :content_url, :video_duration)
+        params.require(:topic).permit(:name, :description, :image_url,
+                                      :video_url, :content_url, :video_duration,
+                                      :notes_url, :assignment_url, :notification_url)
       end
 
       def topic_not_found
