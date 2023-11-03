@@ -3,6 +3,8 @@
 
 namespace :api do
   namespace :v1 do
+    resources :privacy, only: %i[index]
+    resources :home, only: %i[index]
     resources :referrals, only: %i[index]
 
     resources :users, only: %i[create] do

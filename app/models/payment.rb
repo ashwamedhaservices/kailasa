@@ -29,7 +29,10 @@
 #  index_payments_on_user_id             (user_id)
 #
 class Payment < ApplicationRecord
-  include Payments::Associatable
+
+  belongs_to :user
+  belongs_to :subscription
+  belongs_to :payment_gateway
 
   enum :status, %i[created initiated pending success failed refunded cancelled]
   enum :mode, %i[card upi net_banking emi bnpl]

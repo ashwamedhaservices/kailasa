@@ -32,7 +32,8 @@ class User < ApplicationRecord
   self.inheritance_column = nil
   include Users::StateMachine
   include Users::Validatable
-  include Users::CallBackable
+
+  before_create :salt_password
 
   has_many :referees, class_name: 'User', foreign_key: 'referrer_id', dependent: :restrict_with_error,
                       inverse_of: :referrer
@@ -41,6 +42,7 @@ class User < ApplicationRecord
   has_many :enrollments, dependent: :restrict_with_error
   has_one :subscription, dependent: :restrict_with_error
   has_one :kyc, dependent: :restrict_with_error
+  has_many :payments, dependent: :restrict_with_error
 
   enum :type, %i[customer admin super_admin author student]
 
@@ -62,6 +64,12 @@ class User < ApplicationRecord
 
   def authenticate(password)
     password_digest.eql? ::Utils::Password.encrypt(password:, salt:)
+  end
+
+  def salt_password
+    self.salt = SecureRandom.hex(8)
+    self.iters = 1000
+    self.password_digest = ::Utils::Password.encrypt(password: password_digest, salt:, iters:)
   end
 
   def referral_url
