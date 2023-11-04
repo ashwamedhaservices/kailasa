@@ -13,7 +13,8 @@ module Payments
       private
 
       def call_payu_status_api
-        return RestRequestHandler.new(status_api_base_url).post_form(status_api, payload) if response.status.eql?(200)
+        response = RestRequestHandler.new(status_api_base_url).post_form(status_api, payload)
+        return response if response.status.eql?(200)
 
         Rails.logger.error("payment status fetch failed for #{payment.id}")
         Rails.logger.info("payment status fetch failed: #{response.body}")
