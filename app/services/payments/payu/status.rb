@@ -34,10 +34,10 @@ module Payments
         end
         return Payu::Failure.call(payment, params['unmappedstatus']) if params[:status].eql?(TransactionStatus::FAILURE)
 
-        handle_edge_case_for_unknown_transaction_status
+        handle_edge_case_for_unknown_transaction_status(params)
       end
 
-      def handle_edge_case_for_unknown_transaction_status
+      def handle_edge_case_for_unknown_transaction_status(params)
         Rails.logger.info("edge case params log for payment status #{params}")
         Rails.logger.error("unknown status recived for paymnet_id: #{payment.id}, status: #{params[:status]}")
         Payu::Failure.call(payment, 'failed')
