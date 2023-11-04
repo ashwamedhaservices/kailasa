@@ -14,7 +14,7 @@ module Payments
 
       def call_payu_status_api
         response = RestRequestHandler.new(status_api_base_url).post_form(status_api, payload)
-        return response if response.status.eql?(200)
+        return response if response.code.eql?(200)
 
         Rails.logger.error("payment status fetch failed for #{payment.id}")
         Rails.logger.info("payment status fetch failed: #{response.body}")
@@ -35,8 +35,12 @@ module Payments
           key: payment_gateway.api_key,
           command: 'verify_payment',
           var1: payment.uuid,
-          hash: hash(request_hash_string)
+          hash: hash(hash_string)
         }
+      end
+
+      def hash_string
+        "#{payment_gateway.api_key}|verify_payment|#{payment.uuid}|#{payment_gateway.secret}"
       end
     end
   end
