@@ -29,7 +29,6 @@
 #  index_payments_on_user_id             (user_id)
 #
 class Payment < ApplicationRecord
-
   belongs_to :user
   belongs_to :subscription
   belongs_to :payment_gateway
@@ -63,7 +62,7 @@ class Payment < ApplicationRecord
   }.freeze
 
   def finalized?
-    %i[success failed refunded cancelled].include?(status)
+    %w[success failed refunded cancelled].include?(status)
   end
 
   def self.payu_status(status)

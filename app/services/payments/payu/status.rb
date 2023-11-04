@@ -3,12 +3,9 @@
 module Payments
   module Payu
     class Status < Base
-      attr_reader :payment
-
       def call
-        return unless payment.finalized?
+        return if payment.finalized?
 
-        response = RestRequestHandler.new(status_api_base_url).post(status_api)
         Rails.logger.info("payment status fetch failed: #{response.body}") unless response.status.eql?(200)
 
         update_payment_status(response.body[payment.uuid])
@@ -31,23 +28,8 @@ module Payments
           key: payment_gateway.api_key,
           command: 'verify_payment',
           var1: payment.uuid,
-          hash:
+          hash: hash(request_hash_string)
         }
-      end
-
-      def headers
-        {
-          Accept: 'application/json',
-          'Content-Type': 'application/x-www-form-urlencoded'
-        }
-      end
-
-      def hash
-        hash(hash_string)
-      end
-
-      def hash_string
-        "#{payment_gateway.api_key}|verify_payment|#{payment.uuid}|#{payment_gateway.secret}"
       end
     end
   end

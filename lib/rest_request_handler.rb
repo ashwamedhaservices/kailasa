@@ -17,6 +17,10 @@ class RestRequestHandler
     send_request(Net::HTTP::Post, path, headers, body)
   end
 
+  def post_form(path, body = {})
+    parse_response(Net::HTTP.post_form(URI.join(@base_url, path), body))
+  end
+
   def put(path, body = {}, headers = {})
     send_request(Net::HTTP::Put, path, headers, body)
   end
