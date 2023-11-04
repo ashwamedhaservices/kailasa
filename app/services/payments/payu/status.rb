@@ -3,11 +3,17 @@
 module Payments
   module Payu
     class Status < Base
+      module TransactionStatus
+        SUCCESS = 'success'
+        FAILURE = 'failure'
+        NOTFOUND = 'Not Found'
+      end
+
       def call
         return if payment.finalized?
 
         response = call_payu_status_api
-        update_payment_status(response.body[payment.uuid])
+        update_payment_status(response.body.dig('transaction_details', payment.uuid))
       end
 
       private
@@ -21,13 +27,28 @@ module Payments
       end
 
       def update_payment_status(params)
-        Payu::Success.call(payment, params[:unmappedstatus], success_options(params)) if params[:status] == 'success'
-        Payu::Failure.call(payment, params[:unmappedstatus])
+        return Rails.logger.error("nil recived as update params for #{payment.id}") unless params
+
+        if params[:status].eql?(TransactionStatus::SUCCESS)
+          return Payu::Success.call(payment, params['unmappedstatus'], success_options(params))
+        end
+        return Payu::Failure.call(payment, params['unmappedstatus']) if params[:status].eql?(TransactionStatus::FAILURE)
+
+        handle_edge_case_for_unknown_transaction_status
+      end
+
+      def handle_edge_case_for_unknown_transaction_status
+        Rails.logger.info("edge case params log for payment status #{params}")
+        Rails.logger.error("unknown status recived for paymnet_id: #{payment.id}, status: #{params[:status]}")
+        Payu::Failure.call(payment, 'failed')
       end
 
       def success_options(params)
-        { mode: params[:mode], pg_transaction_no: params[:bank_ref_num], txn_reference_no: params[:mihpayid],
-          settlement_time: params[:addedon], notes: params[:bankcode] }
+        { mode: params['mode'],
+          pg_transaction_no: params['bank_ref_num'],
+          txn_reference_no: params['mihpayid'],
+          settlement_time: params['addedon'],
+          notes: params['bankcode'] }
       end
 
       def payload
