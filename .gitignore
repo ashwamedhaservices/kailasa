@@ -29,6 +29,7 @@
 /config/database.yml
 /config/redis.yml
 /config/mongoid.yml
+/config/sidekiq.yml
 /config/credentials/*
 /config/credentials/development.key
 /config/credentials/staging.key

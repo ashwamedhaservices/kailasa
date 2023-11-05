@@ -1,5 +1,6 @@
-# rubocop:disable Metrics/BlockLength
 # frozen_string_literal: true
+
+require Rails.root.join('config/environments/configurations.rb').to_s
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
@@ -15,20 +16,23 @@ Rails.application.configure do
   # Show full error reports.
   config.consider_all_requests_local = true
 
-  # Enable/disable caching. By default caching is disabled.
-  # Run rails dev:cache to toggle caching.
-  if Rails.root.join('tmp/caching-dev.txt').exist?
-    config.action_controller.perform_caching = true
+  # configure_redis_cache
+  configure_redis_cache
 
-    config.cache_store = :memory_store
-    config.public_file_server.headers = {
-      'Cache-Control' => "public, max-age=#{2.days.to_i}"
-    }
-  else
-    config.action_controller.perform_caching = false
+  # # Enable/disable caching. By default caching is disabled.
+  # # Run rails dev:cache to toggle caching.
+  # if Rails.root.join('tmp/caching-dev.txt').exist?
+  #   config.action_controller.perform_caching = true
 
-    config.cache_store = :null_store
-  end
+  #   config.cache_store = :memory_store
+  #   config.public_file_server.headers = {
+  #     'Cache-Control' => "public, max-age=#{2.days.to_i}"
+  #   }
+  # else
+  #   config.action_controller.perform_caching = false
+
+  #   config.cache_store = :null_store
+  # end
 
   # Store uploaded files on the local file system (see config/storage.yml for options)
   config.active_storage.service = :local
@@ -63,5 +67,3 @@ Rails.application.configure do
   # Print out views response
   config.debug_exception_response_format = :default
 end
-
-# rubocop:enable Metrics/BlockLength

@@ -28,19 +28,27 @@ module Payments
 
       def update_payment_status(params)
         return Rails.logger.error("nil recived as update params for #{payment.id}") unless params
-
-        if params[:status].eql?(TransactionStatus::SUCCESS)
-          return Payu::Success.call(payment, params['unmappedstatus'], success_options(params))
-        end
-        return Payu::Failure.call(payment, params['unmappedstatus']) if params[:status].eql?(TransactionStatus::FAILURE)
+        return handle_success_payment(params) if params['status'].eql?(TransactionStatus::SUCCESS)
+        return handle_failure_payment(params) if params['status'].eql?(TransactionStatus::FAILURE)
 
         handle_edge_case_for_unknown_transaction_status(params)
       end
 
+      def handle_success_payment(params)
+        Rails.logger.info("updated status of success payment_id #{payment.id} as #{params['unmappedstatus']}")
+        Payu::Success.call(payment, params['unmappedstatus'], success_options(params))
+      end
+
+      def handle_failure_payment(params)
+        Rails.logger.info("updated status of failure payment_id #{payment.id} as #{params['unmappedstatus']}")
+        Payu::Failure.call(payment, params['unmappedstatus'])
+      end
+
       def handle_edge_case_for_unknown_transaction_status(params)
         Rails.logger.info("edge case params log for payment status #{params}")
-        Rails.logger.error("unknown status recived for paymnet_id: #{payment.id}, status: #{params[:status]}")
+        Rails.logger.error("unknown status recived for paymnet_id: #{payment.id}, status: #{params['status']}")
         Payu::Failure.call(payment, 'failed')
+        Rails.logger.info("updated statue of payment id #{payment.id} as failed")
       end
 
       def success_options(params)

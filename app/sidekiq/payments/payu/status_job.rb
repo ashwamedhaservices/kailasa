@@ -5,8 +5,13 @@ module Payments
     class StatusJob
       include Sidekiq::Job
 
+      sidekiq_options queue: :critical
+
       def perform(payment_id)
-        Payments::Payu::Status.call(Payment.find(payment_id))
+        payment = Payment.find_by(id: payment_id)
+        return Rails.logger.error("status_job: payment not found for the id #{payment_id}") unless payment
+
+        Payments::Payu::Status.call(payment)
       end
     end
   end

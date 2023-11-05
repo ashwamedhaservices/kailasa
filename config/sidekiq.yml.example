@@ -1,9 +1,10 @@
 default: &default
-  host: 127.0.0.1
-  port: 6379
-  pool_size: 20
-  timeout: 1
-  url: redis://127.0.0.1:6379/0
+  redis_url: redis://127.0.0.1:6379/0
+  concurrency: 5
+  queues:
+    - critical
+    - default
+    - low
 
 development: &development
   <<: *default

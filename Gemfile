@@ -17,8 +17,9 @@ gem 'mongoid'
 gem 'puma', '~> 3.11'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 2.5'
-# Use Redis adapter to run Action Cable in production
-gem 'connection_pool'
+
+# Use hiredis to get better performance than the "redis" gem
+gem 'hiredis'
 gem 'redis'
 
 # Use ActiveModel has_secure_password
@@ -60,11 +61,19 @@ gem 'aws-sdk-s3'
 
 gem 'paper_trail'
 gem 'strong_migrations'
+
+# for encrypting data
 gem 'symmetric-encryption'
 
 # PDF response
 gem 'wicked_pdf', '1.4.0'
 gem 'wkhtmltopdf-binary'
+
+# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
+gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
+
+# Async and background jobs
+gem 'sidekiq'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -89,8 +98,3 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
-
-# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
-
-gem 'sidekiq', '~> 7.1'
