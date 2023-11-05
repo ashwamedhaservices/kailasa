@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 def configure_redis_cache
   config.action_controller.perform_caching = false
   config.cache_store = :null_store

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 sidekiq_configs = Rails.configuration.redis
 
 Sidekiq.configure_server do |config|
