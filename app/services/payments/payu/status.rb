@@ -10,7 +10,7 @@ module Payments
       end
 
       def call
-        return if payment.finalized?
+        return Rails.logger.info("payment finalized id #{payment.id}") if payment.finalized?
 
         response = call_payu_status_api
         update_payment_status(response.body.dig('transaction_details', payment.uuid))
@@ -42,6 +42,7 @@ module Payments
       def handle_failure_payment(params)
         Rails.logger.info("updated status of failure payment_id #{payment.id} as #{params['unmappedstatus']}")
         Payu::Failure.call(payment, params['unmappedstatus'])
+        ::Payments::PaymentSuccess.new(payment.user).subscribe
       end
 
       def handle_edge_case_for_unknown_transaction_status(params)
