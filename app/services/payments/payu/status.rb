@@ -37,12 +37,12 @@ module Payments
       def handle_success_payment(params)
         Rails.logger.info("updated status of success payment_id #{payment.id} as #{params['unmappedstatus']}")
         Payu::Success.call(payment, params['unmappedstatus'], success_options(params))
+        ::Payments::PaymentSuccess.new(payment.user).subscribe
       end
 
       def handle_failure_payment(params)
         Rails.logger.info("updated status of failure payment_id #{payment.id} as #{params['unmappedstatus']}")
         Payu::Failure.call(payment, params['unmappedstatus'])
-        ::Payments::PaymentSuccess.new(payment.user).subscribe
       end
 
       def handle_edge_case_for_unknown_transaction_status(params)
