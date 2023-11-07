@@ -25,6 +25,7 @@ class Meeting < ApplicationRecord
   enum provider: { jitsi: 0, google_meet: 1, zoom: 2 }
 
   scope :visible, lambda {
+                    Rails.logger.info('visible meetings called')
                     current_time = DateTime.current
                     where('start_time < ? and end_time > ?', (current_time - 30.minutes), (current_time + 30.minutes))
                   }
