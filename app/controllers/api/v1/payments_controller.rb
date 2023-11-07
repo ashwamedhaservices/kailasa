@@ -13,7 +13,10 @@ module Api
       end
 
       def callback
-        Rails.logger.info "response: #{params}"
+        payment = Payment.find_by(uuid: params['txnid'])
+        return json_failure(msg: 'payment not found') if payment.blank?
+
+        Payments::Payu::Status.new(payment).callback(params)
         render json: success(data: params), status: :ok
       end
 

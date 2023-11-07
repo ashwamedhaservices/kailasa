@@ -16,6 +16,10 @@ module Payments
         update_payment_status(response.body.dig('transaction_details', payment.uuid))
       end
 
+      def callback(params)
+        update_payment_status(params)
+      end
+
       private
 
       def call_payu_status_api
