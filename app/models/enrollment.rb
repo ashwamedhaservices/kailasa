@@ -22,7 +22,8 @@
 #  index_enrollments_on_topic_id                 (topic_id)
 #
 class Enrollment < ApplicationRecord
-  include Enrollments::Associatable
+  belongs_to :profile
+  belongs_to :topic
 
   enum :status, %i[enrolled active]
 end

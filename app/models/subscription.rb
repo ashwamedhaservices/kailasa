@@ -19,7 +19,9 @@
 #
 class Subscription < ApplicationRecord
   has_paper_trail
-  include Subscriptions::Associatable
+
+  belongs_to :user
+  has_many :payments, dependent: :restrict_with_error
 
   enum :kind, %i[unsubscribed seven_days one_year]
   enum :status, %i[pending active inactive]

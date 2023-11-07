@@ -10,6 +10,7 @@ module Admin
 
         def create
           meeting = Meeting.new(meetings_create_params)
+          meeting[:id_at_provider] = meetings_create_params[:url].split('/')[-1]
           return json_failure(msg: meeting.errors.full_messages.to_sentence) unless meeting.save
 
           json_success(msg: 'The meeting was created successfully', data: meeting)
@@ -18,7 +19,7 @@ module Admin
         private
 
         def available_meetings
-          @available_meetings ||= Meeting.visible
+          @available_meetings ||= Meeting.all
         end
 
         def current_time

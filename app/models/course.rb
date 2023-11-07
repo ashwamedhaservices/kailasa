@@ -20,7 +20,7 @@
 #  updated_at  :datetime         not null
 #
 class Course < ApplicationRecord
-  include Courses::Associatable
+  has_many :subjects, dependent: :restrict_with_error
 
   enum :status, %i[created published archived]
   enum :level, %i[primary secondary higher_secondary bachelors masters professional life_skill]
