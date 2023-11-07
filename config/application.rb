@@ -23,5 +23,6 @@ module Kailasa
     config.eager_load_paths << Rails.root.join('lib')
     config.payouts = config_for(:payouts)
     config.redis = config_for(:redis)
+    config.sidekiq = config_for(:sidekiq)
   end
 end
