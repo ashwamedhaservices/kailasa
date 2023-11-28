@@ -18,5 +18,6 @@
 #  index_chapters_on_subject_id  (subject_id)
 #
 class Chapter < ApplicationRecord
-  include Chapters::Associatable
+  belongs_to :subject
+  has_many :topics, dependent: :restrict_with_error
 end

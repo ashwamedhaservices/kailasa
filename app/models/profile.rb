@@ -18,7 +18,8 @@
 #  index_profiles_on_user_id  (user_id)
 #
 class Profile < ApplicationRecord
-  include Profiles::Associatable
+  belongs_to :user
+  has_many :enrollments, dependent: :restrict_with_error
 
   enum :status, %i[created deleted]
 end

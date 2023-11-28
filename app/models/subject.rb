@@ -18,5 +18,6 @@
 #  index_subjects_on_course_id  (course_id)
 #
 class Subject < ApplicationRecord
-  include Subjects::Associatable
+  belongs_to :course
+  has_many :chapters, dependent: :restrict_with_error
 end

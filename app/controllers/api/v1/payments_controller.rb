@@ -13,25 +13,22 @@ module Api
       end
 
       def callback
-        Rails.logger.info "response: #{params}"
+        payment = Payment.find_by(uuid: params['txnid'])
+        return json_failure(msg: 'payment not found') if payment.blank?
+
+        Payments::Payu::Status.new(payment).callback(params)
         render json: success(data: params), status: :ok
       end
 
       def return_url
         @result = Payments::Payu::ParseReturnUrl.call(return_url_params)
-        # return render json: success(data:), status: :ok if success?
         if data.status == 'success'
-          current_user = data.user
-          current_user.update(subscribed: true)
-          Subscriptions::Purchase.call(current_user, :one_year)
-          Referral::Credit::Processor.call(current_user)
+          Payments::PaymentSuccess.new(data.user).subscribe
           return redirect_to 'https://ashwamedhaservices.com/payments/payu/response?status=success',
                              allow_other_host: true
         end
 
         redirect_to 'https://ashwamedhaservices.com/payments/payu/response?status=failure', allow_other_host: true
-
-        # render json: failure(msg:), status: :bad_request
       end
 
       private

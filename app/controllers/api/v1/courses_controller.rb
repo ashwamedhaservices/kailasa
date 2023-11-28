@@ -4,7 +4,8 @@ module Api
   module V1
     class CoursesController < ApplicationController
       def index
-        @course = Course.all.to_a.reject { |c| c.name.match(/ to /) }
+        @course = courses_in_order
+        @course = @course.reject { |c| c.name.match(/ to /) } unless current_user.type.eql?('admin')
         render json: success(data: @course), status: :ok
       end
 
@@ -44,6 +45,31 @@ module Api
 
       def course_update_params
         params.require(:course).permit(:name, :description, :image_url, :price, :language, :level, :hours)
+      end
+
+      def courses_in_order
+        course_order.map { |id| course_hash[id] }
+      end
+
+      def course_order
+        @course_order ||= if current_user.admin?
+                            Course.pluck(:id)
+                          else
+                            [36, 56, 37, 38, 61, 62, 63, 42, 43, 45, 46, 49, 54, 55, 60, 64, 59, 73, 74, 75, 76, 77,
+                             78, 79, 80]
+                          end
+      end
+
+      def course_hash
+        @course_hash ||= generate_course_hash
+      end
+
+      def generate_course_hash
+        course_hash = {}
+        Course.all.to_a.each do |course|
+          course_hash[course.id] = course
+        end
+        course_hash
       end
     end
   end

@@ -1,0 +1,35 @@
+development:
+  clients:
+    default:
+      database: kailasa_development
+      hosts:
+        - localhost:27017
+      options:
+        read:
+          mode: :primary
+        max_pool_size: 1
+
+staging:
+  clients:
+    default:
+      uri: ""
+      options:
+        max_pool_size: 20
+        
+test:
+  clients:
+    default:
+      database: kailasa_test
+      hosts:
+        - localhost:27017
+      options:
+        read:
+          mode: :primary
+        max_pool_size: 1
+
+production:
+  clients:
+    default:
+      uri: ""
+      options:
+        max_pool_size: 20
