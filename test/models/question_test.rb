@@ -7,7 +7,7 @@
 #  id            :bigint           not null, primary key
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
-#  value         :string(255)
+#  value         :text(65535)
 #  question_type :integer          default("samcq")
 #
 require 'test_helper'
