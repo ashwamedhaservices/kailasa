@@ -45,6 +45,7 @@ scope :accounts do
         resources :addresses, only: %i[show update]
         resources :nominees, only: %i[show update]
         resources :bank_accounts, only: %i[show update]
+        resources :reports, only: %i[index]
       end
     end
   end

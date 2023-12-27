@@ -127,6 +127,7 @@ group :development do
 
   # rubocop for formatting the code base
   gem 'rubocop'
+  gem 'rubocop-capybara', require: false
   gem 'rubocop-rails', require: false
 
   # For navigating through the code base
