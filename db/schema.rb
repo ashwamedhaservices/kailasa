@@ -147,6 +147,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_11_211521) do
   create_table "payment_gateways", charset: "utf8mb3", force: :cascade do |t|
     t.string "name"
     t.integer "status", limit: 1, default: 0
+    t.string "partner_id"
     t.string "api_key"
     t.string "secret"
     t.string "success_url"
@@ -163,6 +164,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_11_211521) do
     t.integer "platform", limit: 1
     t.integer "for", limit: 1
     t.string "notes"
+    t.string "err"
+    t.string "errdesc"
     t.string "pg_transaction_no"
     t.string "txn_reference_no"
     t.datetime "settlement_time"

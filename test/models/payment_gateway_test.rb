@@ -7,6 +7,7 @@
 #  id          :bigint           not null, primary key
 #  name        :string(255)
 #  status      :integer          default("created")
+#  partner_id  :string(255)
 #  api_key     :string(255)
 #  secret      :string(255)
 #  success_url :string(255)

@@ -10,6 +10,8 @@
 #  platform           :integer
 #  for                :integer
 #  notes              :string(255)
+#  err                :string(255)
+#  errdesc            :string(255)
 #  pg_transaction_no  :string(255)
 #  txn_reference_no   :string(255)
 #  settlement_time    :datetime

@@ -4,7 +4,7 @@ module ExceptionHandler
   extend ActiveSupport::Concern
 
   included do
-    # rescue_from StandardError, with: :standard_error
+    rescue_from StandardError, with: :standard_error
     rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
     rescue_from JWT::ExpiredSignature, with: :unauthorized_request
     rescue_from JWT::DecodeError, with: :unauthorized_request
@@ -25,7 +25,8 @@ module ExceptionHandler
     render json: failure(msg: i18n_msg, error_code: 'record_not_found'), status: :not_found
   end
 
-  def standard_error(_exception)
+  def standard_error(err)
+    Rails.logger.error("unexpected error err: #{err}, backtrace #{err.backtrace}")
     i18n_msg = 'something went wrong'
     render json: failure(msg: i18n_msg, error_code: 'standard_error'), status: :internal_server_error
   end

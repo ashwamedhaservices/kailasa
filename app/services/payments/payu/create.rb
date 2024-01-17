@@ -30,10 +30,7 @@ module Payments
       end
 
       def one_year_subscription_payment
-        payment.uuid = SecureRandom.uuid
-        payment.for = 'one_year_subscription'
-        payment.amount = Rails.application.credentials.subscriptions.price
-        payment.status = 'initiated'
+        Subscriptions::Models::Payments.call(payment, 'one_year')
       end
 
       def payment_gateway

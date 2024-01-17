@@ -24,5 +24,8 @@ module Kailasa
     config.payouts = config_for(:payouts)
     config.redis = config_for(:redis)
     config.sidekiq = config_for(:sidekiq)
+    config.generators do |g|
+      g.orm :active_record
+    end
   end
 end
