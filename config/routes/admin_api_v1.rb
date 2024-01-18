@@ -33,6 +33,11 @@ scope :learnings do
           end
         end
         resources :meetings, only: %i[index create]
+        resources :credits do
+          collection do
+            get :payout_report
+          end
+        end
       end
     end
   end
