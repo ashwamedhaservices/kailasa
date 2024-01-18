@@ -23,7 +23,7 @@
 #
 class Credit < ApplicationRecord
   belongs_to :user
-  belongs_to :for_user, class_name: 'User'
+  belongs_to :for_user, class_name: 'User', optional: true
 
   enum status: { credited: 0, processed: 1, paid: 3 }
   enum credit_type: { partner: 0, user: 1, tv: 3, ev: 4 }
