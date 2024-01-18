@@ -1,0 +1,5 @@
+<%- headers = ['user_id', 'referal_code', 'kyc_id', 'name', 'account_no', 'ifsc', 'amount'] -%>
+<%= CSV.generate_line headers %>
+<%- @leads.each do |lead| -%>
+  <%= CSV.generate_line([lead['user_id'], lead['referal_code'], lead['kyc_id'],lead['name'], lead['account_no'], lead['ifsc'], lead['amount']]) -%>
+<%- end -%>
