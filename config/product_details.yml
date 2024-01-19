@@ -1,0 +1,23 @@
+default: &default
+  tv:
+    amount: 24000
+    bv_to_inr: 0.6
+    referral_limit:
+      user: 12
+  ev:
+    amount: 30000
+    bv_to_inr: 0.6
+    referral_limit:
+      user: 12
+
+development: &development
+  <<: *default
+
+staging: &staging
+  <<: *default
+
+test: &test
+  <<: *default
+
+production: &production
+  <<: *default

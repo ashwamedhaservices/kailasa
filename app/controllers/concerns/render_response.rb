@@ -19,6 +19,10 @@ module RenderResponse
     render json: render_failure(msg:, error_code:, data:), status: :bad_request
   end
 
+  def json_unauthorised(msg: '', data: {})
+    render json: render_failure(msg:, error_code: :unauthorised, data:), status: :unauthorised
+  end
+
   def render_success(msg: '', data: {})
     {
       success: true,

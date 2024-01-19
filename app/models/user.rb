@@ -43,6 +43,7 @@ class User < ApplicationRecord
   has_one :subscription, dependent: :restrict_with_error
   has_one :kyc, dependent: :restrict_with_error
   has_many :payments, dependent: :restrict_with_error
+  has_many :product_subscriptions, dependent: :destroy
 
   enum :type, %i[customer admin super_admin author student]
 

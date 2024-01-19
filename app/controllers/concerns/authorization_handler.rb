@@ -25,11 +25,13 @@ module AuthorizationHandler
   end
 
   def authorize_admin!
-    authorize_user!
-    return if current_user.admin?
+    return json_unauthorised(msg: 'Authentication failed') unless jwt_token
+    return json_unauthorised(msg: 'Authentication failed') unless Authenticate::Users.call(request, jwt_token).success
 
-    # TODO: use failure
-    render json: failure('Unautherized access!', 401), status: :unauthorized
+    @current_user = User.find_by(data['id'])
+    @admin_user = AdminUser.find_by(data['id'])
+
+    json_unauthorised(msg: 'Authentication failed not admin') unless @admin_user&.active?
   end
 
   def authorize_service!
