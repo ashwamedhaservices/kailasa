@@ -86,7 +86,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_17_150510) do
   create_table "credits", charset: "utf8mb3", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "users_id", null: false
+    t.bigint "user_id", null: false
     t.bigint "for_user_id"
     t.integer "status", limit: 1, default: 0
     t.integer "credit_type", limit: 1, default: 0
@@ -94,8 +94,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_17_150510) do
     t.integer "level"
     t.datetime "date"
     t.index ["for_user_id"], name: "index_credits_on_for_user_id"
-    t.index ["users_id", "for_user_id", "credit_type"], name: "index_credits_on_users_id_and_for_user_id_and_credit_type"
-    t.index ["users_id"], name: "index_credits_on_users_id"
+    t.index ["user_id", "for_user_id", "credit_type"], name: "index_credits_on_user_id_and_for_user_id_and_credit_type"
+    t.index ["user_id"], name: "index_credits_on_user_id"
   end
 
   create_table "enrollments", charset: "utf8mb3", force: :cascade do |t|
@@ -322,8 +322,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_17_150510) do
   add_foreign_key "answers", "questions"
   add_foreign_key "bank_accounts", "kycs"
   add_foreign_key "chapters", "subjects"
+  add_foreign_key "credits", "users"
   add_foreign_key "credits", "users", column: "for_user_id"
-  add_foreign_key "credits", "users", column: "users_id"
   add_foreign_key "enrollments", "profiles"
   add_foreign_key "enrollments", "topics"
   add_foreign_key "kycs", "users"

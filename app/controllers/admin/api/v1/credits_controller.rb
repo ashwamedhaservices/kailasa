@@ -6,6 +6,11 @@ module Admin
   module Api
     module V1
       class CreditsController < ApplicationController
+        def index
+          json_success(msg: 'the credits are',
+                       data: Credit.where(index_params.except(:page)).limit(100).offset(100 * index_params[:page].to_i))
+        end
+
         def payout_report
           @leads = generate_payout
           Rails.logger.info("the leads on #{DateTime.current} are #{@leads}")
@@ -44,6 +49,10 @@ module Admin
             bank_detail << hash.fetch(bank_detail[0], 0)
           end
           bank_details
+        end
+
+        def index_params
+          params.permit(:page, :user_id, :credit_type, :status)
         end
       end
     end

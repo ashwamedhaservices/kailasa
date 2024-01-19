@@ -11,6 +11,11 @@ scope :referrals do
             resources :transactions, only: [:index]
           end
         end
+        resources :credits, only: %i[index] do
+          collection do
+            get :payout_report
+          end
+        end
       end
     end
   end
@@ -33,11 +38,6 @@ scope :learnings do
           end
         end
         resources :meetings, only: %i[index create]
-        resources :credits do
-          collection do
-            get :payout_report
-          end
-        end
       end
     end
   end
