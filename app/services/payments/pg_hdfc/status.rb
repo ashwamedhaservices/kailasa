@@ -37,7 +37,7 @@ module Payments
       def api_success
         Rails.logger.info("hdfc success payment_id #{payment.id} the dec_rsp: #{decoded_response}, params #{params}")
         if payment.update(params)
-          Payments::PaymentSuccess.new(user).subscribe
+          Payments::PaymentSuccess.new(user).subscribe if payment.success?
           return success(msg: 'updated payment successfully', data: payment)
         end
 
