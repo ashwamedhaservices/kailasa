@@ -58,7 +58,7 @@ module Payments
       def call
         Rails.logger.info("HDFC response: #{response_hash}")
         if payment.update(payment_params)
-          Payments::PaymentSuccess.new(user).subscribe
+          Payments::PaymentSuccess.new(user).subscribe if payment.success?
           return success(msg: 'updated payment successfully', data: payment)
         end
 

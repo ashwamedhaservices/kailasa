@@ -9,7 +9,7 @@ module Payments
 
       attr_reader :payment, :response_hash
 
-      delegate :payment_gateway, to: :payment
+      delegate :user, :payment_gateway, to: :payment
 
       def initialize(payment)
         @payment = payment
