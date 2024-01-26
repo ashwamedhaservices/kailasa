@@ -6,7 +6,7 @@ module Admin
       class UsersController < ApplicationController
         def index
           users = User.where(index_params.except(:page_no, :count))
-          return json_success(data: users) unless index_params[:page_no].eql?(-1)
+          return json_success(data: users) if index_params[:page_no].eql?(-1)
 
           count = index_params[:count] || 20
           json_success(data: users.limit(count).offset(count * (index_params[:page_no] || 0)))
