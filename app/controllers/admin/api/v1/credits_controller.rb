@@ -10,7 +10,7 @@ module Admin
           credits = Credit.where(index_params)
           return json_success(data: credits.to_a) if invalidate_page_no
 
-          json_success(data: credits.limit(record_count).offset(page_no * record_count))
+          json_success(data: credits.limit(per_page).offset(page_no * per_page))
         end
 
         def payout_report
@@ -53,7 +53,7 @@ module Admin
           bank_details
         end
 
-        # page_no, record_count
+        # page_no, per_page
         def index_params
           params.permit(:user_id, :credit_type, :status)
         end

@@ -8,7 +8,7 @@ module Partner
           return json_failure(msg: 'category not present') unless index_params[:category]
           return json_success(data: product_referrals) if invalidate_page_no
 
-          json_success(data: product_referrals.limit(page_no).offset(per_page))
+          json_success(data: product_referrals.limit(page_no).offset(per_page * page_no))
         end
 
         private

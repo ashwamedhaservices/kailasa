@@ -10,7 +10,7 @@ module PaginationHandler
     page_no.eql?(-1)
   end
 
-  def record_count
-    @record_count ||= (params[:record_count] || 20).to_i
+  def per_page
+    @per_page ||= (params[:per_page] || 20).to_i
   end
 end

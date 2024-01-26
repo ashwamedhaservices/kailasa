@@ -8,7 +8,7 @@ module Admin
           users = User.where(index_params)
           return json_success(data: users.to_a) if invalidate_page_no
 
-          json_success(data: users.limit(record_count).offset(record_count * page_no))
+          json_success(data: users.limit(per_page).offset(per_page * page_no))
         end
 
         def show
@@ -38,7 +38,7 @@ module Admin
 
         private
 
-        # page_no, record_count
+        # page_no, per_page
         def index_params
           params.permit(:id, :mobile_number, :referral_code)
         end
