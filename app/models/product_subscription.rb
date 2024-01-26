@@ -8,7 +8,7 @@
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  user_id        :bigint           not null
-#  user_category  :integer          default(0)
+#  user_category  :integer          default("user")
 #  name           :string(255)
 #  status         :integer          default("unsubscribed")
 #  category       :integer          default("na")

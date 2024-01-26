@@ -221,6 +221,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_19_202710) do
     t.bigint "product_subscription_id", null: false
     t.bigint "user_id", null: false
     t.bigint "referred_user_id", null: false
+    t.string "referred_user_name"
+    t.string "referred_user_email"
+    t.string "referred_user_mobile_number"
     t.index ["product_subscription_id"], name: "index_product_referrals_on_product_subscription_id"
     t.index ["referred_user_id"], name: "index_product_referrals_on_referred_user_id"
     t.index ["user_id"], name: "index_product_referrals_on_user_id"
