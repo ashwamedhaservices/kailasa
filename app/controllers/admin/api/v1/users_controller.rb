@@ -26,7 +26,7 @@ module Admin
                      .find_by(id: show_params[:id])
           return json_notfound(msg: 'User not found with the given id') unless user
 
-          json_success(data: show_success_response(user))
+          json_success(data: detail_success_response(user))
         end
 
         def update
