@@ -21,7 +21,7 @@ module Admin
 
         def details
           user = User.includes(:product_subscriptions,
-                               profile: [:enrollments],
+                               :profiles,
                                kyc: %i[bank_accounts addresses nominees])
                      .find_by(id: show_params[:id])
           return json_notfound(msg: 'User not found with the given id') unless user
@@ -56,8 +56,7 @@ module Admin
           {
             user:,
             kyc: user.kyc,
-            profile: user.profile,
-            enrollments: user.profile.enrollments,
+            profiles: user.profiles,
             bank_accounts: user.kyc.bank_accounts,
             addresses: user.kyc.addresses,
             nominees: user.kyc.nominees,
