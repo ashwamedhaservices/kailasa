@@ -31,16 +31,18 @@ module Payments
       def check_and_update_status
         call_and_parse_hdfc_status_api
         Rails.logger.info("response hash is #{response_hash}")
-        response_hash[:status].to_i.zero? ? api_success : api_failed
+        if response_hash[:status].to_i.zero?
+          Rails.logger.info("hdfc success payment_id #{payment.id} the dec_rsp: #{decoded_response}, params #{params}")
+          return api_success
+        end
+        api_failed
       end
 
       def api_success
-        Rails.logger.info("hdfc success payment_id #{payment.id} the dec_rsp: #{decoded_response}, params #{params}")
         if payment.update(params)
           Payments::PaymentSuccess.new(user).subscribe
           return success(msg: 'updated payment successfully', data: payment)
         end
-
         error(msg: 'failed to update payment', data: payment)
       end
 

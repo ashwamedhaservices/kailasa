@@ -23,6 +23,10 @@ module RenderResponse
     render json: render_failure(msg:, error_code: :unauthorised, data:), status: :unauthorised
   end
 
+  def json_notfound(msg: '', data: {})
+    render json: render_failure(msg:, error_code: 'record_not_found', data:), status: :not_found
+  end
+
   def render_success(msg: '', data: {})
     {
       success: true,
