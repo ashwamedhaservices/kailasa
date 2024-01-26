@@ -61,8 +61,8 @@ module Partner
             total_payout: current_user.credits.credited.sum(:amount),
             payout_completed: current_user.credits.paid.sum(:amount),
             payout_pending: 0,
-            payout_in_review: current_user.credits.where(date: DateTime.now.all_week).sum(:amount),
-            subscribed_products: product_subscriptions.pluck(:user_category, :category),
+            payout_in_review: current_user.credits.credited.where(date: DateTime.now.all_week).sum(:amount),
+            subscribed_products: product_subscriptions,
             payouts: []
           }
           # payouts: []
