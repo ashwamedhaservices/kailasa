@@ -20,20 +20,18 @@ module AuthorizationHandler
       return render json: failure(msg: 'Authentication failed', error_code: 'unauthorized'), status: :unauthorized
     end
 
-    @current_user = User.find(data['id'])
-    @current_profile = Profile.find(data['profile_id'])
+    assingn_request_variables(user_id: data['id'], profile_id: data['profile_id'])
   end
 
   def authorize_admin!
     return json_unauthorised(msg: 'Authentication failed') unless jwt_token
     return json_unauthorised(msg: 'Authentication failed') unless Authenticate::Users.call(request, jwt_token).success
 
-    @current_user = User.find_by(data['id'])
-    @admin_user = AdminUser.find_by(data['id'])
-
+    assingn_request_variables(user_id: data['id'], admin_id: data['admin_user_id'])
     json_unauthorised(msg: 'Authentication failed not admin') unless @admin_user&.active?
   end
 
+  # not yet implemented propely so would need to check this out
   def authorize_service!
     service_auth = Authenticate::ServiceToken.new(request).call
     return if service_auth.success?
@@ -45,5 +43,29 @@ module AuthorizationHandler
 
   def jwt_token
     (request.headers['Authorization'] || '').split.last
+  end
+
+  def assingn_request_variables(user_id: nil, profile_id: nil, admin_id: nil, service_id: nil) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+    if user_id
+      @current_user = User.find_by(id: data['id'])
+      Rails.logger.push_tags("user_id: #{@current_user.id}")
+    end
+
+    if profile_id
+      @current_profile = Profile.find_by(id: data['id'])
+      Rails.logger.push_tags("profile_id: #{@current_profile.id}")
+    end
+
+    if admin_id
+      @admin_user = AdminUser.find_by(id: data['id'])
+      Rails.logger.push_tags("admin_user_id: #{@admin_user.id}")
+    end
+
+    if service_id
+      # authorised service
+      Rails.logger.push_tags("service_name: #{service_id}")
+    end
+
+    Rails.logger.info('request variables assigned')
   end
 end

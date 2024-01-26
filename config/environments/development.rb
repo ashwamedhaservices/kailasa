@@ -78,7 +78,7 @@ Rails.application.configure do
   # config.action_cable.disable_request_forgery_protection = true
 
   config.logger = Logger.new Rails.root.join("log/#{Rails.env}.log")
-  config.logger = ActiveSupport::Logger.new($stdout)
+  # config.logger = ActiveSupport::Logger.new($stdout)
   config.logger.formatter = Logger::Formatter.new
   config.logger = ActiveSupport::TaggedLogging.new(config.logger)
   config.log_tags = [:request_id]

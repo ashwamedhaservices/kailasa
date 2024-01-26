@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: product_referrals
@@ -15,7 +17,7 @@
 #  index_product_referrals_on_referred_user_id         (referred_user_id)
 #  index_product_referrals_on_user_id                  (user_id)
 #
-require "test_helper"
+require 'test_helper'
 
 class ProductReferralTest < ActiveSupport::TestCase
   # test "the truth" do
