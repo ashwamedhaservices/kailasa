@@ -5,11 +5,10 @@ module Admin
     module V1
       class UsersController < ApplicationController
         def index
-          users = User.where(index_params.except(:page_no, :count))
-          return json_success(data: users) if index_params[:page_no].eql?(-1)
+          users = User.where(index_params)
+          return json_success(data: users.to_a) if invalidate_page_no
 
-          count = index_params[:count] || 20
-          json_success(data: users.limit(count).offset(count * (index_params[:page_no] || 0)))
+          json_success(data: users.limit(record_count).offset(record_count * page_no))
         end
 
         def show
@@ -39,8 +38,9 @@ module Admin
 
         private
 
+        # page_no, record_count
         def index_params
-          params.permit(:id, :mobile_number, :referral_code, :page_no, :count)
+          params.permit(:id, :mobile_number, :referral_code)
         end
 
         def show_params
