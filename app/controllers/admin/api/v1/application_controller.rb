@@ -11,7 +11,7 @@ module Admin
         end
 
         def invalidate_page_no
-          page_no.eql(-1)
+          page_no.eql?(-1)
         end
 
         def record_count
