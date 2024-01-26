@@ -7,7 +7,7 @@ module Admin
         before_action :authorize_user!
 
         def page_no
-          @page_no ||= params[:page_no].to_i || 0
+          @page_no ||= (params[:page_no] || 0).to_i
         end
 
         def invalidate_page_no
@@ -15,7 +15,7 @@ module Admin
         end
 
         def record_count
-          @record_count ||= params[:record_count].to_i || 20
+          @record_count ||= (params[:record_count] || 20).to_i
         end
       end
     end
