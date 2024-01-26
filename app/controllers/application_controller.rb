@@ -7,6 +7,8 @@ class ApplicationController < ActionController::Base
   include AuthorizationHandler
   include ActionController::MimeResponds
   include RenderResponse
+  include PaginationHandler
+
   # TODO: might backfire.. To think about it
   delegate :error, :code, to: :interactor
   delegate :msg, :error_code, :data, to: :result

@@ -3,7 +3,7 @@
 module Partner
   module Api
     module V1
-      class AccountsController < ApplicationController
+      class AccountsController < ApplicationController # rubocop:disable Metrics/ClassLength
         # GET /partner/api/v1/accounts
         # {
         #   payout_completed: 1000000,
@@ -31,7 +31,7 @@ module Partner
         # }
         def index
           # TODO: this should be devided into payout service and network service
-          resp = payout_info.merge(performance_info)
+          resp = payout_info.merge(performance_info, user: current_user)
           render json: success(data: resp), status: :ok
         end
 
@@ -58,9 +58,11 @@ module Partner
 
         def payout_info
           {
-            payout_completed: 0,
+            total_payout: current_user.credits.credited.sum(:amount),
+            payout_completed: current_user.credits.paid.sum(:amount),
             payout_pending: 0,
-            payout_in_review: ReferralCredit.where(date: DateTime.now.all_week, user_id: current_user.id).sum(:amount),
+            payout_in_review: current_user.credits.where(date: DateTime.now.all_week).sum(:amount),
+            subscribed_products: product_subscriptions.pluck(:user_category, :category),
             payouts: []
           }
           # payouts: []
@@ -160,6 +162,10 @@ module Partner
 
             referred_users_by_level[level] = User.where(id: ids).to_a
           end
+        end
+
+        def product_subscriptions
+          @product_subscriptions ||= current_user.product_subscriptions.subscribed
         end
       end
     end
