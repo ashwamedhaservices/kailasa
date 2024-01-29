@@ -4,7 +4,7 @@ module Admin
   module Api
     module V1
       class ReportsController < ApplicationController
-        before_action :authorize_user!, except: %i[index]
+        before_action :authorize_admin!, except: %i[index]
 
         def index
           json_success(data: Reports::Info.call)

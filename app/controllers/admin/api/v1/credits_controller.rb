@@ -7,8 +7,10 @@ module Admin
     module V1
       class CreditsController < ApplicationController
         def index
-          json_success(msg: 'the credits are',
-                       data: Credit.where(index_params.except(:page)).limit(100).offset(100 * index_params[:page].to_i))
+          credits = Credit.where(index_params)
+          return json_success(data: credits.to_a) if invalidate_page_no
+
+          json_success(data: credits.limit(per_page).offset(page_no * per_page))
         end
 
         def payout_report
@@ -51,8 +53,9 @@ module Admin
           bank_details
         end
 
+        # page_no, per_page
         def index_params
-          params.permit(:page, :user_id, :credit_type, :status)
+          params.permit(:user_id, :credit_type, :status)
         end
       end
     end

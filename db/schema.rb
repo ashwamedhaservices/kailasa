@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_17_150510) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_19_202710) do
   create_table "addresses", charset: "utf8mb3", force: :cascade do |t|
     t.string "name"
     t.integer "status", limit: 1, default: 0
@@ -26,6 +26,15 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_17_150510) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["kyc_id"], name: "index_addresses_on_kyc_id"
+  end
+
+  create_table "admin_users", charset: "utf8mb3", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.integer "status", limit: 1, default: 0
+    t.integer "role", limit: 1, default: 0
+    t.index ["user_id"], name: "index_admin_users_on_user_id"
   end
 
   create_table "answers", charset: "utf8mb3", force: :cascade do |t|
@@ -206,6 +215,33 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_17_150510) do
     t.index ["bank_account_id"], name: "index_penny_drops_on_bank_account_id"
   end
 
+  create_table "product_referrals", charset: "utf8mb3", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "product_subscription_id", null: false
+    t.bigint "user_id", null: false
+    t.bigint "referred_user_id", null: false
+    t.string "referred_user_name"
+    t.string "referred_user_email"
+    t.string "referred_user_mobile_number"
+    t.index ["product_subscription_id"], name: "index_product_referrals_on_product_subscription_id"
+    t.index ["referred_user_id"], name: "index_product_referrals_on_referred_user_id"
+    t.index ["user_id"], name: "index_product_referrals_on_user_id"
+  end
+
+  create_table "product_subscriptions", charset: "utf8mb3", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.integer "user_category", limit: 1, default: 0
+    t.string "name"
+    t.integer "status", limit: 1, default: 0
+    t.integer "category", limit: 1, default: 0
+    t.float "amount"
+    t.integer "referral_count"
+    t.index ["user_id"], name: "index_product_subscriptions_on_user_id"
+  end
+
   create_table "profiles", charset: "utf8mb3", force: :cascade do |t|
     t.string "name"
     t.integer "status", limit: 1, default: 0
@@ -319,6 +355,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_17_150510) do
   end
 
   add_foreign_key "addresses", "kycs"
+  add_foreign_key "admin_users", "users"
   add_foreign_key "answers", "questions"
   add_foreign_key "bank_accounts", "kycs"
   add_foreign_key "chapters", "subjects"
@@ -334,6 +371,10 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_17_150510) do
   add_foreign_key "payments", "subscriptions"
   add_foreign_key "payments", "users"
   add_foreign_key "penny_drops", "bank_accounts"
+  add_foreign_key "product_referrals", "product_subscriptions"
+  add_foreign_key "product_referrals", "users"
+  add_foreign_key "product_referrals", "users", column: "referred_user_id"
+  add_foreign_key "product_subscriptions", "users"
   add_foreign_key "profiles", "users"
   add_foreign_key "question_paper_questions", "question_papers"
   add_foreign_key "question_paper_questions", "questions"

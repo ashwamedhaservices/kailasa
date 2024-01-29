@@ -7,7 +7,7 @@
   Referral Code: <%=@current_user.referral_code%><br>
   Mobile Number: <%=@current_user.mobile_number%><br>
 
-<%@referred_users_by_level.each do |level, users|%>
+<%@referred_users_by_level&.each do |level, users|%>
   <%if users.present?%>
     <h2>Level: <%=level%></h2>
     <%count = 1%>

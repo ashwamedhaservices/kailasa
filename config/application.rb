@@ -4,6 +4,8 @@ require_relative 'boot'
 
 require 'rails/all'
 
+require_relative '../lib/middlewares/request_response_logger'
+
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
@@ -22,10 +24,13 @@ module Kailasa
     # config.time_zone = "Central Time (US & Canada)"
     config.eager_load_paths << Rails.root.join('lib')
     config.payouts = config_for(:payouts)
+    config.product_details = config_for(:product_details)
     config.redis = config_for(:redis)
     config.sidekiq = config_for(:sidekiq)
     config.generators do |g|
       g.orm :active_record
     end
+
+    config.middleware.use Middlewares::RequestResponseLogger
   end
 end

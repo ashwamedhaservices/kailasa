@@ -9,6 +9,10 @@ namespace :partner do
           get :network_report
         end
       end
+
+      resources :users do
+        resources :product_referrals, shallow: true
+      end
     end
   end
 end

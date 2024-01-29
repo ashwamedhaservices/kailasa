@@ -25,6 +25,16 @@ class Credit < ApplicationRecord
   belongs_to :user
   belongs_to :for_user, class_name: 'User', optional: true
 
-  enum status: { credited: 0, processed: 1, paid: 3 }
+  # credited: money has been added to the wallet
+  # processed:
+  # paid: money that has been paid to bank account
+  # debited: money has been taken from the wallet
+  enum status: { credited: 0, processed: 1, paid: 3, debited: 4 }
+
+  # this enum and product_subscriptions category needs to be in sync
+  # partner: refered user for app
+  # user:
+  # tv: referred for tv
+  # ev: referred for ev
   enum credit_type: { partner: 0, user: 1, tv: 3, ev: 4 }
 end

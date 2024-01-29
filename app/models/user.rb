@@ -43,6 +43,9 @@ class User < ApplicationRecord
   has_one :subscription, dependent: :restrict_with_error
   has_one :kyc, dependent: :restrict_with_error
   has_many :payments, dependent: :restrict_with_error
+  has_many :product_subscriptions, dependent: :destroy
+  has_many :product_referrals, dependent: :destroy
+  has_many :credits, dependent: :destroy
 
   enum :type, %i[customer admin super_admin author student]
 
@@ -76,6 +79,7 @@ class User < ApplicationRecord
     "https://ashwamedhaservices.com/register?referral_code=#{referral_code}"
   end
 
+  # deperecated from here
   def earnings
     {
       balance:,
@@ -125,4 +129,5 @@ class User < ApplicationRecord
     # @remaining_points ||= credited_points - withdrawn_points
     @remaining_points ||= withdrawable_amount - withdrawn_amount
   end
+  # till here
 end
