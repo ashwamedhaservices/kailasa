@@ -57,9 +57,9 @@ module Admin
             user:,
             kyc: user.kyc,
             profiles: user.profiles,
-            bank_accounts: user.kyc.bank_accounts,
-            addresses: user.kyc.addresses,
-            nominees: user.kyc.nominees,
+            bank_accounts: user.kyc&.bank_accounts,
+            addresses: user.kyc&.addresses,
+            nominees: user.kyc&.nominees,
             product_subscriptions: user.product_subscriptions
           }
         end
