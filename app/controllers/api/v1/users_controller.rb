@@ -3,7 +3,7 @@
 module Api
   module V1
     class UsersController < ApplicationController # rubocop:disable Metrics/
-      before_action :authorize_user!, except: %i[create verify login login_otp otp_verification registered referrer]
+      before_action :authorize_user!, except: %i[create verify login login_otp otp_verification referrer]
       # POST accounts/api/v1/users
       def create
         @interactor = ::Users::Create::Processor.call(params: create_params)
@@ -27,6 +27,7 @@ module Api
         render json: failure(msg: error, error_code: code), status: :unprocessable_entity
       end
 
+      # this api is used for loging in
       # POST accounts/api/v1/users/login
       # expects phone/email and password
       def login
@@ -50,6 +51,7 @@ module Api
         render json: success(msg: i8n_msg), status: :created
       end
 
+      # this api is used for loging in
       # POST accounts/api/v1/users/otp_verification
       def otp_verification
         if Otp.verify!(login_params['otp'], verify_options)
@@ -62,15 +64,15 @@ module Api
         end
       end
 
-      # GET accounts/api/v1/users/registered
-      def registered
-        user = User.find_by(mobile_number: params[:mobile_number])
-        return render json: success(msg: 'User not found'), status: :ok unless user
+      # # GET accounts/api/v1/users/registered
+      # def registered
+      #   user = User.find_by(mobile_number: params[:mobile_number])
+      #   return render json: success(msg: 'User not found'), status: :ok unless user
 
-        existing_user_error(user)
-        # i8n_msg, code = existing_user_error(user)
-        # render json: failure(msg: i8n_msg, error_code: code), status: :ok
-      end
+      #   existing_user_error(user)
+      #   # i8n_msg, code = existing_user_error(user)
+      #   # render json: failure(msg: i8n_msg, error_code: code), status: :ok
+      # end
 
       # GET accounts/api/v1/users/referrer
       def referrer # rubocop:disable Metrics/AbcSize
