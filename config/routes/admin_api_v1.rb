@@ -14,6 +14,7 @@ scope :referrals do
         resources :credits, only: %i[index] do
           collection do
             get :payout_report
+            post :bulk_credit_update
           end
         end
       end

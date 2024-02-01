@@ -18,7 +18,7 @@ module Middlewares
       status, headers, response = @app.call(env)
 
       # Log the response
-      Rails.logger.info("Response: #{status} #{headers} - Body: #{response.body}")
+      Rails.logger.info("Response: #{status} #{headers} - Body: #{response}")
 
       [status, headers, response]
     end

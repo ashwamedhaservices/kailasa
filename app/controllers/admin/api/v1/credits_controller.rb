@@ -26,6 +26,12 @@ module Admin
           end
         end
 
+        def bulk_credit_update
+          Rails.logger.info("the params are #{bulk_credit_update_params}")
+          Credits::BulkPayout.call(bulk_credit_update_params[:payouts])
+          json_success(msg: 'Credits updated successfully')
+        end
+
         private
 
         def generate_payout # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
@@ -56,6 +62,11 @@ module Admin
         # page_no, per_page
         def index_params
           params.permit(:user_id, :credit_type, :status)
+        end
+
+        def bulk_credit_update_params
+          params.require(:payouts)
+          params.permit(payouts: %i[user_id amount credit_type])
         end
       end
     end
