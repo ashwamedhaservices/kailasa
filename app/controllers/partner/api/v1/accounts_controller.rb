@@ -165,7 +165,7 @@ module Partner
         end
 
         def product_subscriptions
-          @product_subscriptions ||= current_user.product_subscriptions.subscribed
+          @product_subscriptions ||= current_user.product_subscriptions.subscribed_not_paid
         end
       end
     end
