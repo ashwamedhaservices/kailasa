@@ -27,7 +27,7 @@ class ProductSubscription < ApplicationRecord
   # admin: core admin for the product
   # fdo: field development officer he has been appointed by the admin and has special powers
   enum user_category: { user: 0, admin: 1, fdo: 2 }
-  enum status: { unsubscribed: 0, subscribed: 1 }
+  enum status: { unsubscribed: 0, subscribed: 1, subscribed_not_paid: 2 }
 
   # product_details.yml contains details about the category
   # this enum and credits credit_type needs to be in sync
